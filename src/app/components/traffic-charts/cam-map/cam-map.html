@@ -1,16 +1,13 @@
 <header class="mb-3">
-  <h2 class="m-0 text-[15px] leading-6 font-semibold text-ink">خريطة الكاميرات</h2>
+  <h2 class="m-0 text-[20px] leading-6 font-bold text-ink">خريطة الكاميرات</h2>
 </header>
 <div #map class="isolate min-h-0 flex-1 overflow-hidden rounded-[8px] [direction:ltr]" role="img" aria-label="خريطة مواقع الكاميرات"></div>
 
 @if (liveCamera(); as cam) {
-  <div
-    class="fixed inset-0 z-[2000] flex items-center justify-center bg-black/70 p-4"
-    role="dialog"
-    aria-modal="true"
+  <div class="fixed inset-0 z-[2000] flex items-center justify-center bg-black/70 p-4"
+    role="dialog" aria-modal="true"
     [attr.aria-label]="'بث مباشر - ' + cam.name"
-    (click)="closeLive()"
-  >
+    (click)="closeLive()">
     <div class="w-full max-w-[860px] rounded-[12px] border border-line bg-surface p-4 shadow-card" (click)="$event.stopPropagation()">
       <div class="mb-3 flex items-center justify-between">
         <div class="flex items-center gap-2">

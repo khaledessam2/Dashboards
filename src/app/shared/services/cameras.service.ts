@@ -14,8 +14,6 @@ export interface Camera extends CameraConfig {
 // Real gateway: base URL of a stream server serving browser-playable video (MP4/WebM). RTSP can't play in <video>.
 export const STREAM_GATEWAY = '';
 
-// 15 cameras spread around Al-Masjid an-Nabawi (center ≈ 24.4672, 39.6111), ~100–600 m out.
-// events24h sums to 1,284 to match the KPI total; camera 21 is silent on purpose.
 export const HARAM_CENTER: [number, number] = [24.4672, 39.6111];
 
 const MOCK: Array<CameraConfig & { events24h: number }> = [
@@ -33,7 +31,7 @@ const MOCK: Array<CameraConfig & { events24h: number }> = [
   { name: 'كاميرا 21', ip: '10.0.30.21', location: { lat: 24.4672, lon: 39.6055 }, events24h: 0 },
   { name: 'كاميرا 22', ip: '10.0.30.22', location: { lat: 24.4715, lon: 39.6135 }, events24h: 49 },
   { name: 'كاميرا 24', ip: '10.0.30.24', location: { lat: 24.4632, lon: 39.613 }, events24h: 34 },
-  { name: 'كاميرا 26', ip: '10.0.30.26', location: { lat: 24.47, lon: 39.615 }, events24h: 45 },
+  { name: 'كاميرا 26', ip: '10.0.30.26', location: { lat: 24.47, lon: 39.615 }, events24h: 0 },
 ];
 
 @Injectable({ providedIn: 'root' })

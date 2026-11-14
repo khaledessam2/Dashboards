@@ -67,8 +67,8 @@ export class CamRanking {
           tickInterval: 3,
           tickLength: 0,
           lineColor: 'var(--grid)',
-          crosshair: { width: 1, color: 'var(--text-3)', dashStyle: 'Dash' },
-          labels: { style: { color: 'var(--text-3)', fontSize: '11px' } },
+          crosshair: { width: 1, color: 'var(--text-2)', dashStyle: 'Dash' },
+          labels: { style: { color: 'var(--text-2)', fontSize: '12px' , fontWeight:'bold' } },
         },
         yAxis: {
           title: { text: undefined },
@@ -76,7 +76,7 @@ export class CamRanking {
           allowDecimals: false,
           gridLineDashStyle: 'Dash',
           gridLineColor: 'var(--grid)',
-          labels: { style: { color: 'var(--text-3)', fontSize: '11px' } },
+          labels: { style: { color: 'var(--text-2)', fontSize: '12px' , fontWeight:'bold' } },
         },
         tooltip: {
           shared: true,

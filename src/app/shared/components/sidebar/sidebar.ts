@@ -11,7 +11,7 @@ export interface DashboardLink {
   selector: 'app-sidebar',
   imports: [RouterLink, RouterLinkActive],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  host: { class: 'box-border flex h-full flex-col py-4 ps-4 max-[900px]:h-auto max-[900px]:px-3 max-[900px]:pt-3 max-[900px]:pb-0' },
+  host: { class: 'box-border flex h-full flex-col max-[900px]:h-auto' },
   templateUrl: './sidebar.html',
 })
 

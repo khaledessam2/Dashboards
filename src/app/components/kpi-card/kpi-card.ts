@@ -13,7 +13,7 @@ export interface KpiDef {
   host: {
     '[id]': 'def().id',
     '[class.kpi-flash]': 'flashing()',
-    class: 'card justify-center max-[480px]:justify-start max-[480px]:p-3',
+    class: 'card justify-center',
   },
   templateUrl: './kpi-card.html',
 })

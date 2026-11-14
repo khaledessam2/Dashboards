@@ -28,7 +28,7 @@ export class HourlyChart {
           tickInterval: 3,
           lineColor: 'transparent',
           tickLength: 0,
-          labels: { style: { color: 'var(--text-3)', fontSize: '11px' } },
+          labels: { style: { color: 'var(--text-2)', fontSize: '13px' , fontWeight:'600' } },
         },
         yAxis: {
           title: { text: undefined },
@@ -36,10 +36,10 @@ export class HourlyChart {
           allowDecimals: false,
           gridLineDashStyle: 'Dash',
           gridLineColor: 'var(--grid)',
-          labels: { style: { color: 'var(--text-3)', fontSize: '10.5px' } },
+          labels: { style: { color: 'var(--text-2)', fontSize: '13px' , fontWeight:'600' } },
         },
         tooltip: { headerFormat: '', pointFormat: '{point.category} — <b>{point.y}</b>' },
-        plotOptions: { column: { borderWidth: 0, borderRadius: 3, pointPadding: 0.1, groupPadding: 0.1, maxPointWidth: 14 } },
+        plotOptions: { column: { borderWidth: 0, borderRadius: 3, pointPadding: 0.1, groupPadding: 0.1, maxPointWidth: 16 } },
         series: [{ type: 'column', name: 'الأحداث', data: [] }],
       }));
       this.apply(this.store.hourly());

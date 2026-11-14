@@ -1,32 +1,24 @@
-<div
-  class="flex min-h-0 flex-1 flex-col overflow-hidden rounded-lg bg-surface shadow-card max-[900px]:flex-row max-[900px]:items-center">
-  <div
-    class="mx-4 mt-4 flex shrink-0 flex-col items-center justify-center gap-3 border-b border-line pb-4 max-[1000px]:m-0 max-[1000px]:border-e max-[1000px]:border-b-0 max-[1000px]:px-3 max-[1000px]:py-2">
-    <div role="img" aria-label="الشعار"
-      class="size-32 shrink-0 rounded-full border-2 border-brand bg-[#07121c] bg-[length:177%_auto] bg-[position:50%_13.6%] bg-no-repeat max-[1000px]:size-9"
-      style="background-image: url('Gemini_Generated_Image_v13jz3v13jz3v13j.jpg')"></div>
-    <div class="flex min-w-0 flex-col items-center text-center max-[1000px]:hidden">
-      <b class="truncate text-[20px] leading-[1.4] font-bold text-ink">مركز القيادة والتحكم</b>
-      <span class="truncate text-[18px] font-semibold text-ink-3">المدينة المنورة</span>
+<div class="flex min-h-0 flex-1 flex-col overflow-hidden bg-side max-[900px]:flex-row max-[900px]:items-center">
+  <div class="mx-6 flex shrink-0 items-center gap-3 py-6 max-[900px]:m-0 max-[900px]:px-3 max-[900px]:py-2">
+    <div class="flex min-w-0 flex-col max-[900px]:hidden">
+      <b class="truncate text-[20px] leading-[1.4] font-bold text-white">مركز القيادة والتحكم</b>
+      <span class="truncate text-[16px] font-bold text-[#8a99af]">المدينة المنورة</span>
     </div>
   </div>
+  <p class="mx-6 mt-2 mb-3 text-sm font-semibold text-[#8a99af] max-[900px]:hidden">القائمة</p>
   <nav
-    class="flex flex-col gap-1.5 overflow-y-auto px-3 py-4 [scrollbar-width:thin] max-[900px]:min-w-0 max-[900px]:flex-1 max-[900px]:flex-row max-[900px]:overflow-x-auto max-[900px]:overflow-y-hidden max-[900px]:py-2 max-[900px]:[scrollbar-width:none] max-[900px]:[mask-image:linear-gradient(to_right,#000_calc(100%_-_20px),transparent)] max-[900px]:[&::-webkit-scrollbar]:hidden">
+    class="flex flex-col gap-1 overflow-y-auto px-4 [scrollbar-width:thin] max-[900px]:min-w-0 max-[900px]:flex-1 max-[900px]:flex-row max-[900px]:overflow-x-auto max-[900px]:overflow-y-hidden max-[900px]:py-2 max-[900px]:[scrollbar-width:none]">
     @for (dashboard of dashboards; track dashboard.ar) {
       @if (dashboard.path) {
         <a [routerLink]="dashboard.path" routerLinkActive="active"
-          class="group relative flex h-12 items-center gap-3 rounded-sm px-3 text-[15px] font-medium text-ink-2 no-underline transition-colors duration-150 select-none focus-visible:-outline-offset-2 focus-visible:outline-brand [&:not(.active):hover]:bg-hover [&:not(.active):hover]:text-ink [&.active]:bg-brand/12 [&.active]:font-semibold [&.active]:text-brand max-[900px]:h-10 max-[900px]:flex-none max-[900px]:whitespace-nowrap">
-          <span
-            class="material-symbols-outlined shrink-0 text-2xl text-ink-3 transition-colors duration-150 [font-variation-settings:'wght'_300] group-[.active]:text-brand group-[:not(.active):hover]:text-ink">
-            {{dashboard.icon }}</span>
-          <span>{{ dashboard.ar }}</span>
+          class="group flex h-11 items-center gap-3 rounded-sm px-3 text-[15px] font-medium text-[#dee4ee] no-underline transition-colors duration-150 select-none focus-visible:-outline-offset-2 focus-visible:outline-white [&:not(.active):hover]:bg-white/5 [&.active]:bg-white/10 [&.active]:text-white max-[900px]:flex-none max-[900px]:whitespace-nowrap">
+          <span class="material-symbols-outlined shrink-0 !text-[22px]">{{ dashboard.icon }}</span>
+          <span class="text-xl">{{ dashboard.ar }}</span>
         </a>
       } @else {
-        <span
-          class="relative flex h-12 items-center gap-3 rounded-xl px-3 text-[15px] font-medium text-ink-2 select-none max-[900px]:h-10 max-[900px]:flex-none max-[900px]:whitespace-nowrap">
-          <span class="material-symbols-outlined shrink-0 text-2xl text-ink-3 [font-variation-settings:'wght'_300]">
-          {{dashboard.icon }}</span>
-          <span>{{ dashboard.ar }}</span>
+        <span class="flex h-11 items-center gap-3 rounded-sm px-3 text-[15px] font-medium text-[#dee4ee]/60 select-none max-[900px]:flex-none max-[900px]:whitespace-nowrap">
+          <span class="material-symbols-outlined shrink-0 !text-[22px]">{{ dashboard.icon }}</span>
+          <span class="text-xl">{{ dashboard.ar }}</span>
         </span>
       }
     }

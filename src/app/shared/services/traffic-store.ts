@@ -106,7 +106,7 @@ export class TrafficStore {
     return { id: this.nextId++, event_name, camera_id: cam.ip, camera_name: cam.name, event_time: time };
   }
 
-  /** A new event every 3–10 s, on a random camera (silent cameras never fire). */
+  // A new event every 3–10 s, on a random camera (silent cameras never fire).
   private scheduleLiveEvent(): void {
     setTimeout(() => {
       const activeCameras = this.cameras.filter((c) => c.events24h > 0);
@@ -117,7 +117,7 @@ export class TrafficStore {
     }, 3000 + Math.random() * 7000);
   }
 
-  /** Small random movement in the flow and zone numbers. */
+  // Small random movement in the flow and zone numbers. 
   private drift(): void {
     const wobble = (v: number) => Math.round(v * (1 + (Math.random() - 0.5) * 0.06));
     this.flow.update((f) => ({ entry: wobble(f.entry), exit: wobble(f.exit) }));

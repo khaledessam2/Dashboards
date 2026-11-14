@@ -1,13 +1,9 @@
-<div class="flex items-center justify-between gap-4 max-[480px]:gap-3">
-  <div class="flex min-w-0 gap-3 flex-col">
-    <span class="text-lg leading-[22px] font-normal text-ink-2">
-      {{ def().ar }}
-    </span>
-    <span class="num text-[30px] leading-10 font-bold text-ink max-[900px]:text-2xl max-[900px]:leading-8">
-      {{ def().value }}
-    </span>
+<div class="flex h-full items-center justify-between gap-4">
+  <div class="flex min-w-0 flex-col gap-1">
+    <span class="num text-[28px] leading-9 font-bold text-ink max-[900px]:text-2xl">{{ def().value }}</span>
+    <span class="truncate text-lg font-medium text-ink-2">{{ def().ar }}</span>
   </div>
-  <span class="material-symbols-outlined grid size-14 place-items-center rounded-md text-[36px] text-brand max-[900px]:size-11 max-[900px]:text-[30px]">
-    {{ def().icon }}
+  <span class="flex size-14 shrink-0 items-center justify-center rounded-full bg-brand/10">
+    <span class="material-symbols-outlined block size-7 text-center !text-[28px] !leading-7 text-brand">{{ def().icon }}</span>
   </span>
 </div>

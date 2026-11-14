@@ -18,21 +18,21 @@
   --cyan-muted: #00bcd4;
 
   /* Surfaces — light */
-  --bg: #f0f2f5;
+  --bg: #f1f5f9;
   --bg-side: #ffffff;
   --surface: #ffffff;
   --surface-2: #ffffff;
-  --hover: rgba(52, 71, 103, 0.05);
+  --hover: #f1f5f9;
   --active: rgba(52, 71, 103, 0.07);
   --track: rgba(52, 71, 103, 0.08);
-  --border: rgba(52, 71, 103, 0.08);
+  --border: #e2e8f0;
   --border-strong: rgba(52, 71, 103, 0.16);
-  --grid: rgba(52, 71, 103, 0.12);
+  --grid: #e2e8f0;
   --focus: #1a73e8;
 
-  --text: #344767;
-  --text-2: #67748e;
-  --text-3: #8f9bb3;
+  --text: #1c2434;
+  --text-2: #64748b;
+  --text-3: #8a99af;
 
   /* Raised dark tile (icons, active nav) */
   --dark: linear-gradient(195deg, #4dc97b, #00a651);
@@ -57,7 +57,8 @@
 }
 
 @theme {
-  --shadow-card: 0 2px 12px rgba(52, 71, 103, 0.08);
+  --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.06);
+  --color-side: #1c2434;
   /* الخط الأساسي: Cairo (يُحمَّل من Google Fonts في index.html) */
   --font-sans: 'Cairo', 'Segoe UI', Tahoma, sans-serif;
   --font-num: 'Cairo', sans-serif;
@@ -66,7 +67,7 @@
 
 /* Shared card surface used by the KPI + chart components. */
 @utility card {
-  @apply box-border flex min-h-0 min-w-0 flex-col rounded-[12px] bg-surface px-6 py-4 shadow-card;
+  @apply box-border flex min-h-0 min-w-0 flex-col rounded-lg bg-surface px-6 py-5 shadow-card;
 }
 
 /* Kept in layers so Tailwind utilities can override them. */
