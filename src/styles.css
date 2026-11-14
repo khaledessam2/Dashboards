@@ -1,3 +1,152 @@
-/* You can add global styles to this file, and also import other style files */
-
 @import 'tailwindcss';
+
+:root {
+  /* KPI-Documentation §7 — reference hues */
+  --green-accent: #00a651;
+  --green-light: #4dc97b;
+  --cyan: #00bcd4;
+  --amber: #f5a623;
+  --red: #e74c3c;
+  --indigo: #5b6abf;
+  --purple: #8b5cf6;
+
+  /* Severity — Material Dashboard palette */
+  --sev-green: #00a651;
+  --sev-amber: #f5a623;
+  --sev-red: #e74c3c;
+  --green: var(--sev-green);
+  --cyan-muted: #00bcd4;
+
+  /* Surfaces — light */
+  --bg: #f0f2f5;
+  --bg-side: #ffffff;
+  --surface: #ffffff;
+  --surface-2: #ffffff;
+  --hover: rgba(52, 71, 103, 0.05);
+  --active: rgba(52, 71, 103, 0.07);
+  --track: rgba(52, 71, 103, 0.08);
+  --border: rgba(52, 71, 103, 0.08);
+  --border-strong: rgba(52, 71, 103, 0.16);
+  --grid: rgba(52, 71, 103, 0.12);
+  --focus: #1a73e8;
+
+  --text: #344767;
+  --text-2: #67748e;
+  --text-3: #8f9bb3;
+
+  /* Raised dark tile (icons, active nav) */
+  --dark: linear-gradient(195deg, #4dc97b, #00a651);
+  --shadow-tile: 0 4px 16px rgba(0, 166, 81, 0.30);
+}
+
+/* Expose the tokens to Tailwind: bg-surface, text-ink-2, border-grid, shadow-card, font-num … */
+@theme inline {
+  --color-page: var(--bg);
+  --color-surface: var(--surface);
+  --color-ink: var(--text);
+  --color-ink-2: var(--text-2);
+  --color-ink-3: var(--text-3);
+  --color-brand: var(--green-accent);
+  --color-sev-green: var(--sev-green);
+  --color-sev-amber: var(--sev-amber);
+  --color-sev-red: var(--sev-red);
+  --color-track: var(--track);
+  --color-grid: var(--grid);
+  --color-line: var(--border);
+  --color-hover: var(--hover);
+}
+
+@theme {
+  --shadow-card: 0 2px 12px rgba(52, 71, 103, 0.08);
+  /* الخط الأساسي: Cairo (يُحمَّل من Google Fonts في index.html) */
+  --font-sans: 'Cairo', 'Segoe UI', Tahoma, sans-serif;
+  --font-num: 'Cairo', sans-serif;
+  --font-mono: 'Cairo', ui-monospace, Consolas, monospace;
+}
+
+/* Shared card surface used by the KPI + chart components. */
+@utility card {
+  @apply box-border flex min-h-0 min-w-0 flex-col rounded-[12px] bg-surface px-6 py-4 shadow-card;
+}
+
+/* Kept in layers so Tailwind utilities can override them. */
+@layer base {
+  html,
+  body {
+    margin: 0;
+    height: 100%;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-sans);
+    font-size: 15px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection { background: rgba(26, 115, 232, 0.2); }
+  :focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; border-radius: 4px; }
+  * { scrollbar-width: thin; scrollbar-color: var(--border-strong) transparent; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+}
+
+/* KPI-Documentation §7 animation standards */
+@keyframes event-blink {
+  0%, 100% { box-shadow: inset 0 0 0 0 transparent; }
+  50% { box-shadow: inset 0 0 14px 2px rgba(0, 166, 81, 0.35); }
+}
+@keyframes event-blink-critical {
+  0%, 100% { box-shadow: inset 0 0 0 0 transparent; }
+  50% { box-shadow: inset 0 0 14px 2px rgba(231, 76, 60, 0.45); }
+}
+@keyframes kpi-flash {
+  0%, 100% { box-shadow: inset 0 0 0 0 transparent, 0 2px 12px rgba(52, 71, 103, 0.08); }
+  35% { box-shadow: inset 0 0 18px 3px rgba(0, 166, 81, 0.4), 0 2px 12px rgba(52, 71, 103, 0.08); }
+}
+@keyframes marker-flash {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.7); opacity: 0.55; }
+}
+
+@layer components {
+  .kpi-flash { animation: kpi-flash 2.2s ease-in-out; }
+  .event-blink { animation: event-blink 0.8s ease-in-out 6; }
+  .event-blink-critical { animation: event-blink-critical 1.4s ease-in-out 5; }
+
+  /* Numbers & KPIs: Inter, tabular so digits align column-to-column. */
+  .num {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: 'tnum' 1;
+  }
+
+  /* Times, IDs, axis ticks */
+  .mono {
+    font-variant-numeric: tabular-nums;
+  }
+
+  .material-symbols-outlined {
+    font-family: 'Material Symbols Outlined';
+    font-weight: 400;
+    font-style: normal;
+    font-size: 18px;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    white-space: nowrap;
+    direction: ltr;
+    font-feature-settings: 'liga';
+    -webkit-font-smoothing: antialiased;
+    user-select: none;
+    flex: none;
+  }
+}
+
+/* Tailwind preflight sets img{max-width:100%;height:auto}, which breaks Leaflet tiles */
+.leaflet-container img.leaflet-tile,
+.leaflet-container img.leaflet-marker-icon {
+  max-width: none !important;
+  max-height: none !important;
+}

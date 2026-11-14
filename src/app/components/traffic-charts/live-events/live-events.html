@@ -1,0 +1,57 @@
+
+<header class="mb-3 flex items-center justify-between">
+    <h2 class="m-0 text-[14px] font-semibold leading-6 text-ink">
+      الأحداث المباشرة
+    </h2>
+    @if (lastAge(); as age) {
+      <span id="last-event-age" class="text-[13px] text-ink-3">آخر حدث منذ <span class="mono">{{ age }}</span></span>
+    }
+</header>
+
+<ul class="m-0 flex min-h-0 flex-1 list-none flex-col gap-1.5 overflow-y-auto p-0 pe-1">
+  @for (item of items(); track item.id) {
+    <li
+      class="flex items-center gap-3 border-b border-line px-2 py-3 transition-colors hover:bg-hover"
+      [class.event-blink]="item.fresh && item.severity !== 'critical'"
+      [class.event-blink-critical]="item.fresh && item.severity === 'critical'"
+    >
+      <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg"
+        [class.bg-sev-red/10]="item.severity === 'critical'"
+        [class.text-sev-red]="item.severity === 'critical'"
+        [class.bg-sev-amber/10]="item.severity === 'warning'"
+        [class.text-sev-amber]="item.severity === 'warning'"
+        aria-hidden="true">
+        <span class="material-symbols-outlined text-[20px]">
+          {{ item.icon }}
+        </span>
+      </span>
+
+      <div class="flex min-w-0 flex-1 flex-col gap-1">
+        <span class="truncate text-[13px] font-medium text-ink">
+          {{ item.ar }}
+        </span>
+
+        <span class="flex items-center gap-1 text-[15px] text-ink-3">
+          <span class="material-symbols-outlined !text-[14px]">
+            videocam
+          </span>
+          {{ item.camera }}
+        </span>
+      </div>
+
+      <div class="flex shrink-0 flex-col items-end gap-1">
+        <span class="mono text-[15px] text-ink-2 [direction:ltr]">
+          {{ item.time }}
+        </span>
+
+        <span class="text-[13px] font-medium"
+          [class.text-sev-red]="item.severity === 'critical'"
+          [class.text-sev-amber]="item.severity === 'warning'">
+          {{ item.severity === 'critical' ? 'حرج' : 'تنبيه' }}
+        </span>
+      </div>
+    </li>
+  } @empty {
+    <li class="flex flex-1 items-center justify-center text-[13px] text-ink-3">لا توجد أحداث بعد</li>
+  }
+</ul>

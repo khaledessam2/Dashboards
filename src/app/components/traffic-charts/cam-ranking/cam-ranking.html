@@ -1,0 +1,24 @@
+<header class="mb-3">
+  <h2 class="m-0 text-[15px] leading-6 font-semibold text-ink">المخالفات حسب الكاميرا</h2>
+</header>
+<div class="flex min-h-0 flex-1 flex-col gap-3">
+  <div class="font-num flex flex-wrap gap-2 text-xs font-medium text-ink-2 max-[640px]:text-[11px]">
+    @for (line of lines(); track line.name; let i = $index) {
+      <button
+        type="button"
+        class="inline-flex cursor-pointer items-center gap-2 rounded-full border border-line bg-transparent py-1 ps-2.5 pe-1.5 transition hover:bg-hover hover:shadow-sm"
+        [class.opacity-45]="hidden().has(i)"
+        [class.line-through]="hidden().has(i)"
+        [attr.aria-pressed]="!hidden().has(i)"
+        (click)="toggle(i)"
+        (mouseenter)="highlight(i)"
+        (mouseleave)="highlight(null)"
+      >
+        <i class="size-2.5 rounded-full" [style.background]="line.color"></i>
+        <span>{{ line.name }}</span>
+        <span class="mono rounded-full bg-track px-2 py-0.5 text-[10.5px] leading-4 font-semibold text-ink-2">{{ line.total }}</span>
+      </button>
+    }
+  </div>
+  <div #chart class="min-h-0 flex-1 [direction:ltr]"></div>
+</div>

@@ -1,0 +1,22 @@
+<header class="mb-3">
+  <h2 class="m-0 text-[15px] leading-6 font-semibold text-ink">تدفق الحرم</h2>
+</header>
+<div class="grid min-h-0 flex-1 grid-cols-[minmax(0,1fr)_minmax(260px,3fr)_minmax(0,1fr)] items-center gap-4 max-[640px]:gap-y-3">
+  <div class="flex flex-col items-center gap-1">
+    <span class="text-[11.5px] leading-4 font-medium text-ink-3">دخول</span>
+    <span class="num text-2xl leading-8 font-semibold text-ink max-[640px]:text-xl max-[640px]:leading-7">{{ flow() ? (flow()!.entry | number) : '—' }}</span>
+  </div>
+
+  <div class="flex min-w-0 flex-col items-center gap-3 max-[640px]:col-span-full max-[640px]:row-start-1">
+    <div #chart class="h-[200px] w-full max-[640px]:h-[170px] [direction:ltr]"></div>
+    <div class="flex flex-col items-center gap-1">
+      <span class="num text-[36px] leading-10 font-semibold tracking-[-0.02em] text-(color:--level) [direction:ltr] max-[640px]:text-[28px] max-[640px]:leading-9">{{ netText() }}</span>
+      <span class="text-sm leading-5 font-medium text-(color:--level)">{{ level().label }}</span>
+    </div>
+  </div>
+
+  <div class="flex flex-col items-center gap-1">
+    <span class="text-[11.5px] leading-4 font-medium text-ink-3">خروج</span>
+    <span class="num text-2xl leading-8 font-semibold text-ink max-[640px]:text-xl max-[640px]:leading-7">{{ flow() ? (flow()!.exit | number) : '—' }}</span>
+  </div>
+</div>
