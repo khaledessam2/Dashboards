@@ -1,0 +1,22 @@
+<header class="mb-3 flex flex-wrap items-center justify-between gap-2">
+  <h2 class="m-0 my-3 text-[20px] leading-2 font-semibold text-slate-600">صحة المجموعات</h2>
+  <div class="flex flex-wrap gap-3 text-[14px] text-ink-2">
+    @for (s of statuses; track s) {
+      <button
+        type="button"
+        class="inline-flex text-lg font-bold cursor-pointer items-center gap-1.5 border-0 bg-transparent p-0 text-inherit transition-opacity"
+        [class.opacity-40]="hidden().has(s)"
+        [class.line-through]="hidden().has(s)"
+        [attr.aria-pressed]="!hidden().has(s)"
+        (click)="toggle(s)"
+      >
+        <i class="size-2.5 rounded-full" [style.background]="meta[s].color"></i>{{ meta[s].ar }}
+      </button>
+    }
+  </div>
+</header>
+<div class="grid grid-cols-[repeat(2,minmax(0,1fr))] gap-x-8 max-[900px]:grid-cols-[minmax(0,1fr)]">
+  @for (i of indexes; track i) {
+    <div #chart class="w-full [direction:ltr]" [style.height.px]="height()"></div>
+  }
+</div>

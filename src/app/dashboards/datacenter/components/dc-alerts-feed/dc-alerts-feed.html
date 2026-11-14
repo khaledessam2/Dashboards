@@ -1,0 +1,41 @@
+<header class="mb-3 flex flex-wrap items-center justify-between gap-2">
+  <div class="flex items-center gap-3">
+    <h2 class="m-0 my-3 text-[20px] leading-2 font-semibold text-slate-600">التنبيهات المباشرة</h2>
+    <span class="inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-slate-50 px-2 py-0.5 text-[12px] text-slate-600">
+      <i id="prtg-dot" class="size-1.5 rounded-full" [class.bg-sev-green]="online()" [class.bg-sev-red]="!online()" [class.dc-pulse]="!online()"></i>
+      <span id="prtg-label">{{ online() ? 'PRTG متصل' : 'PRTG غير متصل' }}</span>
+    </span>
+  </div>
+  <div class="inline-flex gap-0.5 rounded-lg bg-slate-100 p-0.5" role="tablist">
+    @for (t of tabs; track t.key) {
+      <button
+        type="button" role="tab" [attr.aria-selected]="filter() === t.key" (click)="filter.set(t.key)"
+        class="cursor-pointer rounded-md border-0 px-3 py-2 text-[14px] font-medium transition-colors"
+        [class]="filter() === t.key ? 'bg-white text-slate-900 shadow-[0_0_0_1px_#e2e8f0]' : 'bg-transparent text-slate-500 hover:text-slate-800'"
+      >{{ t.ar }}</button>
+    }
+  </div>
+</header>
+<ul class="scroll-slim m-0 flex min-h-0 flex-1 list-none flex-col gap-0.5 overflow-y-auto p-0 pe-1">
+  @for (a of filtered(); track a.id) {
+    <li
+      class="flex items-center gap-3 rounded-lg px-2 py-2.5 transition-colors hover:bg-slate-50/80"
+      [class.event-blink]="a.fresh && a.severity !== 'critical'"
+      [class.event-blink-critical]="a.fresh && a.severity === 'critical'"
+    >
+      <span class="relative flex size-8 shrink-0 items-center justify-center rounded-lg" [class.dc-pulse]="a.severity === 'critical'" [style.color]="a.color" [style.background]="a.color + '14'" aria-hidden="true">
+        <span class="material-symbols-outlined !text-[18px]">{{ a.icon }}</span>
+      </span>
+      <div class="flex min-w-0 flex-1 flex-col gap-0.5">
+        <span class="truncate text-[16px] font-bold text-slate-800">{{ a.device }}</span>
+        <span class="truncate text-[15px] text-slate-500">{{ a.text }}</span>
+      </div>
+      <div class="flex shrink-0 flex-col items-end gap-1">
+        <span class="mono text-[15px] text-slate-500 [direction:ltr]">{{ a.time }}</span>
+        <span class="rounded px-2 py-2 text-[13px] font-bold" [style.color]="a.color" [style.background]="a.color + '14'">{{ a.ar }}</span>
+      </div>
+    </li>
+  } @empty {
+    <li class="flex flex-1 items-center justify-center text-[13px] text-slate-500">لا توجد تنبيهات</li>
+  }
+</ul>

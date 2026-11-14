@@ -1,0 +1,22 @@
+<header class="mb-2">
+  <h2 class="m-0 text-[20px] leading-6 font-bold text-ink">{{ title() }}</h2>
+</header>
+<div class="flex min-h-0 flex-1 flex-col items-center justify-center gap-3">
+  <div #chart class="h-[170px] w-full max-w-[360px] [direction:ltr]"></div>
+
+  <div class="flex flex-col items-center gap-0.5">
+    <span class="num text-[32px] leading-10 font-semibold tracking-[-0.02em] text-(color:--level) [direction:ltr]">{{ pctText() }}</span>
+    <span class="text-sm leading-5 font-medium text-(color:--level)">{{ level().label }}</span>
+  </div>
+
+  <div class="grid w-full grid-cols-[repeat(2,minmax(0,1fr))] gap-3 border-t border-track pt-3">
+    <div class="flex flex-col items-center gap-0.5 text-center">
+      <span class="text-[14px] leading-5 font-bold text-ink-2">{{ currentLabel() }}</span>
+      <span class="num text-2xl leading-8 font-semibold text-ink">{{ current() | number }}</span>
+    </div>
+    <div class="flex flex-col items-center gap-0.5 border-s border-track text-center">
+      <span class="text-[14px] leading-5 font-bold text-ink-2">{{ previousLabel() }}</span>
+      <span class="num text-2xl leading-8 font-semibold text-ink">{{ previous() | number }}</span>
+    </div>
+  </div>
+</div>

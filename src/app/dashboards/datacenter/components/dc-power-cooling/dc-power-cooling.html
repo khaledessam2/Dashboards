@@ -1,0 +1,12 @@
+<header class="mb-3"><h2 class="m-0 my-3 text-[20px] leading-2 font-semibold text-slate-600">الطاقة والتبريد</h2></header>
+<div class="grid min-h-0 flex-1 grid-cols-[repeat(2,minmax(0,1fr))] gap-3">
+  @for (m of metrics; track m.ar) {
+    <div class="flex items-center gap-3 rounded-lg bg-hover px-3 py-3">
+      <span class="material-symbols-outlined !text-[24px] text-brand">{{ m.icon }}</span>
+      <div class="flex min-w-0 flex-col">
+        <span class="num text-[15px] leading-6 font-semibold text-slate-600 [direction:ltr] [text-align:right]">{{ m.value }}</span>
+        <span class="truncate text-[18px] text-ink-2">{{ m.ar }}</span>
+      </div>
+    </div>
+  }
+</div>

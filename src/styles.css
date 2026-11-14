@@ -94,6 +94,35 @@
   *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
 }
 
+/* ── Datacenter theme: hairline borders, off-white canvas, no heavy shadows ── */
+.dc-theme {
+  --font-sans: 'IBM Plex Sans Arabic', 'Cairo', 'Segoe UI', Tahoma, sans-serif;
+  --track: #f1f5f9;
+  --text-2: #475569;
+  font-family: var(--font-sans);
+  font-variant-numeric: tabular-nums;
+  background: #f8fafc;
+}
+.dc-theme .card {
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  box-shadow: none;
+  background: #fff;
+}
+.dc-theme .scroll-slim {
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 transparent;
+  mask-image: linear-gradient(to bottom, #000 calc(100% - 20px), transparent);
+}
+.dc-theme .scroll-slim::-webkit-scrollbar { width: 6px; }
+.dc-theme .scroll-slim::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 9999px; }
+.dc-theme .scroll-slim::-webkit-scrollbar-track { background: transparent; }
+@keyframes dc-pulse {
+  0% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0.45); }
+  70%, 100% { box-shadow: 0 0 0 6px rgba(231, 76, 60, 0); }
+}
+.dc-pulse { animation: dc-pulse 1.8s ease-out infinite; }
+
 /* KPI-Documentation §7 animation standards */
 @keyframes event-blink {
   0%, 100% { box-shadow: inset 0 0 0 0 transparent; }

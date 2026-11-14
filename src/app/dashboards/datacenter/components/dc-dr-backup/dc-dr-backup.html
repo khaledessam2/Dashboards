@@ -1,0 +1,11 @@
+<header class="mb-3"><h2 class="m-0 my-3 text-[20px] leading-2 font-semibold text-slate-600">التعافي من الكوارث والنسخ الاحتياطي</h2></header>
+<ul class="m-0 flex min-h-0 flex-1 list-none flex-col justify-between p-0">
+  @for (m of metrics; track m.ar) {
+    <li class="flex items-center justify-between gap-3 border-b border-line py-2 last:border-b-0">
+      <span class="flex items-center gap-2 text-[20px] text-ink-2">
+        <span class="material-symbols-outlined !text-[20px]">{{ m.icon }}</span>{{ m.ar }}
+      </span>
+      <span class="num text-[17px] font-bold" [class.text-sev-green]="m.ok" [class.text-ink]="!m.ok">{{ m.value }}</span>
+    </li>
+  }
+</ul>

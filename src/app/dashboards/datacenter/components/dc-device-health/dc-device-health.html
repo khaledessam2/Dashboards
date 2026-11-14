@@ -1,0 +1,19 @@
+<header class="mb-3"><h2 class="m-0 my-3 text-[20px] leading-2 font-semibold text-slate-600">صحة الأجهزة</h2></header>
+<div class="flex min-h-0 flex-1 flex-col justify-between gap-3">
+  @for (cat of categories(); track cat.key) {
+    <section class="flex flex-col gap-1">
+      <h3 class="m-0 my-2 flex items-center gap-2 text-[15px] font-bold text-ink-2">
+        <span class="material-symbols-outlined !text-[20px]">{{ cat.icon }}</span>{{ cat.ar }}
+      </h3>
+      @for (row of cat.rows; track row.name) {
+        <div class="flex items-center justify-between gap-3 border-b border-line py-1 last:border-b-0">
+          <span class="flex min-w-0 items-center gap-2 text-[16px] text-ink">
+            <i class="size-2.5 shrink-0 rounded-full" [style.background]="row.color"></i>
+            <span class="truncate text-lg">{{ row.name }}</span>
+          </span>
+          <span class="num shrink-0 text-[16px] font-bold [direction:ltr]" [style.color]="row.color">{{ row.valueText }}</span>
+        </div>
+      }
+    </section>
+  }
+</div>

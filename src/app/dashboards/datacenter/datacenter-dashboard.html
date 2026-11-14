@@ -1,0 +1,31 @@
+<header class="flex items-center justify-between gap-4 pt-3 pb-2">
+  <h1 class="m-0 text-2xl leading-8 font-bold text-ink max-[900px]:text-[17px] max-[900px]:leading-6">مركز البيانات — مركز القيادة والتحكم</h1>
+  <app-clock id="clock" />
+</header>
+
+<app-dc-gauges />
+
+<section class="grid grid-cols-[repeat(4,minmax(0,1fr))] gap-4 max-[1100px]:grid-cols-[repeat(2,minmax(0,1fr))] max-[480px]:grid-cols-[minmax(0,1fr)] max-[480px]:gap-3">
+  @for (card of kpiCards(); track card.id) {
+    <app-kpi-card [def]="card" />
+  }
+</section>
+
+<section class="grid grid-cols-[repeat(3,minmax(0,1fr))] gap-4 max-[1400px]:grid-cols-[repeat(2,minmax(0,1fr))] max-[900px]:grid-cols-[minmax(0,1fr)] max-[480px]:gap-3">
+  <app-dc-power-cooling />
+  <app-dc-dr-backup />
+  <app-dc-site-badges class="max-[1400px]:col-span-full" />
+</section>
+
+<section class="grid grid-cols-[repeat(3,minmax(0,1fr))] gap-4 max-[1400px]:grid-cols-[repeat(2,minmax(0,1fr))] max-[900px]:grid-cols-[minmax(0,1fr)] max-[480px]:gap-3">
+  <app-dc-net-traffic />
+  <app-dc-device-health />
+  <app-dc-sensor-donut class="max-[1400px]:col-span-full" />
+</section>
+
+<section class="grid h-105 grid-cols-[repeat(2,minmax(0,1fr))] gap-4 max-[900px]:h-auto max-[900px]:grid-cols-[minmax(0,1fr)] max-[900px]:*:h-96 max-[480px]:gap-3 max-[480px]:*:h-80">
+  <app-dc-alerts-feed />
+  <app-dc-devices-list />
+</section>
+
+<app-dc-group-health />
