@@ -26,7 +26,7 @@ export class MunicipalityDashboard {
       { id: 'kpi-lamps', ar: 'إجمالي الوحدات', icon: 'lightbulb', value: fmt(s.total) },
       { id: 'kpi-faults', ar: 'وحدات بها أعطال', icon: 'build', value: fmt(s.faults), status: 'crit' },
       { id: 'kpi-energy', ar: 'استهلاك الطاقة (kWh)', icon: 'bolt', value: fmt(this.store.energyKwh()) },
-      { id: 'kpi-savings', ar: 'التوفير مقابل خط الأساس', icon: 'savings', value: `${this.store.savingsPct()}%` },
+      { id: 'kpi-savings', ar: 'التوفير مقابل خط الأساس', icon: 'energy_savings_leaf', value: `${this.store.savingsPct()}%` },
     ];
   });
 
