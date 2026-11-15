@@ -2,6 +2,7 @@ import { Injectable, computed, inject, signal } from '@angular/core';
 import { Camera, CamerasService } from './cameras.service';
 import { EventName, TrafficEvent } from '../models/traffic-event.model';
 import { CameraSeries, FlowStats, HourBucket, ZoneStat } from '../models/traffic-stats.model';
+import { formatHour12 } from '../utils/time.utils';
 
 const HOUR = 3_600_000; // 1 hour => 3600000 ms
 const FRESH_MS = 7_000; // how long a new event / map marker stays highlighted
@@ -34,6 +35,7 @@ export class TrafficStore {
   private nextId = 1;
   // Ticks every second.
   readonly now = signal(Date.now());
+  readonly lastUpdate = signal(Date.now());
   private readonly allEvents = signal<TrafficEvent[]>([]);
   readonly flow = signal<FlowStats>({ entry: 2140, exit: 1495 });
   readonly zones = signal<ZoneStat[]>(ZONES);
@@ -54,6 +56,13 @@ export class TrafficStore {
     };
   });
 
+  /** Vehicles counted in the last 24 h (mock until the API provides it). */
+  readonly vehicles = signal({ car: 48210, truck: 6240, bus: 2150 });
+  readonly vehicleTotal = computed(() => {
+    const v = this.vehicles();
+    return v.car + v.truck + v.bus;
+  });
+
   readonly hourly = computed<HourBucket[]>(() => {
     const start = this.windowStart();
     const counts = new Array<number>(24).fill(0);
@@ -61,7 +70,7 @@ export class TrafficStore {
       counts[Math.floor((e.event_time - start) / HOUR)]++; // calculate the time of event
     }
     return counts.map((count, i) => ({
-      label: `${String(new Date(start + i * HOUR).getHours()).padStart(2, '0')}:00`, count
+      label: formatHour12(start + i * HOUR), count
     }));
   });
 
@@ -119,8 +128,14 @@ export class TrafficStore {
 
   // Small random movement in the flow and zone numbers. 
   private drift(): void {
+    this.lastUpdate.set(Date.now());
     const wobble = (v: number) => Math.round(v * (1 + (Math.random() - 0.5) * 0.06));
     this.flow.update((f) => ({ entry: wobble(f.entry), exit: wobble(f.exit) }));
+    this.vehicles.update((v) => ({
+      car: v.car + Math.round(Math.random() * 40),
+      truck: v.truck + Math.round(Math.random() * 6),
+      bus: v.bus + Math.round(Math.random() * 3),
+    }));
     this.zones.update((zones) => zones.map((z) => ({ ...z, value: z.value + Math.round(Math.random() * 120) })).sort((a, b) => b.value - a.value));
   }
 }

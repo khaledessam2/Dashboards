@@ -5,6 +5,9 @@ export interface KpiDef {
   ar: string;
   icon: string;
   value: string;
+  status?: 'warn' | 'crit';
+  /** Optional breakdown: renders several small value/label columns instead of one big value. */
+  parts?: { label: string; value: string }[];
 }
 
 @Component({

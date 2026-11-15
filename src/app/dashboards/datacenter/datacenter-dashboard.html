@@ -1,6 +1,8 @@
 <header class="flex items-center justify-between gap-4 pt-3 pb-2">
-  <h1 class="m-0 text-2xl leading-8 font-bold text-ink max-[900px]:text-[17px] max-[900px]:leading-6">مركز البيانات — مركز القيادة والتحكم</h1>
-  <app-clock id="clock" />
+  <h1 class="m-0 min-w-0 text-2xl leading-8 font-bold text-ink max-[900px]:text-[17px] max-[900px]:leading-6">مركز البيانات — مركز القيادة والتحكم</h1>
+  <div class="flex shrink-0 items-center">
+    <app-last-updated [at]="lastUpdate()" />
+  </div>
 </header>
 
 <app-dc-gauges />
@@ -29,3 +31,7 @@
 </section>
 
 <app-dc-group-health />
+
+<app-dc-ops-insights />
+
+<app-dc-service-health />

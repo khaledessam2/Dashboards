@@ -1,5 +1,17 @@
-<header class="mb-3">
+<header class="mb-3 flex flex-wrap items-center justify-between gap-x-4 gap-y-1">
   <h2 class="m-0 text-[20px] leading-6 font-bold text-ink">خريطة الكاميرات</h2>
+  <div class="flex flex-wrap items-center gap-3 text-[14px] text-ink-2">
+    <span class="inline-flex items-center gap-1.5">
+      <span class="size-2.5 rounded-full bg-[#00a651]"></span>
+      الكاميرات النشطة: <b class="num inline-block text-ink [direction:ltr] [unicode-bidi:isolate]">{{ totalCount() }}/{{ activeCount() }}</b>
+    </span>
+    @if (downNames()) {
+      <span class="inline-flex items-center gap-1.5">
+        <span class="size-2.5 rounded-full bg-red-600"></span>
+        الكاميرات المعطلة: <b class="text-ink">{{ downNames() }}</b>
+      </span>
+    }
+  </div>
 </header>
 <div #map class="isolate min-h-0 flex-1 overflow-hidden rounded-[8px] [direction:ltr]" role="img" aria-label="خريطة مواقع الكاميرات"></div>
 

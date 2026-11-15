@@ -1,13 +1,9 @@
 import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 import { EVENT_META } from '../../../../shared/constants/traffic.constants';
 import { TrafficStore } from '../../../../shared/services/traffic-store';
+import { formatTime12 as formatTime } from '../../../../shared/utils/time.utils';
 
-const pad = (n: number) => String(n).padStart(2, '0');
 
-function formatTime(ms: number): string {
-  const d = new Date(ms);
-  return `${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
-}
 
 function formatAge(seconds: number): string {
   if (seconds < 60) return `${seconds} ث`;

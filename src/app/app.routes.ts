@@ -14,5 +14,9 @@ export const routes: Routes = [
     path: 'datacenter',
     loadComponent: () => import('./dashboards/datacenter/datacenter-dashboard').then((m) => m.DatacenterDashboard),
   },
+  {
+    path: 'municipality',
+    loadComponent: () => import('./dashboards/municipality/municipality-dashboard').then((m) => m.MunicipalityDashboard),
+  },
   { path: '**', redirectTo: 'traffic' },
 ];

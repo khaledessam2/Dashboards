@@ -1,12 +1,9 @@
 import { ChangeDetectionStrategy, Component, DestroyRef, inject, signal } from '@angular/core';
+import { formatTime12 } from '../../utils/time.utils';
+const format = () => formatTime12(Date.now());
 
-const pad = (n: number) => String(n).padStart(2, '0');
-const format = () => {
-  const d = new Date();
-  return `${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
-};
 
-/** Live header clock (device local time, HH:MM:SS), ticks every second. */
+/** Live header clock (device local time, 12-hour), ticks every second. */
 @Component({
   selector: 'app-clock',
   changeDetection: ChangeDetectionStrategy.OnPush,

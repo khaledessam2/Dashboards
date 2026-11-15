@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, DestroyRef, ElementRef, NgZone, afterNextRender, effect, inject, signal, viewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, computed, ElementRef, NgZone, afterNextRender, effect, inject, signal, viewChild } from '@angular/core';
 import * as L from 'leaflet';
 import { Camera, CamerasService, HARAM_CENTER } from '../../../../shared/services/cameras.service';
 import { TrafficStore } from '../../../../shared/services/traffic-store';
@@ -34,6 +34,12 @@ export class CamMap {
 
   protected readonly liveCamera = signal<Camera | null>(null);
   protected readonly streamUrl = signal<string | null>(null);
+
+  protected readonly activeCount = computed(() => this.service.cameras().filter((c) => !c.silent).length);
+  protected readonly totalCount = computed(() => this.service.cameras().length);
+  protected readonly downNames = computed(() =>
+    this.service.cameras().filter((c) => c.silent).map((c) => c.name).join('، '),
+  );
 
   private map?: L.Map;
   private layer = L.layerGroup();

@@ -1,12 +1,8 @@
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { ALERT_META } from '../../../../shared/constants/datacenter.constants';
 import { DatacenterStore } from '../../../../shared/services/datacenter-store';
+import { formatTime12 as formatTime } from '../../../../shared/utils/time.utils';
 
-const pad = (n: number) => String(n).padStart(2, '0');
-const formatTime = (ms: number) => {
-  const d = new Date(ms);
-  return `${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
-};
 
 /** KPI-Documentation §4.8 — live alerts feed (12 items, refreshed every 15 s) + PRTG status. */
 @Component({

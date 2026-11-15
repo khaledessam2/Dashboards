@@ -1,0 +1,36 @@
+<header class="mb-3 flex flex-wrap items-center justify-between gap-2">
+  <div class="flex flex-col">
+    <h2 class="m-0 my-3 text-[20px] leading-2 font-semibold text-slate-600">صحة الخدمات</h2>
+    <span class="text-[14px] text-slate-400">الفحوصات تعمل من خارج الـ backend</span>
+  </div>
+  <div class="flex items-center gap-3 text-[16px] text-slate-600">
+    <span class="inline-flex items-center gap-1.5"><i class="size-2.5 rounded-full" [style.background]="meta.healthy.color"></i>{{ meta.healthy.ar }} <b class="num">{{ summary().healthy }}</b></span>
+    <span class="inline-flex items-center gap-1.5"><i class="size-2.5 rounded-full" [style.background]="meta.degraded.color"></i>{{ meta.degraded.ar }} <b class="num">{{ summary().degraded }}</b></span>
+    <span class="inline-flex items-center gap-1.5"><i class="size-2.5 rounded-full" [style.background]="meta.down.color"></i>{{ meta.down.ar }} <b class="num">{{ summary().down }}</b></span>
+  </div>
+</header>
+<div class="grid grid-cols-[repeat(3,minmax(0,1fr))] gap-3 max-[1400px]:grid-cols-[repeat(2,minmax(0,1fr))] max-[900px]:grid-cols-[minmax(0,1fr)]">
+  @for (c of checks(); track c.id) {
+    <article class="flex flex-col gap-2 rounded-lg border border-slate-200 p-3" [id]="c.id" [style.border-color]="c.status === 'healthy' ? '' : meta[c.status].color + '66'">
+      <div class="flex items-center justify-between gap-2">
+        <div class="flex min-w-0 items-center gap-2">
+          <span class="material-symbols-outlined !text-[24px] text-slate-500">{{ c.icon }}</span>
+          <span class="truncate text-[17px] font-bold text-slate-800" [attr.title]="c.ar">{{ c.ar }}</span>
+        </div>
+        <span class="inline-flex shrink-0 items-center gap-1.5 rounded-full px-2.5 py-0.5 text-[14px] font-semibold"
+          [style.background]="meta[c.status].color + '1f'" [style.color]="meta[c.status].color">
+          <i class="size-2 rounded-full" [class.dc-pulse]="c.status === 'down'" [style.background]="meta[c.status].color"></i>{{ meta[c.status].ar }}
+        </span>
+      </div>
+      <dl class="m-0 flex flex-col gap-1">
+        @for (m of c.metrics; track m.label) {
+          <div class="flex items-center justify-between gap-3 text-[16px]">
+            <dt class="text-slate-500">{{ m.label }}</dt>
+            <dd class="num m-0 font-semibold text-slate-800">{{ m.value }}</dd>
+          </div>
+        }
+      </dl>
+      <span class="text-[14px] text-slate-400">آخر تحقق: {{ age(c.verifiedAt) }}</span>
+    </article>
+  }
+</div>

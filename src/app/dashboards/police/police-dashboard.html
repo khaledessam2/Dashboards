@@ -1,12 +1,14 @@
 <header class="flex items-center justify-between gap-4 pt-3 pb-2">
-  <h1 class="m-0 text-2xl leading-8 font-bold text-ink max-[900px]:text-[17px] max-[900px]:leading-6">نظام الرصد الذكي - الأمن العام</h1>
-  <app-clock id="clock" />
+  <h1 class="m-0 min-w-0 text-2xl leading-8 font-bold text-ink max-[900px]:text-[17px] max-[900px]:leading-6">نظام الرصد الذكي - الأمن العام</h1>
+  <div class="flex shrink-0 items-center">
+    <app-last-updated [at]="lastUpdate()" />
+  </div>
 </header>
 
 <section class="grid grid-cols-[minmax(0,1.55fr)_minmax(0,1fr)] gap-x-4 gap-y-6 max-[1400px]:grid-cols-[minmax(0,1fr)] max-[480px]:gap-3">
-  <div class="grid grid-cols-[repeat(3,minmax(0,1fr))] grid-rows-[repeat(2,minmax(0,1fr))] gap-4 max-[900px]:grid-cols-[repeat(2,minmax(0,1fr))] max-[900px]:grid-rows-none max-[900px]:gap-3 max-[480px]:grid-cols-[minmax(0,1fr)]">
+  <div class="grid grid-cols-[repeat(3,minmax(0,1fr))] auto-rows-fr gap-4 max-[900px]:grid-cols-[repeat(2,minmax(0,1fr))] max-[900px]:grid-rows-none max-[900px]:gap-3 max-[480px]:grid-cols-[minmax(0,1fr)]">
     @for (card of kpiCards(); track card.id) {
-      <app-kpi-card [def]="card" />
+      <app-kpi-card [def]="card" [class.col-span-2]="card.id === 'kpi-smoke'" class="max-[480px]:col-span-1" />
     }
   </div>
   <div class="grid grid-cols-[repeat(2,minmax(0,1fr))] gap-4 max-[1400px]:grid-cols-[repeat(2,minmax(0,1fr))] max-[900px]:grid-cols-[minmax(0,1fr)] max-[480px]:gap-3">

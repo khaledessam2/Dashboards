@@ -57,3 +57,35 @@ export interface GroupHealth {
   total: number;
   counts: Record<PrtgStatus, number>;
 }
+
+export interface OpenOutage {
+  id: number;
+  device: string;
+  sensor: string;
+  message: string;
+  downMs: number;
+}
+
+export interface StaleSensor {
+  id: number;
+  device: string;
+  sensor: string;
+  overdueMs: number;
+}
+
+export interface FailingDevice {
+  name: string;
+  d7: number;
+  d30: number;
+}
+
+export type ServiceStatus = 'healthy' | 'degraded' | 'down';
+
+export interface ServiceCheck {
+  id: string;
+  ar: string;
+  icon: string;
+  status: ServiceStatus;
+  metrics: { label: string; value: string }[];
+  verifiedAt: number;
+}

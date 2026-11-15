@@ -2,9 +2,21 @@
 <div class="grid min-h-0 flex-1 grid-cols-[repeat(2,minmax(0,1fr))] gap-3">
   @for (m of metrics; track m.ar) {
     <div class="flex items-center gap-3 rounded-lg bg-hover px-3 py-3">
-      <span class="material-symbols-outlined !text-[24px] text-brand">{{ m.icon }}</span>
+      <span
+        class="material-symbols-outlined !text-[24px]"
+        [class.text-brand]="!m.status"
+        [class.text-yellow-500]="m.status === 'warn'"
+        [class.text-red-600]="m.status === 'crit'"
+        >{{ m.icon }}</span
+      >
       <div class="flex min-w-0 flex-col">
-        <span class="num text-[15px] leading-6 font-semibold text-slate-600 [direction:ltr] [text-align:right]">{{ m.value }}</span>
+        <span
+          class="num text-[15px] leading-6 font-semibold [direction:ltr] [text-align:right]"
+          [class.text-slate-600]="!m.status"
+          [class.text-yellow-500]="m.status === 'warn'"
+          [class.text-red-600]="m.status === 'crit'"
+          >{{ m.value }}</span
+        >
         <span class="truncate text-[18px] text-ink-2">{{ m.ar }}</span>
       </div>
     </div>

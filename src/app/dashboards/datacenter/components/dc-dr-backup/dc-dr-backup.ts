@@ -16,7 +16,7 @@ interface Metric {
 })
 export class DcDrBackup {
   protected readonly metrics: Metric[] = [
-    { ar: 'آخر نسخة احتياطية', value: '00:15', icon: 'backup' },
+    { ar: 'آخر نسخة احتياطية', value: '12:15 ص', icon: 'backup' },
     { ar: 'RPO المحقق', value: '< 15 د', icon: 'history', ok: true },
     { ar: 'RTO المحقق', value: '< 30 د', icon: 'timer', ok: true },
     { ar: 'DR Sync', value: 'متزامن', icon: 'sync', ok: true },

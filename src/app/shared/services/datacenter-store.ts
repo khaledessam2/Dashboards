@@ -10,7 +10,52 @@ import {
   tempColor,
   trafficColor,
 } from '../constants/datacenter.constants';
-import { AlertSeverity, DcAlert, Device, GaugeVm, GroupHealth, HealthCategory, PrtgStatus, Sensor, SensorKind } from '../models/datacenter.model';
+import {
+  AlertSeverity, DcAlert, Device, FailingDevice, GaugeVm, GroupHealth, HealthCategory, OpenOutage, PrtgStatus,
+  Sensor, SensorKind, ServiceCheck, StaleSensor,
+} from '../models/datacenter.model';
+
+const DOWN_MESSAGE: Record<SensorKind, string> = {
+  ping: 'لا يوجد رد على الطلب (Timeout)',
+  cpu: 'تعذّرت قراءة حمل المعالج',
+  memory: 'تعذّرت قراءة الذاكرة',
+  disk: 'خطأ في الوصول إلى القرص',
+  traffic: 'الواجهة متوقفة عن الإرسال',
+  temperature: 'فُقدت قراءة الحرارة',
+};
+
+/** Mock: stale sensors (sensor id, scan interval in seconds). */
+const STALE_MOCK: Array<[number, number]> = [[5, 60], [14, 300], [29, 60], [61, 300]];
+
+/** Mock: Down transitions per device over 7 / 30 days (real source: PRTG messages). */
+const FAILING_MOCK: FailingDevice[] = [
+  { name: 'مسجل الكاميرات 02', d7: 9, d30: 31 },
+  { name: 'مفتاح الطابق الثاني', d7: 6, d30: 24 },
+  { name: 'خادم البث', d7: 5, d30: 17 },
+  { name: 'وحدة التبريد 02', d7: 3, d30: 14 },
+  { name: 'موجه الفرع', d7: 2, d30: 9 },
+];
+
+/** Mock service probes — real checks run outside the backend (open item: probe host). */
+function buildServiceChecks(now: number): ServiceCheck[] {
+  const sec = (min: number, max: number) => `${Math.round(rand(min, max))} ث`;
+  const ms = (min: number, max: number) => `${Math.round(rand(min, max))} ms`;
+  const at = () => now - rand(2_000, 12_000);
+  return [
+    { id: 'svc-prtg', ar: 'مُجمِّع PRTG', icon: 'sync', status: 'healthy', verifiedAt: at(),
+      metrics: [{ label: 'آخر جمع ناجح', value: `قبل ${sec(5, 25)}` }, { label: 'زمن الاستجابة', value: ms(180, 420) }, { label: 'إخفاقات متتالية', value: '0' }] },
+    { id: 'svc-rest', ar: 'واجهة REST الحية', icon: 'api', status: 'healthy', verifiedAt: at(),
+      metrics: [{ label: 'اختبار Snapshot', value: 'ناجح' }, { label: 'زمن الاستجابة', value: ms(40, 140) }, { label: 'معدل الفشل', value: '0.2%' }] },
+    { id: 'svc-cache', ar: 'الذاكرة المؤقتة الحية', icon: 'memory', status: 'healthy', verifiedAt: at(),
+      metrics: [{ label: 'آخر تحديث ناجح', value: `قبل ${sec(3, 20)}` }, { label: 'عمر الـ Snapshot', value: sec(3, 20) }] },
+    { id: 'svc-sse', ar: 'قناة SSE', icon: 'podcasts', status: 'healthy', verifiedAt: at(),
+      metrics: [{ label: 'حالة الاتصال', value: 'متصلة' }, { label: 'رسالة الاختبار', value: 'تم التسليم' }] },
+    { id: 'svc-history', ar: 'الواجهة التاريخية وقاعدة NoSQL', icon: 'database', status: 'healthy', verifiedAt: at(),
+      metrics: [{ label: 'اختبار القراءة', value: 'ناجح' }, { label: 'زمن الاستجابة', value: ms(60, 210) }, { label: 'آخر كتابة ناجحة', value: `قبل ${sec(10, 40)}` }] },
+    { id: 'svc-rabbit', ar: 'طابور RabbitMQ لإعادة المحاولة', icon: 'swap_horiz', status: 'degraded', verifiedAt: at(),
+      metrics: [{ label: 'سجلات معلّقة', value: `${Math.round(rand(110, 160))}` }, { label: 'عمر أقدم سجل', value: `${Math.round(rand(4, 9))} د` }, { label: 'DB Writer', value: 'يعمل ببطء' }] },
+  ];
+}
 
 const ALERTS_SIZE = 12; // §4.8
 const DEVICES_SIZE = 40; // §4.9
@@ -91,6 +136,7 @@ export class DatacenterStore {
 
   /** Ticks every second (header clock). */
   readonly now = signal(Date.now());
+  readonly lastUpdate = signal(Date.now());
 
   private readonly sensors = signal<Sensor[]>(this.buildSensors());
   readonly alerts = signal<DcAlert[]>([]);
@@ -196,6 +242,41 @@ export class DatacenterStore {
     return [...rows.values()].filter((r) => r.total > 0);
   });
 
+  private readonly downSince = new Map<number, number>();
+  private readonly staleSince = new Map<number, { lastCheck: number; interval: number }>();
+
+  /** Open outages, longest first. */
+  readonly openOutages = computed<OpenOutage[]>(() => {
+    const now = this.now();
+    return this.sensors()
+      .filter((s) => s.status === 'down')
+      .map((s) => ({
+        id: s.id,
+        device: this.nameOf(s.deviceId),
+        sensor: SENSOR_AR[s.kind],
+        message: DOWN_MESSAGE[s.kind],
+        downMs: now - (this.downSince.get(s.id) ?? now),
+      }))
+      .sort((a, b) => b.downMs - a.downMs);
+  });
+
+  /** Sensors whose last reading is older than their scan interval; paused sensors are excluded. */
+  readonly staleSensors = computed<StaleSensor[]>(() => {
+    const now = this.now();
+    const byId = new Map(this.sensors().map((s) => [s.id, s]));
+    return [...this.staleSince]
+      .map(([id, v]) => ({ s: byId.get(id)!, v }))
+      .filter(({ s }) => s.status !== 'paused')
+      .map(({ s, v }) => ({ id: s.id, device: this.nameOf(s.deviceId), sensor: SENSOR_AR[s.kind], overdueMs: now - v.lastCheck - v.interval * 1000 }))
+      .filter((x) => x.overdueMs > 0)
+      .sort((a, b) => b.overdueMs - a.overdueMs);
+  });
+
+  readonly failingDevices = signal<FailingDevice[]>(FAILING_MOCK);
+
+  /** Service health (probes run outside the backend). */
+  readonly serviceChecks = signal<ServiceCheck[]>(buildServiceChecks(Date.now()));
+
   /** New alerts blink; critical ones blink red. */
   readonly freshAlertIds = computed(() => new Set(this.alerts().filter((a) => this.now() - a.time < FRESH_MS).map((a) => a.id)), { equal: sameSet });
 
@@ -206,9 +287,22 @@ export class DatacenterStore {
     const now = Date.now();
     this.alerts.set(Array.from({ length: ALERTS_SIZE }, (_, i) => this.makeAlert(now - (i + 1) * rand(60_000, 300_000))).sort((a, b) => b.time - a.time));
 
+    for (const s of this.sensors()) if (s.status === 'down') this.downSince.set(s.id, now - rand(10 * 60_000, 9 * 3_600_000));
+    for (const [id, interval] of STALE_MOCK) this.staleSince.set(id, { lastCheck: now - interval * 1000 * rand(2.5, 6), interval });
+
     setInterval(() => this.now.set(Date.now()), 1000);
-    setInterval(() => this.pushAlert(), 15_000); // fast cycle
-    setInterval(() => this.drift(), 30_000); // full cycle
+    setInterval(() => {
+      this.serviceChecks.set(buildServiceChecks(Date.now()));
+      this.lastUpdate.set(Date.now());
+    }, 15_000);
+    setInterval(() => {
+      this.pushAlert();
+      this.lastUpdate.set(Date.now());
+    }, 15_000); // fast cycle
+    setInterval(() => {
+      this.drift();
+      this.lastUpdate.set(Date.now());
+    }, 30_000); // full cycle
   }
 
   private buildSensors(): Sensor[] {

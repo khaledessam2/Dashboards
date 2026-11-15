@@ -1,6 +1,7 @@
 import { Injectable, computed, inject, signal } from '@angular/core';
 import { Camera, CamerasService } from './cameras.service';
 import { CameraSeries, HourBucket, PoliceEvent, PoliceEventName, ZoneStat } from '../models/police.model';
+import { formatHour12 } from '../utils/time.utils';
 
 const HOUR = 3_600_000;
 const FRESH_MS = 7_000; // how long a new event / map marker stays highlighted
@@ -43,10 +44,16 @@ export class PoliceStore {
 
   /** Ticks every second. */
   readonly now = signal(Date.now());
+  readonly lastUpdate = signal(Date.now());
   private readonly allEvents = signal<PoliceEvent[]>([]);
   readonly zones = signal<ZoneStat[]>(ZONES);
   /** Mock: breaches in the full previous day (real source: ES, previous day). */
   readonly breachesYesterday = signal(118);
+
+  /** Phase 1 VISuite rules (mock until the API supplies them). Kept out of `kpis().total` on purpose. */
+  readonly extra = signal({ smoke: 3, loitering: 14, intrusion: 5, queue: 7, stationary: 9 });
+  /** Camera that raised the latest smoke alert. */
+  readonly smokeLocation = signal(this.cameras[4]?.name ?? '--');
 
   private readonly windowStart = computed(() => Math.floor(this.now() / HOUR) * HOUR - 23 * HOUR);
   private readonly inWindow = computed(() => this.allEvents().filter((e) => e.event_time >= this.windowStart()));
@@ -82,7 +89,7 @@ export class PoliceStore {
     const start = this.windowStart();
     const counts = new Array<number>(24).fill(0);
     for (const e of this.inWindow()) counts[Math.floor((e.event_time - start) / HOUR)]++;
-    return counts.map((count, i) => ({ label: `${String(new Date(start + i * HOUR).getHours()).padStart(2, '0')}:00`, count }));
+    return counts.map((count, i) => ({ label: formatHour12(start + i * HOUR), count }));
   });
 
   /** §3.4 — hour with the highest count. */
@@ -145,6 +152,15 @@ export class PoliceStore {
   }
 
   private drift(): void {
+    this.lastUpdate.set(Date.now());
+    const bump = (v: number, chance: number) => (Math.random() < chance ? v + 1 : v);
+    this.extra.update((e) => ({
+      smoke: bump(e.smoke, 0.05),
+      loitering: bump(e.loitering, 0.4),
+      intrusion: bump(e.intrusion, 0.1),
+      queue: bump(e.queue, 0.25),
+      stationary: bump(e.stationary, 0.3),
+    }));
     this.zones.update((zones) => zones.map((z) => ({ ...z, value: z.value + Math.round(Math.random() * 120) })).sort((a, b) => b.value - a.value));
   }
 }

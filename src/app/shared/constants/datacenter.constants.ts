@@ -64,3 +64,17 @@ export function cpuColor(pct: number): string {
 export function tempColor(c: number): string {
   return c > 50 ? COLOR_RED : c > 40 ? COLOR_AMBER : COLOR_GREEN;
 }
+
+export const SERVICE_STATUS_META: Record<'healthy' | 'degraded' | 'down', { ar: string; color: string }> = {
+  healthy: { ar: 'سليمة', color: '#00a651' },
+  degraded: { ar: 'متدهورة', color: '#f5a623' },
+  down: { ar: 'متوقفة', color: '#e74c3c' },
+};
+
+/** 3725000 ms → "1 س 2 د" */
+export function formatDuration(ms: number): string {
+  const mins = Math.max(0, Math.floor(ms / 60_000));
+  const h = Math.floor(mins / 60);
+  const m = mins % 60;
+  return h > 0 ? `${h} س ${m} د` : `${m} د`;
+}

@@ -1,0 +1,66 @@
+<section class="card" id="dc-outages">
+  <header class="mb-3 flex items-center justify-between gap-2">
+    <h2 class="m-0 my-3 text-[20px] leading-2 font-semibold text-slate-600">الأعطال المفتوحة</h2>
+    <span class="num rounded-full bg-red-50 px-2 py-0.5 text-[12px] font-medium text-red-600">{{ outages().length }}</span>
+  </header>
+  <ul class="scroll-slim m-0 flex max-h-72 min-h-0 flex-1 list-none flex-col gap-1 overflow-y-auto p-0 pe-1">
+    @for (o of outages(); track o.id) {
+      <li class="flex items-center gap-3 rounded-lg px-2 py-2 hover:bg-slate-50/80">
+        <i class="dc-pulse size-2.5 shrink-0 rounded-full bg-red-500"></i>
+        <div class="flex min-w-0 flex-1 flex-col gap-0.5">
+          <span class="truncate text-[17px] font-bold text-slate-800">{{ o.device }}</span>
+          <span class="truncate text-[15px] text-slate-500">{{ o.sensor }} — {{ o.message }}</span>
+        </div>
+        <span class="num shrink-0 text-[17px] font-semibold text-red-600">{{ fmt(o.downMs) }}</span>
+      </li>
+    } @empty {
+      <li class="py-6 text-center text-[15px] text-slate-500">لا توجد أعطال مفتوحة</li>
+    }
+  </ul>
+</section>
+
+<section class="card" id="dc-stale">
+  <header class="mb-3 flex items-center justify-between gap-2">
+    <h2 class="m-0 my-3 text-[20px] leading-2 font-semibold text-slate-600">حساسات متأخرة القراءة</h2>
+    <span class="num rounded-full bg-amber-50 px-2 py-0.5 text-[12px] font-medium text-amber-600">{{ stale().length }}</span>
+  </header>
+  <ul class="scroll-slim m-0 flex max-h-72 min-h-0 flex-1 list-none flex-col gap-1 overflow-y-auto p-0 pe-1">
+    @for (s of stale(); track s.id) {
+      <li class="flex items-center gap-3 rounded-lg px-2 py-2 hover:bg-slate-50/80">
+        <i class="size-2.5 shrink-0 rounded-full bg-amber-500"></i>
+        <div class="flex min-w-0 flex-1 flex-col gap-0.5">
+          <span class="truncate text-[17px] font-bold text-slate-800">{{ s.device }}</span>
+          <span class="truncate text-[15px] text-slate-500">{{ s.sensor }}</span>
+        </div>
+        <span class="num shrink-0 text-[17px] font-semibold text-amber-600">+{{ fmt(s.overdueMs) }}</span>
+      </li>
+    } @empty {
+      <li class="py-6 text-center text-[15px] text-slate-500">كل القراءات حديثة</li>
+    }
+  </ul>
+  <p class="m-0 mt-2 text-[14px] text-slate-400">الحساسات الموقوفة مستثناة.</p>
+</section>
+
+<section class="card max-[1400px]:col-span-full" id="dc-failing">
+  <header class="mb-3 flex flex-wrap items-center justify-between gap-2">
+    <h2 class="m-0 my-3 text-[20px] leading-2 font-semibold text-slate-600">الأجهزة الأكثر تعطّلًا</h2>
+    <div class="inline-flex gap-0.5 rounded-lg bg-slate-100 p-0.5" role="tablist">
+      @for (p of periods; track p) {
+        <button
+          type="button" role="tab" [attr.aria-selected]="period() === p" (click)="period.set(p)"
+          class="cursor-pointer rounded-md border-0 px-3 py-2 text-[14px] font-medium transition-colors"
+          [class]="period() === p ? 'bg-white text-slate-900 shadow-[0_0_0_1px_#e2e8f0]' : 'bg-transparent text-slate-500 hover:text-slate-800'"
+        >{{ p }} أيام</button>
+      }
+    </div>
+  </header>
+  <ul class="m-0 flex list-none flex-col gap-1 p-0">
+    @for (d of failing(); track d.name; let i = $index) {
+      <li class="flex items-center gap-3 rounded-lg px-2 py-2 hover:bg-slate-50/80">
+        <span class="num flex size-6 shrink-0 items-center justify-center rounded-full bg-slate-100 text-[14px] font-semibold text-slate-600">{{ i + 1 }}</span>
+        <span class="min-w-0 flex-1 truncate text-[17px] font-bold text-slate-800">{{ d.name }}</span>
+        <span class="num shrink-0 text-[17px] font-semibold text-red-600">{{ d.count }} مرة</span>
+      </li>
+    }
+  </ul>
+</section>
