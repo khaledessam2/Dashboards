@@ -14,11 +14,11 @@
       }
     </div>
 
-    <section class="card">
-      <h2 class="m-0 mb-3 text-[20px] leading-6 font-bold text-ink">الحالة</h2>
+    <section class="card p-6 py-7.5">
+      <h2 class="m-0 mb-8 text-[20px] leading-6 font-bold text-ink">الحالة</h2>
       <div class="grid grid-cols-[repeat(3,minmax(0,1fr))] gap-3 max-[480px]:grid-cols-[minmax(0,1fr)]">
         @for (s of statuses(); track s.id) {
-          <div class="flex flex-col items-center justify-center gap-1 rounded-lg px-2 py-4 text-center" [id]="s.id" [style.background]="s.color + '1f'">
+          <div class="flex flex-col items-center justify-center gap-1 rounded-lg px-2 py-4 text-center mb-5" [id]="s.id" [style.background]="s.color + '1f'">
             <span class="material-symbols-outlined !text-[28px]" [style.color]="s.color">{{ s.icon }}</span>
             <span class="num text-2xl leading-8 font-bold text-ink">{{ s.value }}</span>
             <span class="text-[15px] leading-5 font-medium text-ink-2">{{ s.ar }}</span>
@@ -31,10 +31,10 @@
   <!-- Middle column: alerts + operating mode -->
   <div class="flex min-w-0 flex-col gap-4 max-[480px]:gap-3">
     <section class="card">
-      <h2 class="m-0 mb-3 text-[20px] leading-6 font-bold text-ink">التنبيهات</h2>
+      <h2 class="m-0 mb-5 text-[20px] leading-6 font-bold text-ink">التنبيهات</h2>
       <div class="grid grid-cols-[repeat(3,minmax(0,1fr))] gap-3 max-[900px]:grid-cols-[repeat(2,minmax(0,1fr))]">
         @for (a of alerts(); track a.id) {
-          <div class="flex flex-col items-center justify-center rounded-lg px-2 py-4 text-center" [id]="a.id" [style.background]="a.color + '1f'">
+          <div class="flex flex-col items-center justify-center rounded-lg px-2 py-4 text-center mb-3.5" [id]="a.id" [style.background]="a.color + '1f'">
             <span class="num text-2xl leading-8 font-bold" [style.color]="a.color">{{ a.value }}</span>
             <span class="text-[15px] leading-5 font-medium text-ink-2">{{ a.ar }}</span>
           </div>
@@ -56,7 +56,7 @@
   </div>
 
   <!-- Left column: lamps map / list -->
-  <app-muni-lamps-view class="h-137 max-[1500px]:h-110 max-[480px]:h-96" />
+  <app-muni-lamps-view class="h-146 max-[1500px]:h-125 max-[480px]:h-108" />
 </section>
 
 <app-muni-visuite-indicators />

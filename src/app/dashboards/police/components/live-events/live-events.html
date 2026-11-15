@@ -1,5 +1,5 @@
 
-<header class="mb-3 flex items-center justify-between">
+<header class="mb-3 flex flex-wrap items-center justify-between gap-x-3 gap-y-1">
     <h2 class="m-0 text-[20px] leading-6 font-bold text-ink">
       الأحداث المباشرة
     </h2>
@@ -8,9 +8,9 @@
     }
 </header>
 
-<ul class="m-0 flex min-h-0 flex-1 list-none flex-col gap-1.5 overflow-y-auto p-0 pe-1">
+<ul class="@container m-0 flex min-h-0 flex-1 list-none flex-col gap-1.5 overflow-y-auto p-0 pe-1">
   @for (item of items(); track item.id) {
-    <li class="flex items-center gap-3 border-b border-line px-2 py-3 transition-colors hover:bg-hover"
+    <li class="flex flex-wrap items-center gap-x-3 gap-y-1 border-b border-line px-2 py-3 transition-colors hover:bg-hover"
       [class.event-blink]="item.fresh && item.severity !== 'critical'"
       [class.event-blink-critical]="item.fresh && item.severity === 'critical'"
     >
@@ -30,7 +30,7 @@
           {{ item.ar }}
         </span>
 
-        <span class="flex items-center gap-1 text-[15px] text-ink-2">
+        <span class="flex items-center gap-1 text-[15px] whitespace-nowrap text-ink-2">
           <span class="material-symbols-outlined !text-[14px]">
             videocam
           </span>
@@ -38,7 +38,7 @@
         </span>
       </div>
 
-      <div class="flex shrink-0 flex-col items-end gap-1">
+      <div class="flex shrink-0 flex-col items-end gap-1 @max-[360px]:w-full @max-[360px]:flex-row-reverse @max-[360px]:items-center @max-[360px]:justify-between">
         <span class="mono text-[18px] text-ink-2 [direction:ltr]">
           {{ item.time }}
         </span>

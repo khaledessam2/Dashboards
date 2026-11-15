@@ -5,7 +5,7 @@
   </div>
 </header>
 
-<section class="grid grid-cols-[minmax(0,1fr)_minmax(0,1.25fr)_minmax(0,1fr)] items-stretch gap-4 max-[1500px]:grid-cols-[minmax(0,1fr)] max-[480px]:gap-3">
+<section class="grid grid-cols-[minmax(0,1.5fr)_minmax(0,3fr)] items-stretch gap-4 max-[1500px]:grid-cols-[minmax(0,1fr)] max-[480px]:gap-3">
   <!-- Right column: KPIs -->
   <div class="grid min-w-0 grid-cols-[repeat(2,minmax(0,1fr))] content-start gap-4 max-[900px]:gap-3 max-[480px]:grid-cols-[minmax(0,1fr)]">
     @for (card of kpiCards(); track card.id) {
@@ -15,9 +15,11 @@
 
   <!-- Middle column: comparison gauges + top zones -->
   <div class="flex min-w-0 flex-col gap-4 max-[480px]:gap-3">
-    <div class="grid grid-cols-[repeat(2,minmax(0,1fr))] gap-4 max-[900px]:grid-cols-[minmax(0,1fr)] max-[480px]:gap-3">
+    <div class="grid flex-1 grid-cols-[repeat(2,minmax(0,1fr))] gap-4 max-[900px]:grid-cols-[minmax(0,1fr)] max-[480px]:gap-3">
+      <div class="flex min-w-0 flex-col gap-4 max-[480px]:gap-3">
       <app-police-compare-gauge
         id="inc-gauge"
+        class="min-h-[480px] flex-1"
         title="الأحداث الأمنية"
         currentLabel="الساعة الحالية"
         previousLabel="الساعة السابقة"
@@ -27,6 +29,7 @@
       />
       <app-police-compare-gauge
         id="breach-gauge"
+        class="min-h-[440px] flex-1"
         title="اختراق المناطق المحظورة"
         currentLabel="اليوم"
         previousLabel="أمس"
@@ -34,16 +37,21 @@
         [current]="store.breach().current"
         [previous]="store.breach().previous"
       />
+      </div>
+      <!-- Live events + map: stacked, each matching a gauge's height -->
+      <div class="flex min-w-0 flex-col gap-4 max-[480px]:gap-3">
+        <div class="relative min-h-[480px] flex-1">
+          <app-police-live-events class="absolute inset-0" />
+        </div>
+        <app-police-cam-map class="min-h-[420px] flex-1" />
+      </div>
     </div>
-    <app-police-top-zones class="h-139" />
   </div>
+</section>
 
-  <!-- Left column: hourly chart, map, live events -->
-  <div class="flex min-w-0 flex-col gap-4 max-[480px]:gap-3">
-    <app-police-hourly-chart class="h-70" />
-    <app-police-cam-map class="h-96" />
-    <app-police-live-events class="h-80" />
-  </div>
+<section class="grid grid-cols-[repeat(2,minmax(0,1fr))] items-stretch gap-4 max-[900px]:grid-cols-[minmax(0,1fr)] max-[480px]:gap-3">
+  <app-police-top-zones class="h-100" />
+  <app-police-hourly-chart class="h-100" />
 </section>
 
 <app-police-cam-ranking class="h-80 max-[640px]:h-auto" />

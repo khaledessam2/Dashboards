@@ -18,16 +18,18 @@
 
   <!-- Middle column: flow gauge + top zones -->
   <div class="flex min-w-0 flex-col gap-4 max-[480px]:gap-3">
-    <app-flow-gauge />
-    <app-top-zones class="h-94" />
+    <app-flow-gauge class="h-128" />
+    <app-top-zones class="h-85" />
   </div>
 
   <!-- Left column: hourly chart, map, live events -->
   <div class="flex min-w-0 flex-col gap-4 max-[480px]:gap-3">
-    <app-hourly-chart class="h-60" />
-    <app-cam-map class="h-79" />
-    <app-live-events class="h-70" />
+    <app-live-events class="h-128" />
+    <app-cam-map class="h-85" />
   </div>
 </section>
 
-<app-cam-ranking class="h-80 max-[640px]:h-auto" />
+<section class="mt-4 grid grid-cols-[repeat(3,minmax(0,1fr))] items-stretch gap-4 max-[1500px]:grid-cols-[minmax(0,1fr)] max-[480px]:mt-3 max-[480px]:gap-3">
+  <app-cam-ranking class="col-span-2 h-80 max-[1500px]:col-span-1 max-[640px]:h-auto" />
+  <app-hourly-chart class="h-80" />
+</section>
