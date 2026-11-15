@@ -22,11 +22,12 @@ export class MunicipalityDashboard {
   protected readonly kpiCards = computed<KpiDef[]>(() => {
     const s = this.store.statusCounts();
     const fmt = (n: number) => n.toLocaleString('en-US');
+    const c = this.store.kpiChange();
     return [
       { id: 'kpi-lamps', ar: 'إجمالي الوحدات', icon: 'lightbulb', value: fmt(s.total) },
-      { id: 'kpi-faults', ar: 'وحدات بها أعطال', icon: 'build', value: fmt(s.faults), status: 'crit' },
-      { id: 'kpi-energy', ar: 'استهلاك الطاقة (kWh)', icon: 'bolt', value: fmt(this.store.energyKwh()) },
-      { id: 'kpi-savings', ar: 'التوفير مقابل خط الأساس', icon: 'energy_savings_leaf', value: `${this.store.savingsPct()}%` },
+      { id: 'kpi-faults', ar: 'وحدات بها أعطال', icon: 'build', value: fmt(s.faults), status: 'crit', change: { pct: c.faults, upIsBad: true } },
+      { id: 'kpi-energy', ar: 'استهلاك الطاقة (kWh)', icon: 'bolt', value: fmt(this.store.energyKwh()), change: { pct: c.energy, upIsBad: true } },
+      { id: 'kpi-savings', ar: 'التوفير مقابل خط الأساس', icon: 'energy_savings_leaf', value: `${this.store.savingsPct()}%`, change: { pct: c.savings } },
     ];
   });
 

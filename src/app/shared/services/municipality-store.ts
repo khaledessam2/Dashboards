@@ -55,6 +55,8 @@ const TRIPFALL: LocationStat[] = [
 export class MunicipalityStore {
   readonly lamps = signal<Lamp[]>(this.makeLamps());
   readonly energyKwh = signal(18_420);
+  /** Mock: % change vs the previous day per KPI (real source: ES, previous day). */
+  readonly kpiChange = signal({ faults: -8, energy: 4, savings: 3 });
   readonly lastUpdate = signal(Date.now());
 
   readonly abandoned = signal<LocationStat[]>(ABANDONED);

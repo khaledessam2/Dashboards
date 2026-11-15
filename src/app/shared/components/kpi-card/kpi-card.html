@@ -17,7 +17,14 @@
       [class.text-red-600]="def().status === 'crit'"
       >{{ def().value }}</span
     >
-    <span class="truncate text-lg leading-6 font-medium text-ink-2" [attr.title]="def().ar">{{ def().ar }}</span>
+    <span class="text-lg leading-6 font-medium text-ink-2" [attr.title]="def().ar">{{ def().ar }}</span>
+    @if (def().change; as c) {
+      <span class="flex items-center gap-1 text-sm leading-5 font-semibold" [class.text-red-600]="isBad(c)" [class.text-green-600]="!isBad(c)">
+        <span class="material-symbols-outlined !text-[16px] !leading-4">{{ c.pct >= 0 ? 'arrow_upward' : 'arrow_downward' }}</span>
+        <span class="num [direction:ltr]">{{ c.pct > 0 ? '+' : '' }}{{ c.pct }}%</span>
+      </span>
+      <span class="text-sm leading-2 whitespace-nowrap text-ink-2">مقارنة باليوم السابق</span>
+    }
   </div>
   }
   <span

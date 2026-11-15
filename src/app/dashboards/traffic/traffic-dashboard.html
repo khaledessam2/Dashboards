@@ -5,23 +5,29 @@
   </div>
 </header>
 
-<section class="grid grid-cols-[minmax(0,1.55fr)_minmax(0,1fr)] gap-x-4 gap-y-6 max-[1400px]:grid-cols-[minmax(0,1fr)] max-[480px]:gap-3">
-  <div class="grid grid-cols-[repeat(3,minmax(0,1fr))] auto-rows-fr gap-4 max-[900px]:grid-cols-[repeat(2,minmax(0,1fr))] max-[900px]:grid-rows-none max-[900px]:gap-3 max-[480px]:grid-cols-[minmax(0,1fr)]">
-    @for (card of kpiCards(); track card.id) {
-      <app-kpi-card [def]="card" />
-    }
+<section class="grid grid-cols-[repeat(3,minmax(0,1fr))] items-stretch gap-4 max-[1500px]:grid-cols-[minmax(0,1fr)] max-[480px]:gap-3">
+  <!-- Right column: KPIs + vehicle distribution -->
+  <div class="flex min-w-0 flex-col gap-4 max-[480px]:gap-3">
+    <div class="grid grid-cols-[repeat(2,minmax(0,1fr))] auto-rows-fr gap-4 max-[900px]:gap-3 max-[480px]:grid-cols-[minmax(0,1fr)]">
+      @for (card of kpiCards(); track card.id) {
+        <app-kpi-card [def]="card" />
+      }
+    </div>
+    <app-vehicle-mix />
   </div>
-  <app-flow-gauge />
-</section>
 
-<section class="grid h-90 grid-cols-[minmax(0,1.55fr)_minmax(0,1fr)] gap-4 max-[1400px]:h-auto max-[1400px]:grid-cols-[minmax(0,1fr)] max-[1400px]:*:h-90 max-[900px]:*:h-80 max-[480px]:gap-3 max-[480px]:*:h-75">
-  <app-hourly-chart />
-  <app-top-zones />
-</section>
+  <!-- Middle column: flow gauge + top zones -->
+  <div class="flex min-w-0 flex-col gap-4 max-[480px]:gap-3">
+    <app-flow-gauge />
+    <app-top-zones class="h-94" />
+  </div>
 
-<section class="grid h-105 grid-cols-[minmax(0,1.55fr)_minmax(0,1fr)] gap-4 max-[1400px]:h-auto max-[1400px]:grid-cols-[minmax(0,1fr)] max-[1400px]:*:h-96 max-[480px]:gap-3 max-[480px]:*:h-80">
-  <app-cam-map />
-  <app-live-events />
+  <!-- Left column: hourly chart, map, live events -->
+  <div class="flex min-w-0 flex-col gap-4 max-[480px]:gap-3">
+    <app-hourly-chart class="h-60" />
+    <app-cam-map class="h-79" />
+    <app-live-events class="h-70" />
+  </div>
 </section>
 
 <app-cam-ranking class="h-80 max-[640px]:h-auto" />

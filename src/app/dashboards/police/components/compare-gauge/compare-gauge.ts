@@ -46,12 +46,12 @@ export class PoliceCompareGauge {
       const ink = css.getPropertyValue('--text').trim() || '#1f2937';
       const surface = css.getPropertyValue('--surface').trim() || '#ffffff';
       const chart = (this.chart = Highcharts.chart(this.container().nativeElement, {
-        chart: { type: 'gauge', backgroundColor: 'transparent', spacing: [10, 24, 4, 24] },
+        chart: { type: 'gauge', backgroundColor: 'transparent', spacing: [8, 10, 0, 10] },
         title: { text: undefined },
         credits: { enabled: false },
         legend: { enabled: false },
         tooltip: { enabled: false },
-        pane: { startAngle: -90, endAngle: 90, center: ['50%', '92%'], size: '140%', background: [{ backgroundColor: 'transparent', borderWidth: 0, innerRadius: '0%', outerRadius: '100%' }] },
+        pane: { startAngle: -90, endAngle: 90, center: ['50%', '88%'], size: '100%', background: [{ backgroundColor: 'transparent', borderWidth: 0, innerRadius: '0%', outerRadius: '100%' }] },
         yAxis: {
           min: -GAUGE_LIMIT,
           max: GAUGE_LIMIT,
@@ -64,11 +64,11 @@ export class PoliceCompareGauge {
           labels: { distance: 14, style: { color: 'var(--text-3)', fontSize: '11px' } },
           // Thresholds: >+50 red, >+20 amber, ±20 green, below −20 cyan.
           plotBands: [
-            { from: -100, to: -50, color: 'rgba(0,188,212,0.30)', thickness: 20 },
-            { from: -50, to: -20, color: 'rgba(0,188,212,0.18)', thickness: 20 },
-            { from: -20, to: 20, color: 'rgba(0,166,81,0.22)', thickness: 20 },
-            { from: 20, to: 50, color: 'rgba(245,166,35,0.22)', thickness: 20 },
-            { from: 50, to: 100, color: 'rgba(231,76,60,0.22)', thickness: 20 },
+            { from: -100, to: -50, color: 'rgba(0,188,212,0.75)', thickness: 26 },
+            { from: -50, to: -20, color: 'rgba(0,188,212,0.5)', thickness: 26 },
+            { from: -20, to: 20, color: 'rgba(0,166,81,0.9)', thickness: 26 },
+            { from: 20, to: 50, color: 'rgba(245,166,35,0.9)', thickness: 26 },
+            { from: 50, to: 100, color: 'rgba(231,76,60,0.9)', thickness: 26 },
           ],
         },
         series: [

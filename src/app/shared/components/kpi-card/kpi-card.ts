@@ -6,6 +6,8 @@ export interface KpiDef {
   icon: string;
   value: string;
   status?: 'warn' | 'crit';
+  /** Change vs the previous day (%). `upIsBad`: an increase is shown red (violations) instead of green. */
+  change?: { pct: number; upIsBad?: boolean };
   /** Optional breakdown: renders several small value/label columns instead of one big value. */
   parts?: { label: string; value: string }[];
 }
@@ -28,6 +30,10 @@ export class KpiCard {
   protected readonly flashing = signal(false);
   private previous: string | undefined;
   private timer?: ReturnType<typeof setTimeout>;
+
+  protected isBad(c: { pct: number; upIsBad?: boolean }): boolean {
+    return c.upIsBad ? c.pct > 0 : c.pct < 0;
+  }
 
   constructor() {
     effect(() => {

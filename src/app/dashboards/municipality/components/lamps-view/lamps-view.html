@@ -11,9 +11,11 @@
       <span class="material-symbols-outlined">list</span>القائمة
     </button>
   </div>
-  <input type="search" placeholder="بحث باسم أو رقم العمود"
-    class="w-full max-w-[280px] rounded-[8px] border border-line bg-surface px-3 py-1.5 text-[14px] text-ink outline-none placeholder:text-ink-3 focus:border-brand max-[480px]:max-w-none"
-    [value]="query()" (input)="onSearch($event)" />
+  @if (view() === 'list') {
+    <input type="search" placeholder="بحث باسم أو رقم العمود"
+      class="w-full max-w-[280px] rounded-[8px] border border-line bg-surface px-3 py-1.5 text-[14px] text-ink outline-none placeholder:text-ink-3 focus:border-brand max-[480px]:max-w-none"
+      [value]="query()" (input)="onSearch($event)" />
+  }
 </header>
 
 <div class="relative min-h-0 flex-1" [class.hidden]="view() !== 'map'">

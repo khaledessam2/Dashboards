@@ -5,42 +5,45 @@
   </div>
 </header>
 
-<section class="grid grid-cols-[minmax(0,1.55fr)_minmax(0,1fr)] gap-x-4 gap-y-6 max-[1400px]:grid-cols-[minmax(0,1fr)] max-[480px]:gap-3">
-  <div class="grid grid-cols-[repeat(3,minmax(0,1fr))] auto-rows-fr gap-4 max-[900px]:grid-cols-[repeat(2,minmax(0,1fr))] max-[900px]:grid-rows-none max-[900px]:gap-3 max-[480px]:grid-cols-[minmax(0,1fr)]">
+<section class="grid grid-cols-[minmax(0,1fr)_minmax(0,1.25fr)_minmax(0,1fr)] items-stretch gap-4 max-[1500px]:grid-cols-[minmax(0,1fr)] max-[480px]:gap-3">
+  <!-- Right column: KPIs -->
+  <div class="grid min-w-0 grid-cols-[repeat(2,minmax(0,1fr))] content-start gap-4 max-[900px]:gap-3 max-[480px]:grid-cols-[minmax(0,1fr)]">
     @for (card of kpiCards(); track card.id) {
       <app-kpi-card [def]="card" [class.col-span-2]="card.id === 'kpi-smoke'" class="max-[480px]:col-span-1" />
     }
   </div>
-  <div class="grid grid-cols-[repeat(2,minmax(0,1fr))] gap-4 max-[1400px]:grid-cols-[repeat(2,minmax(0,1fr))] max-[900px]:grid-cols-[minmax(0,1fr)] max-[480px]:gap-3">
-    <app-police-compare-gauge
-      id="inc-gauge"
-      title="الأحداث الأمنية: الساعة الحالية مقابل السابقة"
-      currentLabel="الساعة الحالية"
-      previousLabel="الساعة السابقة"
-      kind="incident"
-      [current]="store.incident().current"
-      [previous]="store.incident().previous"
-    />
-    <app-police-compare-gauge
-      id="breach-gauge"
-      title="اختراق المناطق المحظورة: اليوم مقابل أمس"
-      currentLabel="اليوم"
-      previousLabel="أمس"
-      kind="breach"
-      [current]="store.breach().current"
-      [previous]="store.breach().previous"
-    />
+
+  <!-- Middle column: comparison gauges + top zones -->
+  <div class="flex min-w-0 flex-col gap-4 max-[480px]:gap-3">
+    <div class="grid grid-cols-[repeat(2,minmax(0,1fr))] gap-4 max-[900px]:grid-cols-[minmax(0,1fr)] max-[480px]:gap-3">
+      <app-police-compare-gauge
+        id="inc-gauge"
+        title="الأحداث الأمنية"
+        currentLabel="الساعة الحالية"
+        previousLabel="الساعة السابقة"
+        kind="incident"
+        [current]="store.incident().current"
+        [previous]="store.incident().previous"
+      />
+      <app-police-compare-gauge
+        id="breach-gauge"
+        title="اختراق المناطق المحظورة"
+        currentLabel="اليوم"
+        previousLabel="أمس"
+        kind="breach"
+        [current]="store.breach().current"
+        [previous]="store.breach().previous"
+      />
+    </div>
+    <app-police-top-zones class="h-139" />
   </div>
-</section>
 
-<section class="grid h-90 grid-cols-[minmax(0,1.55fr)_minmax(0,1fr)] gap-4 max-[1400px]:h-auto max-[1400px]:grid-cols-[minmax(0,1fr)] max-[1400px]:*:h-90 max-[900px]:*:h-80 max-[480px]:gap-3 max-[480px]:*:h-75">
-  <app-police-hourly-chart />
-  <app-police-top-zones />
-</section>
-
-<section class="grid h-105 grid-cols-[minmax(0,1.55fr)_minmax(0,1fr)] gap-4 max-[1400px]:h-auto max-[1400px]:grid-cols-[minmax(0,1fr)] max-[1400px]:*:h-96 max-[480px]:gap-3 max-[480px]:*:h-80">
-  <app-police-cam-map />
-  <app-police-live-events />
+  <!-- Left column: hourly chart, map, live events -->
+  <div class="flex min-w-0 flex-col gap-4 max-[480px]:gap-3">
+    <app-police-hourly-chart class="h-70" />
+    <app-police-cam-map class="h-96" />
+    <app-police-live-events class="h-80" />
+  </div>
 </section>
 
 <app-police-cam-ranking class="h-80 max-[640px]:h-auto" />

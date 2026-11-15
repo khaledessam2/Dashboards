@@ -49,6 +49,8 @@ export class PoliceStore {
   readonly zones = signal<ZoneStat[]>(ZONES);
   /** Mock: breaches in the full previous day (real source: ES, previous day). */
   readonly breachesYesterday = signal(118);
+  /** Mock: % change vs the previous day per KPI (real source: ES, previous day). */
+  readonly kpiChange = signal({ total: 8, restricted: 34, leftobj: -6, overcrowd50: 12, overcrowd30: 5, tripfall: -9, loitering: 10, intrusion: 25, queue: -4, stationary: 7, smoke: 50 });
 
   /** Phase 1 VISuite rules (mock until the API supplies them). Kept out of `kpis().total` on purpose. */
   readonly extra = signal({ smoke: 3, loitering: 14, intrusion: 5, queue: 7, stationary: 9 });

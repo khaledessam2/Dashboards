@@ -1,0 +1,16 @@
+<header class="mb-3">
+  <h2 class="m-0 mb-5 text-[20px] leading-6 font-bold text-ink">توزيع أنواع المركبات</h2>
+</header>
+<div class="grid grid-cols-3 gap-3 mb-5">
+  @for (it of items(); track it.ar) {
+    <div class="flex min-w-0 items-center gap-3 max-[480px]:flex-col max-[480px]:gap-1">
+      <span class="flex size-12 shrink-0 items-center justify-center rounded-full" [class]="it.bg">
+        <span class="material-symbols-outlined !text-[26px]" [class]="it.fg">{{ it.icon }}</span>
+      </span>
+      <div class="flex min-w-0 flex-col">
+        <span class="num text-xl leading-7 font-bold text-ink">{{ it.pct }}%</span>
+        <span class="truncate text-base leading-5 font-medium text-ink-2">{{ it.ar }}</span>
+      </div>
+    </div>
+  }
+</div>

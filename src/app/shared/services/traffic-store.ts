@@ -40,6 +40,11 @@ export class TrafficStore {
   readonly flow = signal<FlowStats>({ entry: 2140, exit: 1495 });
   readonly zones = signal<ZoneStat[]>(ZONES);
 
+  /** Mock: flow of the previous day (real source: ES, previous day). */
+  readonly flowYesterday = signal<FlowStats>({ entry: 1550, exit: 1542 });
+  /** Mock: % change vs the previous day per KPI (real source: ES, previous day). */
+  readonly kpiChange = signal({ total: 12, crosswalk: 6, wrongway: 14, parking: 18, taxi: -5, congestion: 9, vehicles: 8 });
+
   //Start of the first of the 24 hourly buckets.
   private readonly windowStart = computed(() => Math.floor(this.now() / HOUR) * HOUR - 23 * HOUR);
   private readonly inWindow = computed(() => this.allEvents().filter((e) => e.event_time >= this.windowStart())); // Events in last 24 h
