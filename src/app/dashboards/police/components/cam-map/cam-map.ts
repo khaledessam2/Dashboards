@@ -1,76 +1,68 @@
-import { ChangeDetectionStrategy, Component, DestroyRef, ElementRef, NgZone, afterNextRender, effect, inject, signal, viewChild } from '@angular/core';
-import * as L from 'leaflet';
-import { Camera, CamerasService, HARAM_CENTER } from '../../../../shared/services/cameras.service';
+import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
+import { CameraPopup } from '../../../traffic/components/camera-popup/camera-popup';
+import { camId } from '../../../../shared/constants/police.constants';
+import { Camera, CamerasService } from '../../../../shared/services/cameras.service';
 import { PoliceStore } from '../../../../shared/services/police-store';
 
-const CENTER: L.LatLngTuple = HARAM_CENTER; // Al-Masjid an-Nabawi
-const OK = '#00a651';
+type Level = 'crit' | 'warn' | 'ok' | 'off';
+const COLOR: Record<Level, string> = { crit: '#e11d48', warn: '#f59e0b', ok: '#10b981', off: '#94a3b8' };
 
-function markerIcon(camera: Camera, flashing: boolean): L.DivIcon {
-  const html = camera.silent
-    ? `<div class="cam-pin cam-pin-problem" title="${camera.name}">!</div>`
-    : `<div class="cam-pin${flashing ? ' cam-pin-flash' : ''}" style="background:${OK};cursor:pointer" title="${camera.name}"></div>`;
-  return L.divIcon({ html, className: '', iconSize: [26, 26], iconAnchor: [13, 13] });
-}
+/** Schematic map plane: 760 × 585. Camera nodes + coverage / heat circles (#15, #23). */
+const NODES: Array<{ id: string; ip: string; x: number; y: number; level: Level }> = [
+  { id: 'CAM-03', ip: '10.0.30.3', x: 319, y: 173, level: 'crit' },
+  { id: 'CAM-01', ip: '10.0.30.1', x: 406, y: 200, level: 'crit' },
+  { id: 'CAM-14', ip: '10.0.30.14', x: 530, y: 127, level: 'ok' },
+  { id: 'CAM-18', ip: '10.0.30.18', x: 288, y: 292, level: 'warn' },
+  { id: 'CAM-07', ip: '10.0.30.7', x: 492, y: 387, level: 'ok' },
+  { id: 'CAM-21', ip: '10.0.30.21', x: 130, y: 470, level: 'off' },
+];
+
+const CIRCLES = [
+  { cx: 450, cy: 274, r: 200, fill: 'rgba(148,163,184,0.10)', stroke: 'rgba(148,163,184,0.55)' },
+  { cx: 333, cy: 163, r: 110, fill: 'rgba(225,29,72,0.10)', stroke: 'rgba(225,29,72,0.45)' },
+  { cx: 333, cy: 163, r: 59, fill: 'rgba(225,29,72,0.14)', stroke: 'rgba(225,29,72,0.6)' },
+  { cx: 273, cy: 305, r: 90, fill: 'rgba(245,158,11,0.14)', stroke: 'rgba(245,158,11,0.45)' },
+  { cx: 485, cy: 397, r: 70, fill: 'rgba(11,92,255,0.10)', stroke: 'rgba(11,92,255,0.4)' },
+];
 
 @Component({
   selector: 'app-police-cam-map',
+  imports: [CameraPopup],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  host: { id: 'cam-map', class: 'card', '(document:keydown.escape)': 'closeLive()' },
+  host: { id: 'cam-map', class: 'pcard !p-0 overflow-hidden' },
   templateUrl: './cam-map.html',
-  styles: `
-    :host ::ng-deep .cam-pin { width: 18px; height: 18px; margin: 4px; border-radius: 50%; border: 2px solid #fff; box-sizing: border-box; }
-    :host ::ng-deep .cam-pin-problem { width: 26px; height: 26px; margin: 0; background: #e74c3c; color: #fff; font: 700 14px/22px sans-serif; text-align: center; cursor: pointer; animation: cam-pulse 1.4s ease-out infinite; }
-    :host ::ng-deep .cam-pin-flash { background: #f5a623 !important; box-shadow: 0 0 0 5px rgba(245,166,35,.45); animation: marker-flash .9s ease-in-out infinite; }
-    :host ::ng-deep .cam-tiles { filter: invert(1) hue-rotate(180deg) brightness(.85) contrast(.9) saturate(.6); }
-    @keyframes cam-pulse { 0% { box-shadow: 0 0 0 0 rgba(231,76,60,.7); } 100% { box-shadow: 0 0 0 14px rgba(231,76,60,0); } }
-  `,
 })
 export class PoliceCamMap {
-  private readonly container = viewChild.required<ElementRef<HTMLElement>>('map');
-  private readonly zone = inject(NgZone);
-  private readonly service = inject(CamerasService);
   private readonly store = inject(PoliceStore);
+  private readonly cameras = inject(CamerasService).cameras;
 
-  protected readonly liveCamera = signal<Camera | null>(null);
-  protected readonly streamUrl = signal<string | null>(null);
+  protected readonly circles = CIRCLES;
+  protected readonly zoom = signal(1);
+  protected readonly selected = signal<Camera | null>(null);
+  protected readonly active = computed(() => this.store.cameraLink().online);
+  protected readonly zoomTransform = computed(() => `translate(${380 * (1 - this.zoom())} ${292 * (1 - this.zoom())}) scale(${this.zoom()})`);
+  protected readonly legend = [
+    { color: COLOR.crit, ar: 'حدث حرج / طارئ' },
+    { color: COLOR.warn, ar: 'تنبيه / تحذير أمني' },
+    { color: COLOR.ok, ar: 'كاميرا متصلة ونشطة' },
+    { color: COLOR.off, ar: 'كاميرا غير متصلة' },
+  ];
 
-  private map?: L.Map;
-  private layer = L.layerGroup();
-
-  constructor() {
-    const destroyRef = inject(DestroyRef);
-    afterNextRender(() => {
-      this.map = L.map(this.container().nativeElement, { center: CENTER, zoom: 15, zoomControl: true, attributionControl: false });
-      L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, className: 'cam-tiles' }).addTo(this.map);
-      this.layer.addTo(this.map);
-      this.render(this.service.cameras(), this.store.freshCameraIds());
-      const ro = new ResizeObserver(() => this.map?.invalidateSize());
-      ro.observe(this.container().nativeElement);
-      destroyRef.onDestroy(() => {
-        ro.disconnect();
-        this.map?.remove();
-      });
+  protected readonly nodes = computed(() => {
+    const fresh = this.store.freshCameraIds();
+    const cams = this.cameras();
+    return NODES.map((n) => {
+      const cam = cams.find((c) => c.ip === n.ip);
+      const level: Level = cam && !cam.online ? 'off' : fresh.has(n.ip) && n.level === 'ok' ? 'warn' : n.level;
+      return { ...n, id: cam ? camId(cam.name) : n.id, color: COLOR[level], fresh: fresh.has(n.ip) };
     });
-    effect(() => this.render(this.service.cameras(), this.store.freshCameraIds()));
+  });
+
+  protected open(ip: string): void {
+    this.selected.set(this.cameras().find((c) => c.ip === ip) ?? null);
   }
 
-  private render(cameras: Camera[], fresh: ReadonlySet<string>): void {
-    if (!this.map) return;
-    this.layer.clearLayers();
-    for (const cam of cameras) {
-      const marker = L.marker([cam.location.lat, cam.location.lon], { icon: markerIcon(cam, fresh.has(cam.ip)) }).addTo(this.layer);
-      marker.bindTooltip(cam.silent ? `${cam.name} — ⚠ بدون أحداث 24 ساعة` : cam.name);
-      marker.on('click', () => this.zone.run(() => this.openLive(cam)));
-    }
-  }
-
-  private openLive(cam: Camera): void {
-    this.streamUrl.set(this.service.streamUrl(cam));
-    this.liveCamera.set(cam);
-  }
-
-  protected closeLive(): void {
-    this.liveCamera.set(null);
+  protected zoomBy(delta: number): void {
+    this.zoom.update((z) => Math.min(1.6, Math.max(0.7, +(z + delta).toFixed(1))));
   }
 }

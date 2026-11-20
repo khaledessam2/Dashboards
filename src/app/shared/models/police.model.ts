@@ -3,8 +3,7 @@ export type PoliceEventName =
   | 'Left Object'
   | 'Overcrowd-30'
   | 'Overcrowd-50'
-  | 'Trip Fall'
-  | 'Wrong Way';
+  | 'Trip Fall';
 
 export interface PoliceEvent {
   id: number;
@@ -30,7 +29,3 @@ export interface CameraSeries {
   data: number[];
 }
 
-export interface Level {
-  color: string;
-  label: string;
-}

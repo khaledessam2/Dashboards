@@ -1,4 +1,20 @@
-<header class="mb-3">
-  <h2 class="m-0 text-[20px] leading-6 font-bold text-ink">أكثر المناطق حركة</h2>
-</header>
-<div #chart class="min-h-0 flex-1 [direction:ltr]"></div>
+<div class="grid min-h-0 flex-1 grid-cols-2 gap-8 max-[640px]:grid-cols-1">
+  @for (list of lists(); track list.title) {
+    <section class="flex min-w-0 flex-col">
+      <h2 class="m-0 mb-4 text-[18px] leading-6 font-bold text-ink">{{ list.title }}</h2>
+      <ul class="m-0 flex min-h-0 flex-1 list-none flex-col justify-between gap-3 p-0">
+        @for (z of list.rows; track z.ar) {
+          <li class="flex flex-col gap-1.5">
+            <div class="flex items-baseline justify-between gap-2 text-[14px]">
+              <span class="truncate font-medium text-ink-2">{{ z.ar }}</span>
+              <b class="num shrink-0 text-ink">{{ z.value.toLocaleString('en-US') }}</b>
+            </div>
+            <div class="h-1.5 overflow-hidden rounded-full bg-[#eef1f6]">
+              <div class="h-full rounded-full transition-[width] duration-700" [style.width.%]="z.width" [style.background]="z.color"></div>
+            </div>
+          </li>
+        }
+      </ul>
+    </section>
+  }
+</div>

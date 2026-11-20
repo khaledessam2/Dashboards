@@ -1,31 +1,63 @@
-<header class="mb-3">
-  <h2 class="m-0 text-[20px] leading-6 font-bold text-ink">خريطة الكاميرات</h2>
+<header class="flex items-center justify-between gap-3 px-5 pt-5 pb-3">
+  <h2 class="m-0 flex items-center gap-2 text-[18px] leading-6 font-bold text-ink">
+    <span class="material-symbols-outlined !text-[20px] text-[#0b5cff]">map</span>
+    خريطة مواقع الكاميرات والأحداث (نظام التتبع الجغرافي)
+  </h2>
+  <span class="inline-flex items-center gap-1.5 rounded-full bg-[#ecfdf5] px-2.5 py-0.5 text-[12px] font-bold text-[#059669]">
+    <i class="size-1.5 rounded-full bg-[#10b981]"></i>{{ active() }} كاميرا نشطة
+  </span>
 </header>
-<div #map class="isolate min-h-0 flex-1 overflow-hidden rounded-[8px] [direction:ltr]" role="img" aria-label="خريطة مواقع الكاميرات"></div>
 
-@if (liveCamera(); as cam) {
-  <div class="fixed inset-0 z-[2000] flex items-center justify-center bg-black/70 p-4"
-    role="dialog" aria-modal="true"
-    [attr.aria-label]="'بث مباشر - ' + cam.name"
-    (click)="closeLive()">
-    <div class="w-full max-w-[860px] rounded-[12px] border border-line bg-surface p-4 shadow-card" (click)="$event.stopPropagation()">
-      <div class="mb-3 flex items-center justify-between">
-        <div class="flex items-center gap-2">
-          <span class="inline-flex items-center gap-1 rounded bg-sev-red px-2 py-0.5 text-[11px] font-bold text-white">
-            <span class="size-1.5 animate-pulse rounded-full bg-white"></span>LIVE
-          </span>
-          <h3 class="m-0 text-[15px] font-semibold text-ink">{{ cam.name }}</h3>
-        </div>
-        <button type="button" class="cursor-pointer rounded px-2 py-1 text-ink-2 hover:bg-hover" aria-label="إغلاق" (click)="closeLive()">✕</button>
-      </div>
+<div class="relative min-h-[440px] flex-1 overflow-hidden border-t border-[#eef1f6] bg-[#f7f9fc]">
+  <svg class="absolute inset-0 size-full [direction:ltr]" viewBox="0 0 760 585" preserveAspectRatio="xMidYMid slice" aria-label="خريطة الكاميرات">
+    <defs>
+      <pattern id="pgrid" width="38" height="38" patternUnits="userSpaceOnUse"><path d="M38 0H0V38" fill="none" stroke="#e8edf4" stroke-width="1" /></pattern>
+    </defs>
+    <rect width="760" height="585" fill="url(#pgrid)" />
+    <g [attr.transform]="zoomTransform()">
+      <!-- roads -->
+      <path d="M150 50 C250 190 330 300 440 585" fill="none" stroke="#d3dae5" stroke-width="14" stroke-linecap="round" />
+      <path d="M40 222 C160 215 300 190 520 205 S690 215 760 230" fill="none" stroke="#d3dae5" stroke-width="12" stroke-linecap="round" />
+      <path d="M40 396 C250 400 450 392 760 392" fill="none" stroke="#c4ccd9" stroke-width="5" stroke-linecap="round" />
+      <path d="M350 0 V585" fill="none" stroke="#9aa6b8" stroke-width="2" stroke-dasharray="6 5" />
+      @for (c of circles; track $index) {
+        <circle [attr.cx]="c.cx" [attr.cy]="c.cy" [attr.r]="c.r" [attr.fill]="c.fill" [attr.stroke]="c.stroke" stroke-width="1.2" />
+      }
+      <!-- central yard label -->
+      <g>
+        <rect x="375" y="242" width="150" height="64" rx="8" fill="#fff" stroke="#9aa6b8" stroke-width="1.2" />
+        <text x="450" y="280" text-anchor="middle" font-size="13" font-weight="600" fill="#334155">ساحة الحرم المركزية</text>
+      </g>
+      @for (n of nodes(); track n.id) {
+        <g [attr.transform]="'translate(' + n.x + ' ' + n.y + ')'" class="cursor-pointer" role="button" tabindex="0" [attr.aria-label]="'بث مباشر - ' + n.id" (click)="open(n.ip)" (keydown.enter)="open(n.ip)">
+          @if (n.fresh) {
+            <circle r="26" [attr.fill]="n.color" opacity="0.25"><animate attributeName="r" values="16;30;16" dur="1.4s" repeatCount="indefinite" /></circle>
+          }
+          <circle r="16" [attr.fill]="n.color" stroke="#fff" stroke-width="3" />
+          <rect x="-7" y="-4.5" width="10" height="9" rx="1.8" fill="#fff" />
+          <path d="M4 -1.5 L8 -4 V4 L4 1.5Z" fill="#fff" />
+          <rect x="-28" y="20" width="56" height="20" rx="5" fill="#1c2434" />
+          <text y="34" text-anchor="middle" font-size="11" font-weight="700" fill="#fff" font-family="monospace">{{ n.id }}</text>
+        </g>
+      }
+    </g>
+  </svg>
 
-      <div class="aspect-video w-full overflow-hidden rounded-[8px] bg-black">
-        @if (streamUrl(); as url) {
-          <video class="size-full object-contain" [src]="url" autoplay muted controls playsinline></video>
-        } @else {
-          <div class="flex size-full items-center justify-center text-[13px] text-ink-3">لم يتم ربط رابط البث لهذه الكاميرا بعد</div>
-        }
-      </div>
-    </div>
+  <!-- zoom controls -->
+  <div class="absolute end-4 top-4 flex flex-col overflow-hidden rounded-lg border border-[#e6ebf2] bg-white shadow">
+    <button type="button" class="size-9 cursor-pointer border-0 bg-transparent text-[18px] text-ink-2 hover:bg-hover" aria-label="تكبير" (click)="zoomBy(0.2)">+</button>
+    <button type="button" class="size-9 cursor-pointer border-0 border-t border-[#eef1f6] bg-transparent text-[18px] text-ink-2 hover:bg-hover" aria-label="تصغير" (click)="zoomBy(-0.2)">−</button>
   </div>
+
+  <!-- legend -->
+  <div class="absolute start-4 bottom-4 flex flex-col gap-1.5 rounded-lg border border-[#e6ebf2] bg-white px-3.5 py-3 text-[13px] shadow">
+    <b class="text-[13px] text-ink">مستوى الحدث والتغطية</b>
+    @for (l of legend; track l.ar) {
+      <span class="flex items-center gap-2 text-ink-2"><i class="size-2.5 rounded-full" [style.background]="l.color"></i>{{ l.ar }}</span>
+    }
+  </div>
+</div>
+
+@if (selected(); as cam) {
+  <app-camera-popup [camera]="cam" (closed)="selected.set(null)" />
 }

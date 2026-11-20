@@ -1,62 +1,33 @@
-import { ChangeDetectionStrategy, Component, DestroyRef, ElementRef, afterNextRender, effect, inject, viewChild } from '@angular/core';
-import Highcharts from 'highcharts';
-import { HourBucket } from '../../../../shared/models/police.model';
-import { activityColor } from '../../../../shared/utils/police.utils';
+import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
+import type Highcharts from 'highcharts';
+import { HcChart } from '../../../../shared/components/ops-widgets/hc-chart/hc-chart';
 import { PoliceStore } from '../../../../shared/services/police-store';
 
+/** الأحداث الأمنية حسب الساعة (#20): 24 h columns, peak in red, runner-up in amber. */
 @Component({
   selector: 'app-police-hourly-chart',
+  imports: [HcChart],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  host: { id: 'hourly-events', class: 'card' },
+  host: { id: 'hourly-chart', class: 'pcard' },
   templateUrl: './hourly-chart.html',
 })
 export class PoliceHourlyChart {
-  private readonly container = viewChild.required<ElementRef<HTMLElement>>('chart');
   private readonly store = inject(PoliceStore);
-  private chart?: Highcharts.Chart;
-  protected readonly peak = this.store.peakHour;
+  protected readonly hourly = computed(() => this.store.range().hourly);
 
-  constructor() {
-    const destroyRef = inject(DestroyRef);
-    afterNextRender(() => {
-      const chart = (this.chart = Highcharts.chart(this.container().nativeElement, {
-        chart: { type: 'column', backgroundColor: 'transparent', spacing: [8, 8, 0, 0] },
-        title: { text: undefined },
-        credits: { enabled: false },
-        legend: { enabled: false },
-        xAxis: {
-          categories: [],
-          tickInterval: 3,
-          lineColor: 'transparent',
-          tickLength: 0,
-          labels: { style: { color: 'var(--text-2)', fontSize: '13px' , fontWeight:'600' } },
-        },
-        yAxis: {
-          title: { text: undefined },
-          min: 0,
-          allowDecimals: false,
-          gridLineDashStyle: 'Dash',
-          gridLineColor: 'var(--grid)',
-          labels: { style: { color: 'var(--text-2)', fontSize: '13px' , fontWeight:'600' } },
-        },
-        tooltip: { headerFormat: '', pointFormat: '{point.category} — <b>{point.y}</b>' },
-        plotOptions: { column: { borderWidth: 0, borderRadius: 3, pointPadding: 0.1, groupPadding: 0.1, maxPointWidth: 16 } },
-        series: [{ type: 'column', name: 'الأحداث', data: [] }],
-      }));
-      this.apply(this.store.hourly());
-      destroyRef.onDestroy(() => chart.destroy());
-    });
-    effect(() => this.apply(this.store.hourly()));
-  }
-
-  private apply(buckets: HourBucket[]): void {
-    if (!this.chart) return;
-    const max = Math.max(1, ...buckets.map((b) => b.count));
-    this.chart.xAxis[0].setCategories(buckets.map((b) => b.label), false);
-    this.chart.series[0].setData(
-      buckets.map((b) => ({ y: b.count, color: activityColor(b.count, max) })),
-      true,
-      false,
-    );
-  }
+  protected readonly options = computed<Highcharts.Options>(() => {
+    const buckets = this.store.timeline();
+    const sorted = buckets.map((b) => b.count).sort((a, b) => b - a);
+    const [first, second] = [sorted[0], sorted[1]];
+    const color = (v: number, i: number) => (v === first && v > 0 ? '#f43f5e' : v === second && v > 0 ? '#f59e0b' : i % 3 === 0 ? '#5b8def' : '#a9c4f8');
+    return {
+      chart: { type: 'column', spacing: [4, 0, 0, 0] },
+      legend: { enabled: false },
+      tooltip: { headerFormat: '', pointFormat: '{point.category}: <b>{point.y}</b> حدث', shared: false },
+      xAxis: { categories: buckets.map((b) => b.label), tickInterval: Math.ceil(buckets.length / 8), labels: { style: { fontSize: '11px', color: '#8a99af' } } },
+      yAxis: { visible: false, min: 0 },
+      plotOptions: { column: { borderRadius: 3, borderWidth: 0, pointPadding: 0.05, groupPadding: 0.04 } },
+      series: [{ type: 'column', name: 'الأحداث', data: buckets.map((b, i) => ({ y: b.count, color: color(b.count, i) })) }],
+    };
+  });
 }

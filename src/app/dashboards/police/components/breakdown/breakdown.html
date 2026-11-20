@@ -1,0 +1,50 @@
+<header class="mb-3 flex items-center justify-between gap-3">
+  <h2 class="m-0 flex items-center gap-2 text-[18px] leading-6 font-bold text-ink">
+    @if (icon()) {
+      <span class="material-symbols-outlined !text-[20px] text-[#0b5cff]">{{ icon() }}</span>
+    }
+    {{ title() }}
+  </h2>
+  @if (badge()) {
+    <span class="rounded-md bg-[#f1f5f9] px-2 py-0.5 text-[12px] font-semibold text-ink-2">{{ badge() }}</span>
+  }
+</header>
+
+@if (layout() === 'stacked') {
+  <div class="relative mx-auto my-2 h-[210px] w-[210px] shrink-0">
+    <app-hc-chart [options]="options()" [height]="0" class="absolute inset-0" />
+    <div class="pointer-events-none absolute inset-0 flex flex-col items-center justify-center">
+      <b class="num text-[26px] leading-8 text-ink">{{ total().toLocaleString('en-US') }}</b>
+      <span class="text-[13px] text-ink-2">{{ centerLabel() }}</span>
+    </div>
+  </div>
+  <ul class="m-0 mt-auto flex list-none flex-col gap-2 p-0 pt-3">
+    @for (i of items(); track i.name) {
+      <li class="flex items-center justify-between gap-3 rounded-lg bg-[#f6f8fb] px-3 py-2 text-[14px]">
+        <span class="flex items-center gap-2 font-semibold text-ink"><i class="size-2.5 rounded-full" [style.background]="i.color"></i>{{ i.name }}</span>
+        <span class="flex items-center gap-3"><b class="num text-ink">{{ i.pct }}%</b><span class="num text-[13px] text-ink-3">{{ i.y.toLocaleString('en-US') }}</span></span>
+      </li>
+    }
+  </ul>
+  @if (footnote()) {
+    <p class="m-0 mt-3 border-t border-[#eef1f6] pt-3 text-center text-[13px] text-ink-2">{{ footnote() }}</p>
+  }
+} @else {
+  <div class="flex min-h-0 flex-1 items-center gap-4">
+    <ul class="m-0 flex min-w-0 flex-1 list-none flex-col gap-3 p-0">
+      @for (i of items(); track i.name) {
+        <li class="flex items-center justify-between gap-2 text-[14px]">
+          <span class="flex min-w-0 items-center gap-2 font-medium text-ink-2"><i class="size-2.5 shrink-0 rounded-full" [style.background]="i.color"></i><span class="truncate">{{ i.name }}</span></span>
+          <b class="num text-ink">{{ i.pct }}%</b>
+        </li>
+      }
+    </ul>
+    <div class="relative size-[140px] shrink-0">
+      <app-hc-chart [options]="options()" [height]="0" class="absolute inset-0" />
+      <div class="pointer-events-none absolute inset-0 flex flex-col items-center justify-center">
+        <b class="num text-[22px] leading-6 text-ink">{{ total().toLocaleString('en-US') }}</b>
+        <span class="text-[12px] text-ink-3">{{ centerLabel() }}</span>
+      </div>
+    </div>
+  </div>
+}
