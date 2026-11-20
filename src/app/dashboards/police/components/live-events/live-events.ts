@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
+import { FlashOnChange } from '../../../../shared/directives/flash-on-change';
 import { CAMERA_PLACES, POLICE_EVENT_META, camId } from '../../../../shared/constants/police.constants';
 import { PoliceStore } from '../../../../shared/services/police-store';
 import { formatTime12 } from '../../../../shared/utils/time.utils';
@@ -9,11 +10,16 @@ const SHOWN = 5;
 @Component({
   selector: 'app-police-live-events',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  hostDirectives: [FlashOnChange],
   host: { id: 'live-events', class: 'pcard !p-0' },
   templateUrl: './live-events.html',
 })
 export class PoliceLiveEvents {
   private readonly store = inject(PoliceStore);
+
+  constructor() {
+    inject(FlashOnChange).watch(this.items);
+  }
   protected readonly total = this.store.totalAll;
 
   protected readonly items = computed(() => {

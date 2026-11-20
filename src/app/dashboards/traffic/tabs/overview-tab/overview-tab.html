@@ -30,7 +30,7 @@
 
 <section class="grid grid-cols-[minmax(0,1fr)_minmax(0,2fr)_minmax(0,1.1fr)] gap-4 max-[1500px]:grid-cols-[minmax(0,1fr)]">
   <div class="flex min-w-0 flex-col gap-4">
-    <div class="card flex-1 justify-between gap-3 !p-4">
+    <div [flashOnChange]="s.weather()" class="card flex-1 justify-between gap-3 !p-4">
       <div class="flex items-start justify-between gap-3">
         <div class="flex items-center gap-3">
           <span class="flex size-11 items-center justify-center rounded-full bg-yellow-500/15"><span class="material-symbols-outlined text-yellow-500">partly_cloudy_day</span></span>
@@ -41,7 +41,7 @@
       <span class="border-t border-line pt-2 text-[14px] font-semibold text-brand">التوقعات الساعية</span>
     </div>
 
-    <div class="card flex-1 justify-between gap-3 !p-4">
+    <div [flashOnChange]="s.nextPrayer().ar" class="card flex-1 justify-between gap-3 !p-4">
       <div class="flex items-start justify-between gap-3">
         <div class="flex items-center gap-3">
           <span class="flex size-11 items-center justify-center rounded-full bg-green-600/10"><span class="material-symbols-outlined text-green-600">mosque</span></span>
@@ -54,7 +54,7 @@
       </div>
     </div>
 
-    <div class="card flex-1 justify-between gap-3 !p-4">
+    <div [flashOnChange]="s.flights()" class="card flex-1 justify-between gap-3 !p-4">
       <div class="flex items-center gap-3">
         <span class="flex size-11 items-center justify-center rounded-full bg-sky-500/10"><span class="material-symbols-outlined text-sky-500">flight_land</span></span>
         <div class="flex flex-col"><b class="text-[16px] text-ink">وصول الرحلات الجوية</b><small class="text-ink-2">مطار الأمير محمد بن عبدالعزيز</small></div>
@@ -65,7 +65,7 @@
       </div>
     </div>
 
-    <div class="card flex-1 justify-between gap-2 !p-4">
+    <div [flashOnChange]="s.visitors()" class="card flex-1 justify-between gap-2 !p-4">
       <div class="flex items-center justify-between gap-3">
         <div class="flex items-center gap-3">
           <span class="flex size-11 items-center justify-center rounded-full bg-purple-500/10"><span class="material-symbols-outlined text-purple-500">groups</span></span>

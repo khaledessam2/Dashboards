@@ -19,7 +19,7 @@
 </header>
 
 <div class="relative min-h-0 flex-1" [class.hidden]="view() !== 'map'">
-  <div #map class="isolate size-full overflow-hidden rounded-[8px] [direction:ltr]" role="img" aria-label="خريطة أعمدة الإنارة"></div>
+  <div #map class="isolate absolute inset-0 overflow-hidden rounded-[8px] [direction:ltr]" role="img" aria-label="خريطة أعمدة الإنارة"></div>
   <div class="absolute bottom-2 left-2 z-[500] flex flex-wrap items-center gap-x-3 gap-y-1 rounded-[8px] bg-surface/90 px-3 py-1.5 text-[12px] text-ink-2 shadow-card [direction:rtl] max-[640px]:right-2">
     @for (s of legend; track s.ar) {
       <span class="inline-flex items-center gap-1">

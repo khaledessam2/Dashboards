@@ -1,3 +1,4 @@
+import { FlashOnChange } from '../../../../shared/directives/flash-on-change';
 import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 import { MunicipalityStore } from '../../../../shared/services/municipality-store';
 import { LocationStat } from '../../../../shared/models/municipality.model';
@@ -23,8 +24,9 @@ function build(id: string, ar: string, hint: string, icon: string, color: string
 
 @Component({
   selector: 'app-muni-visuite-indicators',
+  imports: [FlashOnChange],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  host: { class: 'grid grid-cols-[repeat(3,minmax(0,1fr))] gap-4 max-[1400px]:grid-cols-[minmax(0,1fr)] max-[480px]:gap-3' },
+  host: { class: 'contents' },
   templateUrl: './visuite-indicators.html',
 })
 export class MuniVisuiteIndicators {

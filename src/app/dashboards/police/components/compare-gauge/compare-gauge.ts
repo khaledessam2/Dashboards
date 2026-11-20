@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
+import { FlashOnChange } from '../../../../shared/directives/flash-on-change';
 import { PoliceStore } from '../../../../shared/services/police-store';
 import { changePercent } from '../../../../shared/utils/police.utils';
 
@@ -8,11 +9,16 @@ const ARC = Math.PI * 100; // half-circle length for r = 100
 @Component({
   selector: 'app-police-compare-gauge',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  hostDirectives: [FlashOnChange],
   host: { id: 'compare-gauge', class: 'pcard' },
   templateUrl: './compare-gauge.html',
 })
 export class PoliceCompareGauge {
   private readonly store = inject(PoliceStore);
+
+  constructor() {
+    inject(FlashOnChange).watch(this.current);
+  }
 
   protected readonly current = computed(() => this.store.incident().current);
   protected readonly previous = computed(() => this.store.incident().previous);

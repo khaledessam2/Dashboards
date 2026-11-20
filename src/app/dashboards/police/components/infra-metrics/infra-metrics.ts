@@ -1,15 +1,21 @@
 import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
+import { FlashOnChange } from '../../../../shared/directives/flash-on-change';
 import { PoliceStore } from '../../../../shared/services/police-store';
 
 /** مؤشرات أداء البنية التقنية للنظام (#28–#32). */
 @Component({
   selector: 'app-police-infra-metrics',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  hostDirectives: [FlashOnChange],
   host: { class: 'pcard' },
   templateUrl: './infra-metrics.html',
 })
 export class PoliceInfraMetrics {
   private readonly store = inject(PoliceStore);
+
+  constructor() {
+    inject(FlashOnChange).watch(this.tiles);
+  }
   protected readonly uptime = computed(() => this.store.infra().edgeUptime);
 
   protected readonly tiles = computed(() => {

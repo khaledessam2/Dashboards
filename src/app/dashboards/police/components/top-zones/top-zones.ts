@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
+import { FlashOnChange } from '../../../../shared/directives/flash-on-change';
 import { ZoneStat } from '../../../../shared/models/police.model';
 import { PoliceStore } from '../../../../shared/services/police-store';
 
@@ -11,11 +12,16 @@ const rank = (list: ZoneStat[], [dark, light]: [string, string]) => {
 @Component({
   selector: 'app-police-top-zones',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  hostDirectives: [FlashOnChange],
   host: { class: 'pcard' },
   templateUrl: './top-zones.html',
 })
 export class PoliceTopZones {
   private readonly store = inject(PoliceStore);
+
+  constructor() {
+    inject(FlashOnChange).watch(this.lists);
+  }
 
   protected readonly lists = computed(() => [
     { title: 'أكثر المناطق تسجيلاً للأحداث', rows: rank(this.store.zones(), ['#0b5cff', '#7aa7ff']) },

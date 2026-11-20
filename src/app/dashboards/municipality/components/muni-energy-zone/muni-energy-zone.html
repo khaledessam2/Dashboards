@@ -1,0 +1,13 @@
+<header class="mb-3">
+  <h2 class="m-0 text-xl leading-7 font-bold text-ink">استهلاك الطاقة حسب المنطقة</h2>
+  <p class="m-0 mt-0.5 text-[15px] leading-5 text-ink-3">kWh · المناطق الأعلى استهلاكًا</p>
+</header>
+<div class="flex min-h-[200px] flex-1 items-end justify-between gap-2">
+  @for (b of bars(); track b.ar) {
+    <div class="flex h-full min-w-0 flex-1 flex-col items-center justify-end gap-1">
+      <span class="num text-[14px] font-bold text-ink">{{ b.value }}</span>
+      <span class="w-full max-w-[44px] rounded-t-md bg-brand" [style.height.%]="b.pct * 0.8"></span>
+      <span class="w-full truncate text-center text-[14px] text-ink-2" [attr.title]="b.ar">{{ b.ar }}</span>
+    </div>
+  }
+</div>

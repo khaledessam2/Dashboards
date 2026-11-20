@@ -1,3 +1,4 @@
+import { FlashOnChange } from '../../../../shared/directives/flash-on-change';
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { HcChart, OpsMap, Panel, SevPill, StatTile } from '../../../../shared/components/ops-widgets/ops-widgets';
 import { COMPARE_OPTIONS, Compare, PERIOD_OPTIONS, Period, TONE_HEX, TrafficOpsStore, ZONE_OPTIONS } from '../../../../shared/services/traffic-ops-store';
@@ -7,7 +8,7 @@ import { barOptions, donutOptions, lineOptions } from '../../../../shared/utils/
 /** نظرة عامة */
 @Component({
   selector: 'app-overview-tab',
-  imports: [StatTile, Panel, HcChart, OpsMap, SevPill],
+  imports: [FlashOnChange, StatTile, Panel, HcChart, OpsMap, SevPill],
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'flex flex-col gap-4' },
   templateUrl: './overview-tab.html',

@@ -1,5 +1,5 @@
 @for (ind of indicators(); track ind.id) {
-  <section class="card @container" [id]="ind.id">
+  <section class="card @container" [id]="ind.id" [flashOnChange]="ind.rows">
     <header class="mb-3 flex items-start justify-between gap-3 @max-[400px]:flex-col-reverse @max-[400px]:items-start @max-[400px]:gap-1">
       <div class="min-w-0">
         <h2 class="m-0 text-xl leading-7 font-bold text-ink">{{ ind.ar }}</h2>

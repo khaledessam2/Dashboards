@@ -1,3 +1,4 @@
+import { FlashOnChange } from '../../../shared/directives/flash-on-change';
 import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 import { PERIOD_OPTIONS, PoliceStore, SEVERITY_OPTIONS, TYPE_OPTIONS, ZONE_OPTIONS } from '../../../shared/services/police-store';
 import { PoliceBreakdown } from '../components/breakdown/breakdown';
@@ -33,7 +34,7 @@ const fmt = (n: number) => n.toLocaleString('en-US');
 
 @Component({
   selector: 'app-police-dashboard',
-  imports: [PoliceLiveEvents, PoliceCamMap, PoliceBreakdown, PoliceHourlyChart, PoliceCamRanking, PoliceCamTrend, PoliceCompareGauge, PoliceTopZones, PoliceInfraMetrics],
+  imports: [FlashOnChange, PoliceLiveEvents, PoliceCamMap, PoliceBreakdown, PoliceHourlyChart, PoliceCamRanking, PoliceCamTrend, PoliceCompareGauge, PoliceTopZones, PoliceInfraMetrics],
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'block min-h-full bg-[#f6f8fb] [font-family:IBM_Plex_Sans_Arabic,Cairo,sans-serif]' },
   templateUrl: './police-dashboard.html',

@@ -78,7 +78,7 @@
   <!-- KPIs: hero total + 6 tiles -->
   <section class="grid grid-cols-[minmax(0,1fr)_minmax(0,2.3fr)] items-stretch gap-4 max-[1300px]:grid-cols-[minmax(0,1fr)]">
     @if (hero(); as t) {
-      <article class="pcard min-h-[220px] justify-between !gap-4 !p-5">
+      <article [flashOnChange]="t.value" class="pcard min-h-[220px] justify-between !gap-4 !p-5">
         <div class="flex items-center justify-between gap-2">
           <span class="text-[17px] font-semibold text-ink-2">{{ t.label }}</span>
           <span class="flex size-11 items-center justify-center rounded-xl bg-[#eaf1ff] text-[#0b5cff]"><span class="material-symbols-outlined !text-[26px]">{{ t.icon }}</span></span>
@@ -96,7 +96,7 @@
 
     <div class="grid grid-cols-[repeat(3,minmax(0,1fr))] gap-4 max-[900px]:grid-cols-[repeat(2,minmax(0,1fr))] max-[480px]:grid-cols-[minmax(0,1fr)]">
       @for (t of others(); track t.id) {
-        <article class="pcard relative !gap-2 overflow-hidden !p-4">
+        <article [flashOnChange]="t.value" class="pcard relative !gap-2 overflow-hidden !p-4">
           <div class="flex items-center gap-2.5">
             <span class="flex size-10 shrink-0 items-center justify-center rounded-xl" [style.background]="t.bg" [style.color]="t.accent">
               <span class="material-symbols-outlined !text-[22px]">{{ t.icon }}</span>
@@ -118,7 +118,7 @@
   <!-- Secondary indicators -->
   <section class="grid grid-cols-[repeat(auto-fit,minmax(185px,1fr))] gap-3" aria-label="مؤشرات ثانوية">
     @for (s of strip(); track s.label) {
-      <div class="pcard !gap-2 !p-4">
+      <div [flashOnChange]="s.value" class="pcard !gap-2 !p-4">
         <div class="flex items-center justify-between gap-2">
           <span class="flex size-10 shrink-0 items-center justify-center rounded-xl" [style.background]="s.bg" [style.color]="s.color">
             <span class="material-symbols-outlined !text-[22px]">{{ s.icon }}</span>

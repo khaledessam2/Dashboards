@@ -51,9 +51,33 @@ const TRIPFALL: LocationStat[] = [
   { ar: 'ممر عداد 103', value: 4 },
 ];
 
+/** Mock energy by zone (real source: CMS + energy meters mapped via GIS). */
+const ENERGY_BY_ZONE: LocationStat[] = [
+  { ar: 'الحرم', value: 8420 },
+  { ar: 'الروضة', value: 5980 },
+  { ar: 'النسيم', value: 4730 },
+  { ar: 'العزيزية', value: 3950 },
+  { ar: 'الشرق', value: 2932 },
+];
+
 @Injectable({ providedIn: 'root' })
 export class MunicipalityStore {
   readonly lamps = signal<Lamp[]>(this.makeLamps());
+  readonly powerKw = signal(12.4);
+  readonly controlSuccessPct = signal(98.6);
+  readonly env = signal({ temp: 34, humidity: 42, pm25: 28, pm10: 56, noise: 64 });
+  readonly energyByZone = signal<LocationStat[]>(ENERGY_BY_ZONE);
+  readonly visual = signal({ violations: 167, pedestrians: 12864, vehicles: 7950 });
+  readonly services = signal({
+    reports940: { total: 158, open: 86, overdue: 12 },
+    waterLeaks: { total: 12, repairing: 5, resolved: 7 },
+    flooding: { sensors: 24, ready: 100, alerts: 3 },
+    cleaning: { teams: 24, loads: 412, lateZones: 2 },
+    containers: { total: 640, fullPct: 78, lateCollection: 18 },
+    workOrders: { total: 196, completed: 151, overdue: 11 },
+    proximity: { minutes: 4.8, lowCoverage: 3 },
+    drinkingWater: { points: 86, ready: 79, outOfStock: 7 },
+  });
   readonly energyKwh = signal(18_420);
   /** Mock: % change vs the previous day per KPI (real source: ES, previous day). */
   readonly kpiChange = signal({ faults: -8, energy: 4, savings: 3 });
@@ -122,6 +146,9 @@ export class MunicipalityStore {
       }),
     );
     this.energyKwh.update((v) => v + 5 + Math.round(Math.random() * 20));
+    this.powerKw.update((v) => Math.max(8, +(v + (Math.random() - 0.5) * 0.6).toFixed(1)));
+    this.controlSuccessPct.update((v) => Math.min(100, Math.max(95, +(v + (Math.random() - 0.5) * 0.4).toFixed(1))));
+    this.env.update((e) => ({ ...e, temp: e.temp + (Math.random() < 0.3 ? (Math.random() < 0.5 ? -1 : 1) : 0), noise: e.noise + (Math.random() < 0.3 ? (Math.random() < 0.5 ? -1 : 1) : 0) }));
     const bump = (rows: LocationStat[]) =>
       rows.map((r) => (Math.random() < 0.3 ? { ...r, value: r.value + 1 } : r)).sort((a, b) => b.value - a.value);
     this.abandoned.update(bump);

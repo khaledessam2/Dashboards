@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input } from '@angular/core';
+import { FlashOnChange } from '../../../../shared/directives/flash-on-change';
 import type Highcharts from 'highcharts';
 import { HcChart } from '../../../../shared/components/ops-widgets/hc-chart/hc-chart';
 
@@ -17,6 +18,7 @@ export interface BreakdownItem {
   selector: 'app-police-breakdown',
   imports: [HcChart],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  hostDirectives: [FlashOnChange],
   host: { class: 'pcard' },
   templateUrl: './breakdown.html',
 })
@@ -28,6 +30,10 @@ export class PoliceBreakdown {
   readonly centerLabel = input<string>('');
   readonly layout = input<'stacked' | 'side'>('side');
   readonly footnote = input<string>('');
+
+  constructor() {
+    inject(FlashOnChange).watch(this.items);
+  }
 
   protected readonly total = computed(() => this.items().reduce((s, i) => s + i.y, 0));
 
