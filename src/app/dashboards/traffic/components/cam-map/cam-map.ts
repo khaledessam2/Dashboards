@@ -7,10 +7,11 @@ const CENTER: L.LatLngTuple = HARAM_CENTER; // Al-Masjid an-Nabawi
 const OK = '#00a651';
 
 function markerIcon(camera: Camera, flashing: boolean): L.DivIcon {
+  const icon = (name: string) => `<span class="material-symbols-outlined" style="font-size:16px;line-height:1;color:#fff">${name}</span>`;
   const html = camera.silent
-    ? `<div class="cam-pin cam-pin-problem" title="${camera.name}">!</div>`
-    : `<div class="cam-pin${flashing ? ' cam-pin-flash' : ''}" style="background:${OK};cursor:pointer" title="${camera.name}"></div>`;
-  return L.divIcon({ html, className: '', iconSize: [26, 26], iconAnchor: [13, 13] });
+    ? `<div class="cam-pin cam-pin-problem" title="${camera.name}">${icon('videocam_off')}</div>`
+    : `<div class="cam-pin${flashing ? ' cam-pin-flash' : ''}" style="background:${OK};cursor:pointer" title="${camera.name}">${icon('videocam')}</div>`;
+  return L.divIcon({ html, className: '', iconSize: [28, 28], iconAnchor: [14, 14] });
 }
 
 @Component({
@@ -19,8 +20,8 @@ function markerIcon(camera: Camera, flashing: boolean): L.DivIcon {
   host: { id: 'cam-map', class: 'card', '(document:keydown.escape)': 'closeLive()' },
   templateUrl: './cam-map.html',
   styles: `
-    :host ::ng-deep .cam-pin { width: 18px; height: 18px; margin: 4px; border-radius: 50%; border: 2px solid #fff; box-sizing: border-box; }
-    :host ::ng-deep .cam-pin-problem { width: 26px; height: 26px; margin: 0; background: #e74c3c; color: #fff; font: 700 14px/22px sans-serif; text-align: center; cursor: pointer; animation: cam-pulse 1.4s ease-out infinite; }
+    :host ::ng-deep .cam-pin { width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; border-radius: 50%; border: 2px solid #fff; box-sizing: border-box; box-shadow: 0 1px 4px rgba(0,0,0,.35); }
+    :host ::ng-deep .cam-pin-problem { background: #e74c3c; cursor: pointer; animation: cam-pulse 1.4s ease-out infinite; }
     :host ::ng-deep .cam-pin-flash { background: #f5a623 !important; box-shadow: 0 0 0 5px rgba(245,166,35,.45); animation: marker-flash .9s ease-in-out infinite; }
     :host ::ng-deep .cam-tiles { filter: invert(1) hue-rotate(180deg) brightness(.85) contrast(.9) saturate(.6); }
     @keyframes cam-pulse { 0% { box-shadow: 0 0 0 0 rgba(231,76,60,.7); } 100% { box-shadow: 0 0 0 14px rgba(231,76,60,0); } }

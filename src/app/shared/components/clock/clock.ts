@@ -8,7 +8,7 @@ const format = () => formatTime12(Date.now());
   selector: 'app-clock',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'num text-2xl font-semibold text-ink-2 [direction:ltr] max-[900px]:text-lg' },
-  template: '{{ time() }}',
+  templateUrl: './clock.html',
 })
 export class Clock {
   protected readonly time = signal(format());

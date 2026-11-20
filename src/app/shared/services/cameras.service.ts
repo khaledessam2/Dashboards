@@ -9,6 +9,8 @@ export interface CameraConfig {
 export interface Camera extends CameraConfig {
   events24h: number;
   silent: boolean;
+  /** Mock connection state (real source: Milestone XProtect MIP). */
+  online: boolean;
 }
 
 // Real gateway: base URL of a stream server serving browser-playable video (MP4/WebM). RTSP can't play in <video>.
@@ -36,7 +38,7 @@ const MOCK: Array<CameraConfig & { events24h: number }> = [
 
 @Injectable({ providedIn: 'root' })
 export class CamerasService {
-  readonly cameras = signal<Camera[]>(MOCK.map((c) => ({ ...c, silent: c.events24h === 0 })));
+  readonly cameras = signal<Camera[]>(MOCK.map((c) => ({ ...c, silent: c.events24h === 0, online: c.events24h > 0 })));
   streamUrl(camera: Camera): string | null {
     return STREAM_GATEWAY ? `${STREAM_GATEWAY}/${camera.ip}` : null;
   }

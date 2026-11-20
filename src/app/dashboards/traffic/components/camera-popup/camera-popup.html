@@ -1,0 +1,21 @@
+<div class="fixed inset-0 z-[2000] flex items-center justify-center bg-black/70 p-4" role="dialog" aria-modal="true" [attr.aria-label]="'بث مباشر - ' + camera().name" (click)="closed.emit()">
+  <div class="w-full max-w-[860px] rounded-[12px] border border-line bg-surface p-4 shadow-card" (click)="$event.stopPropagation()">
+    <div class="mb-3 flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <span class="inline-flex items-center gap-1 rounded bg-sev-red px-2 py-0.5 text-[11px] font-bold text-white">
+          <span class="size-1.5 animate-pulse rounded-full bg-white"></span>LIVE
+        </span>
+        <h3 class="m-0 text-[15px] font-semibold text-ink">{{ camera().name }}</h3>
+        <small class="text-ink-3">{{ camera().ip }}</small>
+      </div>
+      <button type="button" class="cursor-pointer rounded border-0 bg-transparent px-2 py-1 text-ink-2 hover:bg-hover" aria-label="إغلاق" (click)="closed.emit()">✕</button>
+    </div>
+    <div class="aspect-video w-full overflow-hidden rounded-[8px] bg-black">
+      @if (url(); as u) {
+        <video class="size-full object-contain" [src]="u" autoplay muted controls playsinline></video>
+      } @else {
+        <div class="flex size-full items-center justify-center text-[13px] text-ink-3">لم يتم ربط رابط البث لهذه الكاميرا بعد</div>
+      }
+    </div>
+  </div>
+</div>

@@ -1,0 +1,110 @@
+<section class="flex flex-wrap items-center gap-4 rounded-xl bg-surface px-5 py-3 text-[15px] shadow-card" aria-label="أدوات التصفية">
+  <label class="flex items-center gap-2 text-ink-2"><span class="material-symbols-outlined !text-[20px] text-brand">domain</span>النطاق الجغرافي:
+    <select class="rounded-lg border-0 bg-hover px-3 py-1.5 font-semibold text-ink" [value]="o.zoneId()" (change)="o.zoneId.set($any($event.target).value)">
+      @for (z of zones; track z.id) { <option [value]="z.id">{{ z.id === 'all' ? 'المدينة المنورة - كامل النطاق' : z.ar }}</option> }
+    </select>
+  </label>
+  <span class="flex items-center gap-2 text-ink-2">طريقة العرض:
+    <span class="flex gap-1 rounded-lg bg-hover p-1 text-[14px] font-semibold">
+      @for (v of views; track v) {
+        <button type="button" class="cursor-pointer rounded-md border-0 px-3 py-1" [class.bg-white]="view() === v" [class.text-brand]="view() === v" [class.bg-transparent]="view() !== v" [class.text-ink-2]="view() !== v" (click)="view.set(v)">{{ v }}</button>
+      }
+    </span>
+  </span>
+  <label class="flex items-center gap-2 text-ink-2"><span class="material-symbols-outlined !text-[20px]">calendar_month</span>النافذة الزمنية:
+    <select class="rounded-lg border-0 bg-hover px-3 py-1.5 font-semibold text-ink" [value]="o.period()" (change)="o.period.set($any($event.target).value)">
+      @for (p of periods; track p.id) { <option [value]="p.id">{{ p.id === '24h' ? 'آخر 24 ساعة (لحظي)' : p.ar }}</option> }
+    </select>
+  </label>
+  <span class="ms-auto flex gap-2">
+    <button type="button" class="flex cursor-pointer items-center gap-2 rounded-lg border border-line bg-surface px-4 py-1.5 font-semibold text-ink"><span class="material-symbols-outlined !text-[20px] text-ink-2">tune</span>مرشحات متقدمة</button>
+    <button type="button" class="flex cursor-pointer items-center gap-2 rounded-lg border-0 bg-brand px-4 py-1.5 font-semibold text-white"><span class="material-symbols-outlined !text-[20px]">traffic</span>تعديل توقيت الإشارات الذكية</button>
+  </span>
+</section>
+
+<section class="grid grid-cols-[repeat(3,minmax(0,1fr))] gap-4 max-[1100px]:grid-cols-[repeat(2,minmax(0,1fr))] max-[640px]:grid-cols-[minmax(0,1fr)]">
+  <app-tile label="متوسط السرعة" icon="speed" [value]="s.speed()" unit="كم/س" [chip]="chip('+6% سرعة تدفق')" sub="المرجعي: 70" />
+  <app-tile label="مؤشر الازدحام (Jam Factor)" icon="timer" tone="warn" [value]="o.jamFactor" chip="متوسط" chipTone="warn" sub="ضمن الحدود التشغيلية" />
+  <app-tile label="إجمالي المركبات (آخر ساعة)" icon="directions_car" [value]="fmt(o.z(o.live(82430, 1)))" unit="مركبة" [chip]="chip('+8% مقارنة بالساعة السابقة')" />
+  <app-tile label="المناطق الحرجة حالياً" icon="warning" tone="crit" [value]="o.z(o.bump(7, 2), 1)" [chip]="chip('+2 نقاط')" chipTone="bad" sub="تركز في نطاق الحرم وطريق قباء" />
+  <app-tile label="نسبة استخدام السعة" icon="road" [value]="o.capacityUse + '%'" [ring]="o.capacityUse" [sub]="'السعة الاستيعابية: ' + fmt(o.capacity) + ' مركبة'" />
+  <app-tile label="زمن استمرار الازدحام" icon="hourglass_bottom" tone="crit" [value]="o.jamMinutes" unit="دقيقة" [chip]="chip('+11% عن المعدل اليومي')" chipTone="bad" />
+</section>
+
+<section class="grid grid-cols-[minmax(0,1fr)_minmax(0,2fr)] gap-4 max-[1300px]:grid-cols-[minmax(0,1fr)]">
+  <div class="flex min-w-0 flex-col gap-4">
+    <app-panel title="حالة الطرق حسب مستوى الازدحام" icon="route" hint="678 كم مرصود">
+      <div class="flex h-3 overflow-hidden rounded-full bg-track">
+        @for (l of levels; track l.ar) { <div [style.width.%]="l.pct" [style.background]="l.color"></div> }
+      </div>
+      @for (l of levels; track l.ar) {
+        <div class="flex items-center justify-between rounded-lg bg-hover/70 px-3 py-2 text-[16px]">
+          <span class="flex items-center gap-2 font-medium"><i class="size-3 rounded-full" [style.background]="l.color"></i>{{ l.ar }}</span>
+          <span class="num flex items-center gap-3"><b>{{ l.km }}</b><small class="text-ink-2">كم</small><b class="rounded px-2 py-0.5 text-[13px]" [style.background]="l.color + '26'" [style.color]="l.color">{{ l.pct }}%</b></span>
+        </div>
+      }
+    </app-panel>
+
+    <app-panel class="flex-1" title="أكثر المناطق ازدحاماً حالياً" icon="location_on" hint="عرض كل التقاطعات (24)">
+      <ul class="m-0 flex flex-1 list-none flex-col gap-2 p-0">
+        @for (r of rows(); track r.name; let i = $index) {
+          <li class="flex flex-1 items-center justify-between gap-2 rounded-lg bg-hover/70 px-3 py-2.5" [class.event-blink]="blink()">
+            <span class="flex min-w-0 items-center gap-2">
+              <b class="num flex size-7 shrink-0 items-center justify-center rounded bg-brand/10 text-sm text-brand">{{ i + 1 }}</b>
+              <span class="flex min-w-0 flex-col"><b class="truncate text-[16px] text-ink">{{ r.name }}</b><small class="num text-ink-2">{{ fmt(r.vehicles) }} مركبة تدفق</small></span>
+            </span>
+            <span class="flex items-center gap-2"><b class="num text-[15px]" [style.color]="r.color">{{ r.speed }} كم/س</b><b class="rounded px-2 py-0.5 text-[12px]" [style.background]="r.color + '26'" [style.color]="r.color">{{ r.tag }}</b></span>
+          </li>
+        }
+      </ul>
+      <div class="flex items-center justify-between text-[13px] text-ink-2">
+        <span class="flex items-center gap-1"><i class="size-2 rounded-full bg-green-600"></i>تحديث الترتيب فوري كل 10 ثوان</span>
+        <button type="button" class="flex cursor-pointer items-center gap-1 rounded-lg border-0 bg-brand/10 px-3 py-1.5 font-semibold text-brand"><span class="material-symbols-outlined !text-[18px]">local_police</span>توجيه دورية ميدانية</button>
+      </div>
+    </app-panel>
+  </div>
+
+  <div class="flex min-w-0 flex-col gap-4">
+    <app-panel title="خريطة التدفق المروري الذكية - المدينة المنورة" icon="map" hint="تتبع مسارات الدائري الأول والثاني ومداخل المسجد النبوي الشريف">
+      <div class="flex gap-2 self-start text-[14px] font-semibold">
+        <span class="flex items-center gap-1 rounded-lg bg-brand/10 px-3 py-1.5 text-brand"><span class="material-symbols-outlined !text-[18px]">layers</span>الطبقات الحرارية</span>
+        <span class="flex items-center gap-1 rounded-lg bg-brand/10 px-3 py-1.5 text-brand"><span class="material-symbols-outlined !text-[18px]">videocam</span>كاميرات المراقبة (142)</span>
+      </div>
+      <app-ops-map scene="flow" [markers]="o.trafficMap" [(hidden)]="hiddenLevels" center="المنطقة المركزية - المسجد النبوي" />
+      <div class="flex flex-wrap items-center gap-2 text-[13px] text-ink-2">
+        @for (l of legend; track l.id) {
+          <button type="button" class="flex cursor-pointer items-center gap-1.5 rounded-full border border-line bg-surface px-3 py-1 hover:bg-hover" [class.opacity-40]="hiddenLevels().includes(l.id)" [attr.aria-pressed]="!hiddenLevels().includes(l.id)" (click)="toggleLevel(l.id)">
+            <i class="size-2.5 rounded-full" [style.background]="l.color"></i><span [class.line-through]="hiddenLevels().includes(l.id)">{{ l.ar }}</span>
+          </button>
+        }
+        @if (hiddenLevels().length) { <button type="button" class="cursor-pointer rounded-full border-0 bg-brand/10 px-3 py-1 font-semibold text-brand" (click)="hiddenLevels.set([])">إظهار الكل</button> }
+      </div>
+      @if (alertOpen()) {
+        <div class="flex flex-wrap items-center justify-between gap-2 border-t border-line pt-2 text-[14px]">
+          <span class="flex items-center gap-2"><b class="rounded bg-red-600 px-2 py-0.5 text-[12px] text-white">تنبيه عملياتي</b>ازدحام متزايد على تقاطع طريق الهجرة مع الدائري الثاني، تم تمديد زمن الإشارة الخضراء 45 ثانية تلقائياً عبر الذكاء الاصطناعي.</span>
+          <span class="flex items-center gap-3"><small class="text-ink-3">منذ 3 دقائق</small><button type="button" class="cursor-pointer rounded border-0 bg-hover px-2 py-0.5 text-[13px] font-semibold text-ink-2" (click)="alertOpen.set(false)">تم الاطلاع ✕</button></span>
+        </div>
+      } @else {
+        <button type="button" class="self-start cursor-pointer rounded-lg border-0 bg-red-50 px-3 py-1 text-[13px] font-semibold text-red-600" (click)="alertOpen.set(true)">عرض التنبيه العملياتي</button>
+      }
+    </app-panel>
+
+    <app-panel title="الحركة حسب الساعة" icon="bar_chart" hint="تحديث لحظي">
+      <app-hc-chart [options]="hourly()" [height]="230" />
+    </app-panel>
+  </div>
+</section>
+
+<section class="grid grid-cols-[repeat(3,minmax(0,1fr))] gap-4 max-[1300px]:grid-cols-[minmax(0,1fr)]">
+  <app-panel title="كثافة الأحياء" icon="location_city" hint="حجم المركبات">
+    <app-hc-chart [options]="districts()" [height]="230" />
+    <div class="flex items-center justify-between text-[13px]"><small class="text-ink-2">معدل النمو اليومي: +3.8%</small><span class="cursor-pointer font-semibold text-brand">تحليل مكاني ←</span></div>
+  </app-panel>
+  <app-panel title="اتجاهات الحركة المرورية خلال 24 ساعة" icon="trending_up" [hint]="o.showCompare() ? 'مقارنة اليوم الحالي مع اليوم المماثل الأسبوع الماضي' : ''">
+    <app-hc-chart [options]="trend()" [height]="260" />
+  </app-panel>
+  <app-panel title="توزيع أسطول المركبات" icon="directions_bus" hint="اللحظي">
+    <app-hc-chart [options]="fleet" [height]="260" />
+    <div class="flex items-center justify-between text-[13px]"><small class="text-ink-2">زيادة أسطول الحافلات بنسبة %4.2 مقارنة بأمس</small><span class="cursor-pointer font-semibold text-brand">تقرير الأسطول ←</span></div>
+  </app-panel>
+</section>
