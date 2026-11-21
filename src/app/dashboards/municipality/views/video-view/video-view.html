@@ -1,0 +1,20 @@
+    <section class="pcard !gap-4">
+<header class="flex flex-wrap items-start justify-between gap-2 border-b border-[#e6ebf2] pb-3">
+  <div>
+    <h2 class="m-0 text-[26px] leading-8 font-bold text-ink">٦. تحليل الفيديو الميداني (Ipsotek VISuite)</h2>
+    <p class="m-0 mt-1 text-[18px] font-medium text-[#0f172a]">السقوط لا يثبت عيب الرصيف، والجسم المتروك لا يُصنف كمخلفات إلا بعد المراجعة</p>
+  </div>
+  <span class="rounded-full bg-[#ecfeff] px-3 py-1 text-[15px] font-bold text-[#0891b2]">19 حالة بانتظار المراجعة البلدية</span>
+</header>
+<div class="flex flex-col gap-3">
+  @for (v of cards; track v.label) {
+    <div class="flex items-center justify-between gap-3 rounded-lg border border-[#e6ebf2] p-3.5">
+      <div class="min-w-0">
+        <b class="text-[18px] text-ink">{{ v.label }}</b>
+        <p class="m-0 mt-0.5 text-[16px] font-medium text-[#334155]">{{ v.note }}</p>
+      </div>
+      <b class="num shrink-0 text-[26px]" [class]="v.c">{{ v.val }}</b>
+    </div>
+  }
+</div>
+    </section>

@@ -1,0 +1,36 @@
+<section class="grid grid-cols-[repeat(4,minmax(0,1fr))] gap-4 max-[1500px]:grid-cols-[repeat(2,minmax(0,1fr))] max-[640px]:grid-cols-[minmax(0,1fr)]" aria-label="الحالة التشغيلية الآنية">
+  <div class="pcard !flex-row items-center !gap-3.5 !px-5 !py-4">
+    <span class="flex size-12 shrink-0 items-center justify-center rounded-xl bg-[#fffbeb] text-[#f59e0b]"><span class="material-symbols-outlined !text-[26px]">wb_sunny</span></span>
+    <div class="flex min-w-0 flex-col gap-1">
+      <span class="num text-[16px] leading-6 font-semibold text-ink"><b class="text-[22px] font-bold">28°C</b> | رطوبة 32% | رياح 18 km/h</span>
+<span class="flex items-center gap-1 text-[14px] leading-5 font-medium text-[#059669]"><span class="material-symbols-outlined !text-[16px]">check_circle</span>الأرصاد (NCM): استقرار جوي — لا توجد تنبيهات</span>
+    </div>
+  </div>
+
+  <div class="pcard !flex-row items-center !gap-3.5 !px-5 !py-4">
+    <span class="flex size-12 shrink-0 items-center justify-center rounded-xl bg-[#ecfeff] text-[#0891b2]"><span class="material-symbols-outlined !text-[26px]">umbrella</span></span>
+    <div class="flex min-w-0 flex-col gap-1">
+      <span class="text-[16px] leading-6 font-semibold text-ink">جاهزية البلدية للحالة الجوية</span>
+      <div class="flex flex-wrap items-center gap-2.5">
+        <b class="num text-[30px] leading-9 text-[#059669] [direction:ltr]" [flashOnChange]="store.kpi().readiness">{{ store.kpi().readiness }}</b>
+        <span class="rounded bg-[#ecfdf5] px-2 py-0.5 text-[13px] font-bold text-[#059669]">المضخات والفرق جاهزة</span>
+      </div>
+    </div>
+  </div>
+
+  <button type="button" (click)="store.govOpen.set(true)" class="pcard cursor-pointer !flex-row items-center !gap-3.5 !px-5 !py-4 text-start hover:bg-[#f6f8fb]">
+    <span class="flex size-12 shrink-0 items-center justify-center rounded-xl bg-[#fffbeb] text-[#d97706]"><span class="material-symbols-outlined !text-[26px]">satellite_alt</span></span>
+    <div class="flex min-w-0 flex-col gap-1">
+      <span class="text-[16px] leading-6 font-semibold text-ink">حالة تحديث المصادر (15 مصدر)</span>
+      <span class="num text-[14px] leading-5 font-medium text-[#475569]"><b class="text-[#059669]">13 لحظي</b> · <b class="text-[#d97706]">2 تأخر (حفريات / مياه)</b></span>
+    </div>
+  </button>
+
+  <div class="pcard !flex-row items-center !gap-3.5 !px-5 !py-4">
+    <span class="flex size-12 shrink-0 items-center justify-center rounded-xl bg-[#eaf1ff] text-[#0b5cff]"><span class="material-symbols-outlined !text-[26px]">groups</span></span>
+    <div class="flex min-w-0 flex-col gap-1">
+      <span class="text-[16px] leading-6 font-semibold text-ink">الفرق والمضخات العاملة</span>
+      <span class="num text-[14px] leading-5 font-medium text-[#475569]">فرق النظافة: <b class="text-ink">64 فرقة</b> | مضخات التصريف: <b class="text-[#059669]">{{ store.kpi().pumpsOn }} / 48</b></span>
+    </div>
+  </div>
+</section>

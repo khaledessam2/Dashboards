@@ -1,0 +1,30 @@
+<header class="flex flex-wrap items-center justify-between gap-3 rounded-xl bg-surface px-5 py-3 shadow-card">
+  <div class="flex items-center gap-3">
+    <span class="flex size-12 items-center justify-center rounded-xl bg-[#0b5cff] text-white">
+      <span class="material-symbols-outlined !text-[28px]">location_city</span>
+    </span>
+    <div>
+      <div class="flex flex-wrap items-center gap-2.5">
+        <h1 class="m-0 text-[22px] leading-7 font-bold text-ink">لوحة البلدية بالمدينة المنورة</h1>
+        <span class="flex items-center gap-2 rounded-full bg-green-600/10 px-3 py-0.5 text-[13px] font-semibold text-green-700">
+          <span class="size-2.5 animate-pulse rounded-full bg-green-500"></span>رصد بلدي حي
+        </span>
+      </div>
+      <p class="m-0 text-[15px] font-semibold text-ink">النطاق: الإنارة الذكية، بلاغات 940 والصيانة، النظافة، المياه والتصريف، الطرق والأرصفة، تحليل الفيديو، والبيئة والطقس</p>
+    </div>
+  </div>
+
+  <div class="flex flex-wrap items-center gap-3">
+    <span class="flex items-center gap-2 rounded-full bg-green-600/10 px-3 py-1.5 text-[14px] font-semibold text-green-700">
+      <span class="material-symbols-outlined !text-[18px]">sync</span>آخر تحديث: {{ updatedText() }}
+      <span class="size-2.5 rounded-full bg-green-500"></span>
+    </span>
+    <span class="flex items-center gap-2 rounded-full border border-line px-3 py-1.5 text-[14px] text-ink">
+      <span class="material-symbols-outlined !text-[18px] font-medium text-[#475569]">schedule</span>توقيت المدينة المنورة
+      <b class="num [direction:ltr]">{{ clock() }}</b>
+    </span>
+    <button type="button" class="flex size-10 cursor-pointer items-center justify-center rounded-lg border border-line bg-surface font-medium text-[#475569]" aria-label="ملء الشاشة" (click)="fullscreen()">
+      <span class="material-symbols-outlined !text-[22px]">fullscreen</span>
+    </button>
+  </div>
+</header>

@@ -1,0 +1,44 @@
+  <section class="pcard !gap-4">
+    <header class="flex flex-wrap items-start justify-between gap-2 border-b border-[#e6ebf2] pb-3">
+<div>
+  <h2 class="m-0 text-[26px] leading-8 font-bold text-ink">٢. البلاغات (940) وأوامر العمل والصيانة (CMMS)</h2>
+  <p class="m-0 mt-1 text-[18px] font-medium text-[#0f172a]">الإغلاق الإداري للبلاغ لا يثبت اكتمال الإصلاح دون تأكيد أمر العمل والتحقق الميداني</p>
+</div>
+<div class="flex flex-wrap gap-2 text-[15px] font-bold">
+  <span class="rounded-full bg-[#ecfeff] px-3 py-1 text-[#0891b2]">متوسط زمن الإسناد: 22 دقيقة</span>
+  <span class="rounded-full bg-[#ecfdf5] px-3 py-1 text-[#059669]">متوسط زمن الإصلاح: 4.8 ساعة</span>
+</div>
+    </header>
+    <div class="grid grid-cols-[minmax(0,4fr)_minmax(0,8fr)] gap-4 max-[1100px]:grid-cols-[minmax(0,1fr)]">
+<div class="rounded-xl border border-[#e6ebf2] p-4">
+  <h3 class="m-0 mb-3 text-[20px] font-bold text-ink">حالة أوامر العمل (CMMS)</h3>
+  <ul class="m-0 flex list-none flex-col gap-3 p-0 text-[17px]">
+    <li class="flex items-center justify-between gap-2"><span class="font-medium text-[#0f172a]">أوامر مفتوحة قيد التنفيذ</span><b class="num text-[#0891b2]">271</b></li>
+    <li class="flex items-center justify-between gap-2"><span class="font-medium text-[#0f172a]">أوامر متأخرة عن الموعد</span><b class="num text-[#e11d48]">{{ store.kpi().woLate }}</b></li>
+    <li class="flex items-center justify-between gap-2"><span class="font-medium text-[#0f172a]">أوامر متوقفة (قطع غيار/تصريح)</span><b class="num text-[#d97706]">14</b></li>
+    <li class="flex items-center justify-between gap-2"><span class="font-medium text-[#0f172a]">بلاغات معاد فتحها (أعطال متكررة)</span><b class="num text-[#f97316]">9</b></li>
+  </ul>
+</div>
+<div class="overflow-x-auto rounded-xl border border-[#e6ebf2] p-4">
+  <h3 class="m-0 mb-3 text-[20px] font-bold text-ink">تقييم أداء المقاولين (الالتزام بالمواعيد وجودة الإغلاق)</h3>
+  <table class="w-full border-collapse text-[17px]">
+    <thead>
+      <tr class="border-b-2 border-[#dde2e8] text-[16px] font-bold text-[#0f172a]">
+        <th class="px-3 py-2.5 text-start font-bold">المقاول / الجهة المنفذة</th><th class="px-3 py-2.5 text-start font-bold">النطاق</th><th class="px-3 py-2.5 text-start font-bold">الإنجاز ضمن المستهدف</th><th class="px-3 py-2.5 text-start font-bold">معدل إعادة الفتح</th><th class="px-3 py-2.5 text-start font-bold">التقييم</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (c of contractors; track c.name) {
+        <tr class="border-t border-[#e6ebf2]">
+          <td class="px-3 py-3 font-bold text-ink">{{ c.name }}</td>
+          <td class="px-3 py-3 text-[#0f172a]">{{ c.scope }}</td>
+          <td class="num px-3 py-3 font-bold" [class]="c.ok ? 'text-[#059669]' : 'text-[#d97706]'">{{ c.pct }}</td>
+          <td class="num px-3 py-3" [class]="c.ok ? 'text-[#0f172a]' : 'font-bold text-[#e11d48]'">{{ c.reopen }}</td>
+          <td class="px-3 py-3"><span class="rounded px-2 py-0.5 text-[15px] font-bold" [class]="c.ok ? 'bg-[#ecfdf5] text-[#059669]' : 'bg-[#fffbeb] text-[#d97706]'">{{ c.rate }}</span></td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>
+    </div>
+  </section>
