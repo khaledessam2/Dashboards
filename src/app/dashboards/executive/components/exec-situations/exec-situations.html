@@ -5,7 +5,7 @@
 
       @for (c of store.incidents(); track c.id) {
         <article (click)="store.openDrawer(c.id)" (mouseenter)="store.focusId.set(c.id)"
-          class="pcard flex-1 cursor-pointer justify-between !gap-3 border-s-[3px] hover:bg-[#f6f8fb]"
+          class="pcard cursor-pointer !gap-3 border-s-[3px] hover:bg-[#f6f8fb]"
           [style.border-inline-start-color]="c.approved ? '#10b981' : c.color">
           <div class="flex items-start justify-between gap-3">
             <div class="flex items-start gap-2.5">
@@ -29,3 +29,5 @@
           </div>
         </article>
       }
+
+      <app-exec-bottom-strip />

@@ -48,11 +48,19 @@ export class TrafficDashboard {
 
   protected readonly spark = 'M2 26 L12 22 L22 17 L32 19 L42 11 L52 7 L58 4';
 
+  protected readonly menuOpen = signal(false);
+
+  protected selectTab(id: TabId): void {
+    this.tab.set(id);
+    this.menuOpen.set(false);
+  }
+
   protected fullscreen(): void {
     void document.documentElement.requestFullscreen?.();
   }
 
   protected closeModals(): void {
+    this.menuOpen.set(false);
     this.store.cameraModal.set(null);
   }
 }

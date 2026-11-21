@@ -1,6 +1,6 @@
 <div class="flex flex-col gap-4 px-6 pt-4 pb-6 max-[900px]:px-3">
 
-  <header class="flex flex-wrap items-center justify-between gap-3 rounded-xl bg-surface px-5 py-3 shadow-card">
+  <header class="relative z-30 flex flex-wrap items-center justify-between gap-3 rounded-xl bg-surface px-5 py-3 shadow-card">
     <div class="flex items-center gap-3">
       <span class="flex size-12 items-center justify-center rounded-xl bg-[#059669] text-white">
         <span class="material-symbols-outlined !text-[28px]">traffic</span>
@@ -26,7 +26,24 @@
       <button type="button" class="flex size-10 cursor-pointer items-center justify-center rounded-lg border border-line bg-surface font-medium text-[#475569]" aria-label="ملء الشاشة" (click)="fullscreen()">
         <span class="material-symbols-outlined !text-[22px]">fullscreen</span>
       </button>
+      <button type="button" class="flex size-10 cursor-pointer items-center justify-center rounded-lg border border-line font-medium"
+        [class]="menuOpen() ? 'bg-[#059669] text-white' : 'bg-surface text-[#475569]'"
+        aria-label="التبويبات" [attr.aria-expanded]="menuOpen()" (click)="menuOpen.set(!menuOpen())">
+        <span class="material-symbols-outlined !text-[22px]">{{ menuOpen() ? 'close' : 'apps' }}</span>
+      </button>
     </div>
+
+    @if (menuOpen()) {
+      <nav class="absolute inset-x-0 top-full z-30 mt-2 flex flex-wrap gap-2 rounded-xl bg-surface p-2 shadow-xl" aria-label="التبويبات">
+        @for (t of tabs; track t.id) {
+          <button type="button" (click)="selectTab(t.id)"
+            class="flex cursor-pointer items-center gap-2 rounded-lg border-0 px-4 py-2.5 text-[15px] font-semibold whitespace-nowrap transition-colors"
+            [class]="tab() === t.id ? 'bg-[#059669] text-white' : 'bg-transparent text-[#475569] hover:bg-[#f6f8fb]'">
+            <span class="material-symbols-outlined !text-[22px]" [style.color]="tab() === t.id ? '#fff' : t.color">{{ t.icon }}</span>{{ t.ar }}
+          </button>
+        }
+      </nav>
+    }
   </header>
 
   <section class="grid grid-cols-[repeat(4,minmax(0,1fr))] gap-4 max-[1500px]:grid-cols-[repeat(2,minmax(0,1fr))] max-[640px]:grid-cols-[minmax(0,1fr)]" aria-label="الحالة التشغيلية الآنية">
@@ -62,18 +79,6 @@
         <span class="num text-[16px] leading-6 font-semibold text-ink"><b class="text-[22px] font-bold">28°C</b> | رياح 14 km/h</span>      </div>
     </div>
   </section>
-
-  <nav class="flex flex-wrap items-center justify-between gap-2 rounded-xl bg-surface p-2 shadow-card" aria-label="التبويبات">
-    <div class="flex flex-wrap gap-2">
-      @for (t of tabs; track t.id) {
-        <button type="button" (click)="tab.set(t.id)"
-          class="flex cursor-pointer items-center gap-2 rounded-lg border-0 px-4 py-2.5 text-[15px] font-semibold whitespace-nowrap transition-colors"
-          [class]="tab() === t.id ? 'bg-[#059669] text-white' : 'bg-transparent text-[#475569] hover:bg-[#f6f8fb]'">
-          <span class="material-symbols-outlined !text-[22px]" [style.color]="tab() === t.id ? '#fff' : t.color">{{ t.icon }}</span>{{ t.ar }}
-        </button>
-      }
-    </div>
-  </nav>
 
   <section class="grid grid-cols-[repeat(5,minmax(0,1fr))] gap-4 max-[1500px]:grid-cols-[repeat(3,minmax(0,1fr))] max-[900px]:grid-cols-[repeat(2,minmax(0,1fr))] max-[560px]:grid-cols-[minmax(0,1fr)]">
     <article [flashOnChange]="store.data().vehicles" class="pcard relative !gap-3 overflow-hidden !p-4">

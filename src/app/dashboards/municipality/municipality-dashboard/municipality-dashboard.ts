@@ -35,4 +35,8 @@ type TabId = (typeof TABS)[number]['id'];
 export class MunicipalityDashboard {
   protected readonly tabs = TABS;
   protected readonly tab = signal<TabId>('overview');
+
+  protected selectTab(id: string): void {
+    this.tab.set(id as TabId);
+  }
 }
