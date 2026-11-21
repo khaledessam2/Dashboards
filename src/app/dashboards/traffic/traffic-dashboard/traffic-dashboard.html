@@ -11,9 +11,7 @@
           <span class="flex items-center gap-2 rounded-full bg-green-600/10 px-3 py-0.5 text-[13px] font-semibold text-green-700">
             <span class="size-2.5 animate-pulse rounded-full bg-green-500"></span>رصد حي ومباشر
           </span>
-        </div>
-        <p class="m-0 text-[15px] font-semibold text-ink">النطاق: محاور المسجد النبوي، المنطقة المركزية، الدائري الأول والثاني، طريق المطار، محطة قطار الحرمين، والمواقف</p>
-      </div>
+        </div>      </div>
     </div>
 
     <div class="flex flex-wrap items-center gap-3">
@@ -37,9 +35,7 @@
       <div class="flex min-w-0 flex-col gap-1">
         <span class="text-[16px] leading-6 font-semibold text-ink">الصلاة القادمة: صلاة {{ prayer().ar }}</span>
         <div class="flex flex-wrap items-center gap-2.5">
-          <b class="num text-[30px] leading-9 text-[#059669] [direction:ltr]">{{ prayer().countdown }}</b>
-          <span class="rounded px-2 py-0.5 text-[13px] font-bold" [class]="prayer().minutes <= 45 ? 'bg-[#fffbeb] text-[#d97706]' : 'bg-[#ecfdf5] text-[#059669]'">{{ prayer().tag }}</span>
-        </div>
+          <b class="num text-[30px] leading-9 text-[#059669] [direction:ltr]">{{ prayer().countdown }}</b>        </div>
       </div>
     </div>
 
@@ -89,7 +85,7 @@
     <article [flashOnChange]="store.data().vehicles" class="pcard relative !gap-3 overflow-hidden !p-4">
       <div class="flex min-h-10 items-center justify-center gap-2.5 text-center">
         <span class="flex size-10 shrink-0 items-center justify-center rounded-xl bg-[#ecfdf5] text-[#059669]"><span class="material-symbols-outlined !text-[22px]">directions_car</span></span>
-        <span class="text-[15px] leading-5 font-semibold text-[#475569]">المركبات المرصودة (حي)</span>
+        <span class="text-[15px] leading-5 font-semibold text-[#475569]">المركبات المرصودة</span>
       </div>
       <div class="flex h-10 items-center justify-center"><b class="num text-[34px] leading-10 text-ink">{{ fmt(store.data().vehicles) }}</b></div>
       <div class="mt-auto flex min-h-11 flex-col items-stretch justify-end text-center gap-1">
@@ -97,7 +93,6 @@
           <span class="num rounded-md px-2 py-0.5 text-[13px] font-bold whitespace-nowrap" class="bg-[#fffbeb] text-[#d97706]">↑ {{ store.data().delta }}</span>
           <svg viewBox="0 0 60 30" class="h-6 w-16 [direction:ltr]" aria-hidden="true"><path [attr.d]="spark" fill="none" stroke="#059669" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" /></svg>
         </div>
-        <span class="text-[14px] font-medium text-[#475569]">المصدر: VISuite &amp; عدادات المرور</span>
       </div>
     </article>
 
@@ -123,12 +118,9 @@
         <span class="flex size-10 shrink-0 items-center justify-center rounded-xl bg-[#fff1f2] text-[#e11d48]"><span class="material-symbols-outlined !text-[22px]">local_fire_department</span></span>
         <span class="text-[15px] leading-5 font-semibold text-[#475569]">المناطق الحرجة وأطوال الازدحام</span>
       </div>
-      <div class="flex h-10 items-center justify-center gap-2">
+      <div class="flex flex-1 items-center justify-center gap-2">
         <span class="num rounded-lg bg-[#fff1f2] px-2.5 text-[24px] leading-9 font-bold text-[#e11d48]">{{ store.data().zones }} <small class="text-[13px]">مناطق</small></span>
         <span class="num rounded-lg bg-[#fffbeb] px-2.5 text-[24px] leading-9 font-bold text-[#d97706]"><span class="inline-block [direction:ltr] [unicode-bidi:isolate]">{{ store.data().km }}</span> <small class="text-[13px]">كم</small></span>
-      </div>
-      <div class="mt-auto flex min-h-11 flex-col items-stretch justify-end text-center">
-        <span class="num text-[14px] leading-5 font-medium text-[#475569]">الأشد: الدائري الأول - تقاطع السلام <span class="inline-block whitespace-nowrap">(24 كم/س)</span></span>
       </div>
     </article>
 
@@ -137,13 +129,9 @@
         <span class="flex size-10 shrink-0 items-center justify-center rounded-xl bg-[#fff1f2] text-[#e11d48]"><span class="material-symbols-outlined !text-[22px]">car_crash</span></span>
         <span class="text-[15px] leading-5 font-semibold text-[#475569]">الحوادث المفتوحة والمتأخرة</span>
       </div>
-      <div class="flex h-10 items-center justify-center gap-2.5">
+      <div class="flex flex-1 items-center justify-center gap-2.5">
         <b class="num text-[34px] leading-10 text-ink">{{ store.data().open }}</b>
         <span class="num rounded-md bg-[#fff1f2] px-2 py-0.5 text-[13px] font-bold whitespace-nowrap text-[#e11d48]">{{ store.data().sla }} متأخرة SLA</span>
-      </div>
-      <div class="num mt-auto flex min-h-11 flex-col items-stretch justify-end text-center gap-0.5 text-[14px] font-medium text-[#475569]">
-        <span>3 حوادث مرورية</span>
-        <span>4 مخاطر بلدية (940/مياه)</span>
       </div>
     </article>
 
@@ -152,13 +140,9 @@
         <span class="flex size-10 shrink-0 items-center justify-center rounded-xl bg-[#ecfdf5] text-[#059669]"><span class="material-symbols-outlined !text-[22px]">visibility</span></span>
         <span class="text-[15px] leading-5 font-semibold text-[#475569]">جاهزية الكاميرات وتحليل VISuite</span>
       </div>
-      <div class="flex h-10 items-center justify-center gap-2">
+      <div class="flex flex-1 items-center justify-center gap-2">
         <b class="num text-[34px] leading-10 text-[#059669] [direction:ltr] [unicode-bidi:isolate]">96.8%</b>
         <span class="num text-[14px] font-medium text-[#475569] [direction:ltr] [unicode-bidi:isolate]">(612 / 632)</span>
-      </div>
-      <div class="num mt-auto flex min-h-11 flex-col items-stretch justify-end text-center gap-0.5 text-[14px]">
-        <span class="font-semibold text-[#059669]">تحليل VISuite مفعّل: <b>420 كاميرا</b></span>
-        <span class="font-medium text-[#e11d48]">20 كاميرا منقطعة</span>
       </div>
     </article>
   </section>

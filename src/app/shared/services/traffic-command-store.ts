@@ -37,8 +37,8 @@ alert_wrongway: item('تنبيه كاميرا (VISuite)', 'رصد عكس اتج�
 
 @Injectable({ providedIn: 'root' })
 export class TrafficCommandStore {
-  readonly selectedKey = signal('acc_911');
-  readonly selected = computed(() => MAP_ITEMS[this.selectedKey()] ?? MAP_ITEMS['acc_911']);
+  readonly selectedKey = signal<string | null>(null);
+  readonly selected = computed(() => MAP_ITEMS[this.selectedKey() ?? ''] ?? null);
   readonly layers = signal<Record<LayerId, boolean>>({ hazards: true, closures: true, parking: true, cameras: false });
 
   readonly cameraModal = signal<string | null>(null);

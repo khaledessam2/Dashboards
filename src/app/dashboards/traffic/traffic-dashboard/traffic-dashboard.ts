@@ -50,8 +50,7 @@ export class TrafficDashboard {
   protected readonly clock = computed(() => new Date(this.live.now()).toLocaleTimeString('en-GB', { hour12: false, timeZone: 'Asia/Riyadh' }));
   protected readonly prayer = computed(() => {
     const p = this.live.nextPrayer();
-    const minutes = Number(p.countdown.slice(0, 2)) * 60 + Number(p.countdown.slice(3, 5));
-    return { ...p, minutes, tag: minutes <= 45 ? `ذروة توافد T-${minutes}` : `متابعة اعتيادية T-${minutes}` };
+    return p;
   });
   protected readonly updatedText = computed(() => {
     const mins = Math.floor((this.live.now() - this.live.lastUpdate()) / 60000);

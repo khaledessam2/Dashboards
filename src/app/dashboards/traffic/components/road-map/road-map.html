@@ -1,8 +1,6 @@
 <header class="flex flex-wrap items-start justify-between gap-3">
   <div>
-    <h2 class="m-0 flex items-center gap-2 text-[18px] leading-6 font-bold text-ink"><span class="material-symbols-outlined !text-[20px] text-[#059669]">map</span>الخريطة المرورية الحية (GIS) لشبكة طرق المدينة المنورة</h2>
-    <p class="m-0 mt-1 text-[14px] font-medium text-[#475569]">انقر على أي طريق، موقف، أو بلاغ لعرض السرعة الحية، حالة المسارات، والبث المباشر</p>
-  </div>
+    <h2 class="m-0 flex items-center gap-2 text-[18px] leading-6 font-bold text-ink"><span class="material-symbols-outlined !text-[20px] text-[#059669]">map</span>الخريطة المرورية الحية (GIS) لشبكة طرق المدينة المنورة</h2>  </div>
   <div class="flex flex-wrap items-center gap-2">
     @for (b of layerButtons; track b.id) {
       <button type="button" class="flex cursor-pointer items-center gap-2 rounded-lg border border-[#e6ebf2] bg-white px-3 py-1.5 text-[14px] font-semibold text-[#475569]"
@@ -16,27 +14,30 @@
 <div class="relative isolate min-h-[480px] w-full flex-1 overflow-hidden rounded-xl border border-[#e6ebf2]">
   <div #map class="absolute inset-0 z-0 [direction:ltr]" role="application" aria-label="خريطة مرورية حية لشبكة طرق المدينة المنورة"></div>
 
-  <div class="absolute top-3 right-3 z-[1000] w-[270px] rounded-xl border border-[#e6ebf2] bg-white/95 p-3">
-    <div class="flex items-start justify-between gap-2">
-      <div class="min-w-0">
-        <span class="text-[12px] font-bold text-[#059669]">{{ store.selected().type }}</span>
-        <h3 class="m-0 text-[15px] leading-5 font-bold text-ink">{{ store.selected().title }}</h3>
+  @if (store.selected(); as s) {
+    <div class="absolute top-3 right-3 z-[1000] w-[270px] rounded-xl border border-[#e6ebf2] bg-white/95 p-3">
+      <div class="flex items-start justify-between gap-2">
+        <div class="min-w-0">
+          <span class="text-[12px] font-bold text-[#059669]">{{ s.type }}</span>
+          <h3 class="m-0 text-[15px] leading-5 font-bold text-ink">{{ s.title }}</h3>
+        </div>
+        <span class="rounded px-2 py-0.5 text-[12px] font-bold whitespace-nowrap" [class]="pill[s.tone]">{{ s.badge }}</span>
       </div>
-      <span class="rounded px-2 py-0.5 text-[12px] font-bold whitespace-nowrap" [class]="pill[store.selected().tone]">{{ store.selected().badge }}</span>
+      <div class="mt-2 grid grid-cols-2 gap-2 rounded-lg bg-[#f6f8fb] p-2">
+        <div><span class="block text-[12px] text-[#475569]">{{ s.m1Label }}</span><b class="num text-[14px]" [class]="text[s.m1Tone]">{{ s.m1Val }}</b></div>
+        <div><span class="block text-[12px] text-[#475569]">{{ s.m2Label }}</span><b class="num text-[14px] text-ink">{{ s.m2Val }}</b></div>
+      </div>
+      <button type="button" class="mt-2 flex w-full cursor-pointer items-center justify-center gap-1.5 rounded-lg border border-[#e6ebf2] bg-white py-1.5 text-[13px] font-semibold text-[#059669] hover:bg-[#f6f8fb]" (click)="store.cameraModal.set(s.cam)">
+        <span class="material-symbols-outlined !text-[18px]">videocam</span>معاينة الكاميرا وتحليل VISuite
+      </button>
     </div>
-    <div class="mt-2 grid grid-cols-2 gap-2 rounded-lg bg-[#f6f8fb] p-2">
-      <div><span class="block text-[12px] text-[#475569]">{{ store.selected().m1Label }}</span><b class="num text-[14px]" [class]="text[store.selected().m1Tone]">{{ store.selected().m1Val }}</b></div>
-      <div><span class="block text-[12px] text-[#475569]">{{ store.selected().m2Label }}</span><b class="num text-[14px] text-ink">{{ store.selected().m2Val }}</b></div>
-    </div>
-    <button type="button" class="mt-2 flex w-full cursor-pointer items-center justify-center gap-1.5 rounded-lg border border-[#e6ebf2] bg-white py-1.5 text-[13px] font-semibold text-[#059669] hover:bg-[#f6f8fb]" (click)="store.cameraModal.set(store.selected().cam)">
-      <span class="material-symbols-outlined !text-[18px]">videocam</span>معاينة الكاميرا وتحليل VISuite
-    </button>
-  </div>
+  }
 
-  <div class="absolute right-3 bottom-6 z-[1000] flex flex-col gap-1 rounded-xl border border-[#e6ebf2] bg-white/95 px-3 py-2 text-[13px] font-medium">
-    <b class="text-[#334155]">دليل الأحداث</b>
-    @for (l of legend; track l.ar) {
-      <span class="flex items-center gap-2 text-[#475569]"><i class="size-2.5 rounded-full" [style.background]="l.color"></i>{{ l.ar }}</span>
-    }
-  </div>
+</div>
+
+<div class="flex flex-wrap items-center gap-x-5 gap-y-1 text-[13px] font-medium">
+  <b class="text-[#334155]">دليل الأحداث</b>
+  @for (l of legend; track l.ar) {
+    <span class="flex items-center gap-2 text-[#475569]"><i class="size-2.5 rounded-full" [style.background]="l.color"></i>{{ l.ar }}</span>
+  }
 </div>
