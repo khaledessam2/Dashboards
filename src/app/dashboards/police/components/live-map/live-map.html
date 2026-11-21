@@ -41,23 +41,24 @@
         </div>
       }
 
-      <div class="pointer-events-auto flex flex-1 flex-col gap-1 rounded-xl border border-[#e6ebf2] bg-white/95 p-3 text-[14px] font-medium text-[#475569]">
-        <b class="block text-[15px] text-ink">دليل الكثافة <span class="text-[12px] font-medium text-[#475569]">(اضغط للفلترة)</span></b>
-        <div class="mb-1 h-2.5 rounded-full" style="background: linear-gradient(to left, #e11d48, #facc15, #10b981)"></div>
-        @for (l of legend; track l.id) {
-          <button type="button" class="flex cursor-pointer items-center justify-between gap-2 rounded-md border-0 bg-transparent px-1.5 py-0.5 text-start text-[14px] font-medium text-[#475569] hover:bg-[#f6f8fb]"
-            [class.opacity-40]="hiddenLevels().includes(l.id)" [attr.aria-pressed]="!hiddenLevels().includes(l.id)" (click)="toggleLevel(l.id)">
-            <span class="flex items-center gap-2" [class.line-through]="hiddenLevels().includes(l.id)"><i class="size-2.5 rounded-full" [style.background]="legendColor[l.id]"></i>{{ l.ar }} ({{ l.hint }})</span>
-            <b class="num rounded bg-[#f1f5f9] px-1.5 text-[12px] text-ink">{{ levelCounts()[l.id] }}</b>
-          </button>
-        }
-      </div>
     }
     <button type="button" (click)="panelsOpen.set(!panelsOpen())" class="pointer-events-auto flex size-9 shrink-0 cursor-pointer items-center justify-center rounded-lg border border-[#e6ebf2] bg-white text-[#475569] hover:bg-[#f6f8fb]"
       [attr.aria-label]="panelsOpen() ? 'إخفاء اللوحات' : 'إظهار اللوحات'" [attr.aria-expanded]="panelsOpen()">
       <span class="material-symbols-outlined !text-[20px]">{{ panelsOpen() ? 'keyboard_arrow_down' : 'keyboard_arrow_up' }}</span>
     </button>
   </div>
+</div>
+
+<div class="flex flex-wrap items-center gap-x-5 gap-y-1 border-t border-[#eef1f6] px-5 py-3 text-[14px] font-medium text-[#475569]">
+  <b class="text-[15px] text-ink">دليل الكثافة <span class="text-[12px] font-medium text-[#475569]">(اضغط للفلترة)</span></b>
+  <div class="h-2.5 w-24 rounded-full" style="background: linear-gradient(to left, #e11d48, #facc15, #10b981)"></div>
+  @for (l of legend; track l.id) {
+    <button type="button" class="flex cursor-pointer items-center gap-2 rounded-md border-0 bg-transparent px-1.5 py-0.5 text-start text-[14px] font-medium text-[#475569] hover:bg-[#f6f8fb]"
+      [class.opacity-40]="hiddenLevels().includes(l.id)" [attr.aria-pressed]="!hiddenLevels().includes(l.id)" (click)="toggleLevel(l.id)">
+      <span class="flex items-center gap-2" [class.line-through]="hiddenLevels().includes(l.id)"><i class="size-2.5 rounded-full" [style.background]="legendColor[l.id]"></i>{{ l.ar }} ({{ l.hint }})</span>
+      <b class="num rounded bg-[#f1f5f9] px-1.5 text-[12px] text-ink">{{ levelCounts()[l.id] }}</b>
+    </button>
+  }
 </div>
 
 @if (camera(); as cam) {

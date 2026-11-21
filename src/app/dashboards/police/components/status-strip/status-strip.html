@@ -4,9 +4,7 @@
     <div class="flex min-w-0 flex-col gap-1">
       <span class="text-[16px] leading-6 font-semibold text-ink">الصلاة القادمة: صلاة {{ store.nextPrayer().ar }} (المدينة)</span>
       <div class="flex flex-wrap items-center gap-2.5">
-        <b class="num text-[30px] leading-9 text-[#059669] [direction:ltr]">{{ store.nextPrayer().countdown }}</b>
-        <span class="rounded px-2 py-0.5 text-[13px] font-bold" [class]="store.nextPrayer().minutes <= 45 ? 'bg-[#fff1f2] text-[#e11d48]' : 'bg-[#ecfdf5] text-[#059669]'">{{ tag() }}</span>
-      </div>
+        <b class="num text-[30px] leading-9 text-[#059669] [direction:ltr]">{{ store.nextPrayer().countdown }}</b>      </div>
     </div>
   </div>
 

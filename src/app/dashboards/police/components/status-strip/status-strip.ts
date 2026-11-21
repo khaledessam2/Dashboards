@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { PoliceStore } from '../../../../shared/services/police-store';
 
 @Component({
@@ -9,9 +9,4 @@ import { PoliceStore } from '../../../../shared/services/police-store';
 })
 export class PoliceStatusStrip {
   protected readonly store = inject(PoliceStore);
-
-  protected readonly tag = computed(() => {
-    const m = this.store.nextPrayer().minutes;
-    return m <= 45 ? 'T-45 تأهب لحركة الحشود' : `T-${m} متابعة اعتيادية`;
-  });
 }

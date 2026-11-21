@@ -56,7 +56,7 @@ const BASE_INCIDENTS: Incident[] = [
 @Injectable({ providedIn: 'root' })
 export class MunicipalityCommandStore {
   readonly layers = signal<Record<MuniLayerId, boolean>>({ lighting: true, water: true, roads: true, sanitation: true, video: true });
-  readonly selectedUid = signal('MUN-2026-8841');
+  readonly selectedUid = signal<string | null>(null);
   readonly traceUid = signal<string | null>(null);
   readonly govOpen = signal(false);
   readonly toast = signal<string | null>(null);
@@ -78,7 +78,7 @@ export class MunicipalityCommandStore {
 
   readonly filtered = this.incidents;
 
-  readonly selected = computed(() => this.incidents().find((i) => i.uid === this.selectedUid()) ?? this.incidents()[0]);
+  readonly selected = computed(() => this.incidents().find((i) => i.uid === this.selectedUid()) ?? null);
   readonly trace = computed(() => this.incidents().find((i) => i.uid === this.traceUid()) ?? null);
 
   readonly kpi = computed(() => {

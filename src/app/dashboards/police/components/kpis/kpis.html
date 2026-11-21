@@ -9,9 +9,7 @@
       <div class="flex items-center justify-between gap-2">
         <span class="num rounded-md bg-[#ecfdf5] px-2 py-0.5 text-[13px] font-bold whitespace-nowrap text-[#059669]">↑ {{ store.hourDelta }}% خلال ساعة</span>
         <svg viewBox="0 0 120 30" class="h-6 w-20 [direction:ltr]" aria-hidden="true"><path [attr.d]="spark()" fill="none" stroke="#059669" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" /></svg>
-      </div>
-      <span class="text-[14px] text-[#475569] font-medium">المصدر: حساسات &amp; VISuite</span>
-    </div>
+      </div>    </div>
   </article>
 
   <article [flashOnChange]="store.occupancyPct()" class="pcard relative !gap-3 overflow-hidden !p-4">
