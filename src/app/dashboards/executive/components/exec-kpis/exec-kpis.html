@@ -1,0 +1,89 @@
+    <!-- Overall gauge -->
+    <button type="button" (click)="store.openDrawer('overall')" class="pcard cursor-pointer !flex-row items-center justify-between !gap-3 !p-4 text-start hover:bg-[#f6f8fb]">
+      <div class="flex min-w-0 flex-col gap-1.5">
+        <span class="text-[13px] font-bold text-[#059669]">النبض العام للمنطقة</span>
+        <b class="text-[17px] leading-6 text-ink">مؤشر الاستقرار العام</b>
+        <span class="flex w-fit items-center gap-1.5 rounded-full px-2.5 py-0.5 text-[13px] font-bold" [style.background]="overall().soft" [style.color]="overall().color">
+          <i class="size-1.5 rounded-full" [style.background]="overall().color"></i>{{ overall().label }}
+        </span>
+      </div>
+      <div class="relative flex size-24 shrink-0 items-center justify-center">
+        <svg class="size-24 -rotate-90" viewBox="0 0 100 100" aria-hidden="true">
+          <circle cx="50" cy="50" r="40" stroke="#e6ebf2" stroke-width="9" fill="none" />
+          <circle cx="50" cy="50" r="40" [attr.stroke]="overall().color" stroke-width="9" fill="none" stroke-dasharray="251.2" [attr.stroke-dashoffset]="gaugeOffset()" stroke-linecap="round" class="transition-all duration-700" />
+        </svg>
+        <b class="num absolute text-[24px] text-ink [direction:ltr]">{{ overall().pct }}%</b>
+      </div>
+    </button>
+
+    <!-- Security -->
+    <button type="button" (click)="store.openDrawer('security')" class="pcard cursor-pointer !gap-3 !p-4 text-start hover:bg-[#f6f8fb]">
+      <div class="flex items-center justify-between gap-2">
+        <div class="flex items-center gap-2.5">
+          <span class="flex size-10 shrink-0 items-center justify-center rounded-xl bg-[#ecfdf5] text-[#10b981]"><span class="material-symbols-outlined !text-[22px]">mosque</span></span>
+          <div class="flex flex-col">
+            <span class="text-[13px] font-medium text-[#475569]">الأمن العام (الحرم)</span>
+            <b class="text-[15px] leading-5 text-ink">كثافة وحركة الحشود</b>
+          </div>
+        </div>
+        <b class="num text-[30px] leading-9 text-ink [direction:ltr]">78%</b>
+      </div>
+      <div class="mt-auto flex items-center justify-between border-t border-[#eef1f6] pt-2.5">
+        <span class="rounded-full bg-[#ecfdf5] px-2.5 py-0.5 text-[13px] font-bold text-[#059669]">مستقر</span>
+        <span class="flex items-center text-[13px] text-[#475569]">التفاصيل<span class="material-symbols-outlined !text-[16px]">chevron_left</span></span>
+      </div>
+    </button>
+
+    <!-- Traffic -->
+    <button type="button" (click)="store.openDrawer('traffic')" class="pcard cursor-pointer !gap-3 !p-4 text-start hover:bg-[#f6f8fb]">
+      <div class="flex items-center justify-between gap-2">
+        <div class="flex items-center gap-2.5">
+          <span class="flex size-10 shrink-0 items-center justify-center rounded-xl bg-[#fffbeb] text-[#f59e0b]"><span class="material-symbols-outlined !text-[22px]">traffic</span></span>
+          <div class="flex flex-col">
+            <span class="text-[13px] font-medium text-[#475569]">المرور</span>
+            <b class="text-[15px] leading-5 text-ink">انسيابية المحاور</b>
+          </div>
+        </div>
+        <b class="num text-[30px] leading-9 text-ink [direction:ltr]">{{ traffic().pct }}%</b>
+      </div>
+      <div class="mt-auto flex items-center justify-between border-t border-[#eef1f6] pt-2.5">
+        <span class="rounded-full bg-[#fffbeb] px-2.5 py-0.5 text-[13px] font-bold text-[#d97706]">{{ traffic().pill }}</span>
+        <span class="flex items-center text-[13px] text-[#475569]">التفاصيل<span class="material-symbols-outlined !text-[16px]">chevron_left</span></span>
+      </div>
+    </button>
+
+    <!-- Municipality -->
+    <button type="button" (click)="store.openDrawer('municipality')" class="pcard cursor-pointer !gap-3 !p-4 text-start hover:bg-[#f6f8fb]">
+      <div class="flex items-center justify-between gap-2">
+        <div class="flex items-center gap-2.5">
+          <span class="flex size-10 shrink-0 items-center justify-center rounded-xl bg-[#ecfdf5] text-[#10b981]"><span class="material-symbols-outlined !text-[22px]">location_city</span></span>
+          <div class="flex flex-col">
+            <span class="text-[13px] font-medium text-[#475569]">الأمانة (البلدية)</span>
+            <b class="text-[15px] leading-5 text-ink">جاهزية الخدمات</b>
+          </div>
+        </div>
+        <b class="num text-[30px] leading-9 text-ink [direction:ltr]">95%</b>
+      </div>
+      <div class="mt-auto flex items-center justify-between border-t border-[#eef1f6] pt-2.5">
+        <span class="rounded-full bg-[#fff1f2] px-2.5 py-0.5 text-[13px] font-bold text-[#e11d48]">كسر مياه مؤثر (1)</span>
+        <span class="flex items-center text-[13px] text-[#475569]">التفاصيل<span class="material-symbols-outlined !text-[16px]">chevron_left</span></span>
+      </div>
+    </button>
+
+    <!-- Digital -->
+    <button type="button" (click)="store.openDrawer('digital')" class="pcard cursor-pointer !gap-3 !p-4 text-start hover:bg-[#f6f8fb]">
+      <div class="flex items-center justify-between gap-2">
+        <div class="flex items-center gap-2.5">
+          <span class="flex size-10 shrink-0 items-center justify-center rounded-xl bg-[#ecfdf5] text-[#059669]"><span class="material-symbols-outlined !text-[22px]">satellite_alt</span></span>
+          <div class="flex flex-col">
+            <span class="text-[13px] font-medium text-[#475569]">البنية الرقمية</span>
+            <b class="text-[15px] leading-5 text-ink">جاهزية الرصد</b>
+          </div>
+        </div>
+        <b class="num text-[30px] leading-9 text-ink [direction:ltr]">96%</b>
+      </div>
+      <div class="mt-auto flex items-center justify-between border-t border-[#eef1f6] pt-2.5">
+        <span class="rounded-full bg-[#fffbeb] px-2.5 py-0.5 text-[13px] font-bold text-[#d97706]">نقص رؤية جزئي</span>
+        <span class="flex items-center text-[13px] text-[#475569]">التفاصيل<span class="material-symbols-outlined !text-[16px]">chevron_left</span></span>
+      </div>
+    </button>

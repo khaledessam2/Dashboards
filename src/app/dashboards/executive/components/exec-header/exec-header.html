@@ -1,0 +1,40 @@
+  <header class="flex flex-wrap items-center justify-between gap-3 rounded-xl bg-surface px-5 py-3 shadow-card">
+    <div class="flex items-center gap-3">
+      <span class="flex size-12 items-center justify-center rounded-xl bg-[#059669] text-white">
+        <span class="material-symbols-outlined !text-[28px]">apartment</span>
+      </span>
+      <div>
+        <div class="flex flex-wrap items-center gap-2.5">
+          <h1 class="m-0 text-[22px] leading-7 font-bold text-ink">لوحة القيادة التنفيذية الموحدة</h1>
+          <span class="flex items-center gap-2 rounded-full bg-green-600/10 px-3 py-0.5 text-[13px] font-semibold text-green-700">
+            <span class="size-2.5 animate-pulse rounded-full bg-green-500"></span>نطاق المشروع المعتمد — المدينة المنورة
+          </span>
+        </div>
+        <p class="m-0 text-[15px] font-semibold text-ink">الموقف التشغيلي الموحد: الأمن العام، المرور، الأمانة، والبنية الرقمية</p>
+      </div>
+    </div>
+
+    <div class="flex flex-wrap items-center gap-3">
+      <span class="flex items-center gap-2 rounded-full border border-line px-3 py-1.5 text-[14px] text-ink">
+        <svg class="size-5 -rotate-90" viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="12" cy="12" r="9" stroke="#e6ebf2" stroke-width="3" fill="none" />
+          <circle cx="12" cy="12" r="9" stroke="#10b981" stroke-width="3" fill="none" stroke-dasharray="56.5" [attr.stroke-dashoffset]="prayerDash()" stroke-linecap="round" />
+        </svg>
+        <span class="font-semibold">صلاة {{ prayer().ar }}</span>
+        <b class="num text-[#059669] [direction:ltr]">{{ prayer().countdown }}</b>
+      </span>
+
+      <span class="flex items-center gap-2 rounded-full border border-line px-3 py-1.5 text-[14px] text-ink">
+        <span class="material-symbols-outlined !text-[18px] text-[#f59e0b]">wb_sunny</span>
+        <b class="num"><span class="[direction:ltr] inline-block">24°C</span> • مستقر</b>
+      </span>
+
+      <span class="flex items-center gap-2 rounded-full border border-line px-3 py-1.5 text-[14px] text-ink">
+        <span class="material-symbols-outlined !text-[18px] font-medium text-[#475569]">schedule</span>توقيت المدينة المنورة
+        <b class="num [direction:ltr]">{{ clock() }}</b>
+      </span>
+      <button type="button" class="flex size-10 cursor-pointer items-center justify-center rounded-lg border border-line bg-surface font-medium text-[#475569]" aria-label="ملء الشاشة" (click)="fullscreen()">
+        <span class="material-symbols-outlined !text-[22px]">fullscreen</span>
+      </button>
+    </div>
+  </header>

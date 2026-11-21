@@ -38,10 +38,10 @@ export const DISTRICTS: { key: DistrictKey; ar: string; ll: [number, number] }[]
 
 export const TYPE_META: Record<MuniType, { ar: string; color: string; icon: string }> = {
   lighting: { ar: 'الإنارة الذكية', color: '#f59e0b', icon: 'lightbulb' },
-  water: { ar: 'المياه والتصريف', color: '#0ea5e9', icon: 'water_drop' },
-  roads: { ar: 'الطرق والحفريات', color: '#f97316', icon: 'construction' },
+  water: { ar: 'المياه والتصريف', color: '#10b981', icon: 'water_drop' },
+  roads: { ar: 'الطرق والحفريات', color: '#f59e0b', icon: 'construction' },
   sanitation: { ar: 'النظافة والحاويات', color: '#10b981', icon: 'delete' },
-  video: { ar: 'تحليل الفيديو', color: '#0891b2', icon: 'videocam' },
+  video: { ar: 'تحليل الفيديو', color: '#059669', icon: 'videocam' },
 };
 
 const BASE_INCIDENTS: Incident[] = [

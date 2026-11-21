@@ -12,6 +12,6 @@ export class DcSiteBadges {
     { name: 'DC-1 رئيسي', status: 'نشط', color: '#00a651' },
     { name: 'DC-2 احتياطي', status: 'نشط', color: '#00a651' },
     { name: 'DR Site', status: 'نشط', color: '#00a651' },
-    { name: 'Cloud Hybrid', status: 'متصل', color: '#00bcd4' },
+    { name: 'Cloud Hybrid', status: 'متصل', color: '#10b981' },
   ];
 }

@@ -13,14 +13,14 @@ import { VideoView } from '../views/video-view/video-view';
 import { WaterView } from '../views/water-view/water-view';
 
 const TABS = [
-  { id: 'overview', ar: 'نظرة عامة تنفيذية', icon: 'layers', color: '#0b5cff' },
+  { id: 'overview', ar: 'نظرة عامة تنفيذية', icon: 'layers', color: '#059669' },
   { id: 'lighting', ar: '١. الإنارة الذكية والطاقة', icon: 'lightbulb', color: '#f59e0b' },
   { id: 'reports', ar: '٢. البلاغات وأوامر العمل', icon: 'assignment', color: '#e11d48' },
   { id: 'sanitation', ar: '٣. النظافة والنفايات', icon: 'cleaning_services', color: '#10b981' },
-  { id: 'water', ar: '٤. المياه وتصريف الأمطار', icon: 'water_drop', color: '#0ea5e9' },
-  { id: 'roads', ar: '٥. الطرق والأرصفة والأصول', icon: 'construction', color: '#f97316' },
-  { id: 'video', ar: '٦. تحليل الفيديو', icon: 'videocam', color: '#06b6d4' },
-  { id: 'environment', ar: '٧. البيئة والطقس', icon: 'eco', color: '#14b8a6' },
+  { id: 'water', ar: '٤. المياه وتصريف الأمطار', icon: 'water_drop', color: '#10b981' },
+  { id: 'roads', ar: '٥. الطرق والأرصفة والأصول', icon: 'construction', color: '#f59e0b' },
+  { id: 'video', ar: '٦. تحليل الفيديو', icon: 'videocam', color: '#10b981' },
+  { id: 'environment', ar: '٧. البيئة والطقس', icon: 'eco', color: '#10b981' },
 ] as const;
 
 type TabId = (typeof TABS)[number]['id'];

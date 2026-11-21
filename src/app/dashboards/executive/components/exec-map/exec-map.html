@@ -1,0 +1,39 @@
+      <header class="flex flex-wrap items-center justify-between gap-3 border-b border-[#eef1f6] px-5 py-3.5">
+        <div class="flex items-center gap-3">
+          <span class="flex size-10 items-center justify-center rounded-xl bg-[#ecfdf5] text-[#059669]"><span class="material-symbols-outlined !text-[22px]">map</span></span>
+          <h2 class="m-0 text-[18px] leading-6 font-bold text-ink">الموقف المكاني الموحد</h2>
+        </div>
+        <div class="flex flex-wrap items-center gap-2">
+          <div class="inline-flex gap-1 rounded-xl border border-line bg-[#f6f8fb] p-1">
+            @for (b of layerButtons; track b.id) {
+              <button type="button" (click)="toggleLayer(b.id)"
+                class="cursor-pointer rounded-lg border px-2.5 py-1 text-[13px] font-bold transition"
+                [class]="layers()[b.id] ? b.on : 'border-transparent bg-transparent text-[#94a3b8]'">{{ b.ar }}</button>
+            }
+          </div>
+          <div class="inline-flex gap-1 rounded-xl border border-line bg-[#f6f8fb] p-1">
+            <button type="button" (click)="setScope('city')" class="cursor-pointer rounded-lg border-0 px-3 py-1 text-[13px] font-bold transition"
+              [class]="scope() === 'city' ? 'bg-[#059669] text-white' : 'bg-transparent text-[#475569] hover:bg-white'">المدينة كاملة</button>
+            <button type="button" (click)="setScope('haram')" class="cursor-pointer rounded-lg border-0 px-3 py-1 text-[13px] font-bold transition"
+              [class]="scope() === 'haram' ? 'bg-[#059669] text-white' : 'bg-transparent text-[#475569] hover:bg-white'">التركيز على الحرم والمنطقة المركزية</button>
+          </div>
+        </div>
+      </header>
+
+      <div class="relative min-h-0 flex-1">
+        <div #map class="absolute inset-0 z-0"></div>
+
+        <!-- Active focus -->
+        <div class="pointer-events-none absolute start-3 top-3 z-[500] max-w-[70%] rounded-xl border border-line bg-surface/95 px-3.5 py-2 shadow-card">
+          <div class="flex items-center gap-2 text-[14px] font-bold text-ink"><i class="size-2.5 rounded-full" [style.background]="store.focus().color"></i>نطاق التأثير النشط: {{ store.focus().title }}</div>
+          <p class="m-0 mt-0.5 text-[12px] font-medium text-[#475569]">الجهات: {{ store.focus().agency }} • {{ store.focus().dossier.lastUpdate }}</p>
+        </div>
+
+        <!-- Legend -->
+        <div class="pointer-events-none absolute end-3 bottom-6 z-[500] flex flex-wrap items-center gap-3.5 rounded-xl border border-line bg-surface/95 px-3 py-2 text-[12px] font-semibold text-ink shadow-card max-[700px]:hidden">
+          <span class="flex items-center gap-1.5"><i class="size-2.5 rounded-full bg-[#e11d48]"></i>حادث موحد (أثر متعدد)</span>
+          <span class="flex items-center gap-1.5"><i class="size-2.5 rounded-full bg-[#d97706]"></i>تنسيق / وصول</span>
+          <span class="flex items-center gap-1.5"><i class="size-2.5 rounded-full bg-[#059669]"></i>مؤمّن / جاهز</span>
+          <span class="flex items-center gap-1.5 text-[#d97706]"><i class="size-2.5 rounded-sm border border-dashed border-[#d97706] bg-[#f59e0b]/20"></i>نقص رؤية (غير صفري)</span>
+        </div>
+      </div>

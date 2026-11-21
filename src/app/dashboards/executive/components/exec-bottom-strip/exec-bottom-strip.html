@@ -1,0 +1,42 @@
+    <button type="button" (click)="store.openDrawer('weather')" class="pcard cursor-pointer !flex-row items-center justify-between !gap-3.5 !px-5 !py-4 text-start hover:bg-[#f6f8fb]">
+      <div class="flex items-center gap-3.5">
+        <span class="flex size-12 shrink-0 items-center justify-center rounded-xl bg-[#ecfdf5] text-[#10b981]"><span class="material-symbols-outlined !text-[26px]">cloud</span></span>
+        <div class="flex min-w-0 flex-col gap-1">
+          <span class="text-[14px] font-semibold text-[#475569]">الطقس وجاهزية الساعات القادمة</span>
+          <b class="text-[16px] leading-6 text-ink">مستقر — جاهزية المضخات <span class="num">98%</span></b>
+        </div>
+      </div>
+      <span class="material-symbols-outlined !text-[20px] text-[#94a3b8]">chevron_left</span>
+    </button>
+
+    <button type="button" (click)="store.openDrawer('arrivals')" class="pcard cursor-pointer !flex-row items-center justify-between !gap-3.5 !px-5 !py-4 text-start hover:bg-[#f6f8fb]">
+      <div class="flex items-center gap-3.5">
+        <span class="flex size-12 shrink-0 items-center justify-center rounded-xl bg-[#fffbeb] text-[#f59e0b]"><span class="material-symbols-outlined !text-[26px]">train</span></span>
+        <div class="flex min-w-0 flex-col gap-1">
+          <span class="text-[14px] font-semibold text-[#475569]">موجات الوصول والزيارات</span>
+          <b class="text-[16px] leading-6 text-ink">موجة قطار ومطار خلال <span class="num">45</span> دقيقة</b>
+        </div>
+      </div>
+      <div class="flex h-7 shrink-0 items-end gap-1" aria-hidden="true">
+        <span class="h-3 w-1.5 rounded-sm bg-[#e2e8f0]"></span>
+        <span class="h-4 w-1.5 rounded-sm bg-[#f59e0b]/60"></span>
+        <span class="h-7 w-1.5 rounded-sm bg-[#f59e0b]"></span>
+        <span class="h-4 w-1.5 rounded-sm bg-[#e2e8f0]"></span>
+      </div>
+    </button>
+
+    <button type="button" (click)="store.openDrawer('directives')" class="pcard cursor-pointer justify-center !gap-3 !px-5 !py-4 text-start hover:bg-[#f6f8fb]">
+      <div class="flex flex-wrap items-center justify-between gap-2">
+        <span class="flex items-center gap-2 text-[16px] font-bold text-ink"><span class="material-symbols-outlined !text-[22px] text-[#059669]">fact_check</span>متابعة التوجيهات السابقة</span>
+        <span class="num flex items-center gap-2 text-[13px] font-bold">
+          <span class="text-[#059669]">{{ store.dirDone() }} منجز</span><span class="text-[#cbd5e1]">•</span>
+          <span class="text-[#d97706]">{{ store.dirProg() }} قيد التنفيذ</span><span class="text-[#cbd5e1]">•</span>
+          <span class="text-[#e11d48]">{{ store.dirLate() }} متأخر</span>
+        </span>
+      </div>
+      <div class="flex h-2.5 w-full gap-0.5 overflow-hidden rounded-full bg-[#e6ebf2]">
+        <div class="h-full bg-[#10b981] transition-[width] duration-500" [style.width.%]="store.dirDone() / store.dirTotal() * 100"></div>
+        <div class="h-full bg-[#f59e0b] transition-[width] duration-500" [style.width.%]="store.dirProg() / store.dirTotal() * 100"></div>
+        <div class="h-full bg-[#e11d48] transition-[width] duration-500" [style.width.%]="store.dirLate() / store.dirTotal() * 100"></div>
+      </div>
+    </button>

@@ -12,15 +12,15 @@ const STATION: Pt = [24.5560, 39.7870];
 interface Pin { label?: string; key: string; layer: LayerId | 'hubs'; ll: Pt; bg: string; text: string; shape: 'circle' | 'square' | 'pill'; size?: number; pulse?: boolean }
 const PINS: Pin[] = [
   { key: 'central_area', layer: 'hubs', ll: C, bg: '#10b981', text: 'mosque', shape: 'circle', size: 30 },
-  { key: 'airport_hub', layer: 'hubs', ll: AIRPORT, bg: '#0b5cff', text: 'flight_land', label: 'مطار الأمير محمد', shape: 'pill' },
-  { key: 'train_hub', layer: 'hubs', ll: STATION, bg: '#0b5cff', text: 'train', label: 'قطار الحرمين', shape: 'pill' },
-  { key: 'closure_vip', layer: 'closures', ll: [24.4672, 39.6275], bg: '#7c3aed', text: 'remove_road', shape: 'circle', size: 28 },
+  { key: 'airport_hub', layer: 'hubs', ll: AIRPORT, bg: '#059669', text: 'flight_land', label: 'مطار الأمير محمد', shape: 'pill' },
+  { key: 'train_hub', layer: 'hubs', ll: STATION, bg: '#059669', text: 'train', label: 'قطار الحرمين', shape: 'pill' },
+  { key: 'closure_vip', layer: 'closures', ll: [24.4672, 39.6275], bg: '#d97706', text: 'remove_road', shape: 'circle', size: 28 },
   { key: 'roadwork_1', layer: 'closures', ll: [24.4790, 39.5990], bg: '#f59e0b', text: 'construction', shape: 'circle', size: 26 },
-  { key: 'park_central', layer: 'parking', ll: [24.4735, 39.6045], bg: '#0b5cff', text: 'local_parking', shape: 'square', size: 26 },
+  { key: 'park_central', layer: 'parking', ll: [24.4735, 39.6045], bg: '#059669', text: 'local_parking', shape: 'square', size: 26 },
   { key: 'park_shuhada', layer: 'parking', ll: [24.5000, 39.6190], bg: '#10b981', text: 'local_parking', shape: 'square', size: 26 },
   { key: 'park_aliyah', layer: 'parking', ll: [24.4320, 39.6420], bg: '#10b981', text: 'local_parking', shape: 'square', size: 26 },
   { key: 'acc_911', layer: 'hazards', ll: [24.4585, 39.6042], bg: '#e11d48', text: 'car_crash', shape: 'circle', size: 28, pulse: true },
-  { key: 'hazard_water', layer: 'hazards', ll: [24.4672, 39.5800], bg: '#0ea5e9', text: 'water_drop', shape: 'circle', size: 28 },
+  { key: 'hazard_water', layer: 'hazards', ll: [24.4672, 39.5800], bg: '#10b981', text: 'water_drop', shape: 'circle', size: 28 },
   { key: 'alert_wrongway', layer: 'hazards', ll: [24.4625, 39.6005], bg: '#e11d48', text: 'u_turn_left', shape: 'circle', size: 28, pulse: true },
   { key: 'alert_parking', layer: 'hazards', ll: [24.4695, 39.6200], bg: '#f59e0b', text: 'block', shape: 'circle', size: 28 },
   { key: 'cong_quba', layer: 'hazards', ll: [24.4552, 39.6112], bg: '#e11d48', text: 'traffic', shape: 'circle', size: 28 },
@@ -63,15 +63,15 @@ export class RoadMap {
   protected readonly layerButtons: { id: LayerId; ar: string; color: string }[] = [
         { id: 'hazards', ar: 'الحوادث والمخاطر', color: '#e11d48' },
     { id: 'closures', ar: 'الإغلاقات والحفريات', color: '#f59e0b' },
-    { id: 'parking', ar: 'المواقف والترددي', color: '#0b5cff' },
-    { id: 'cameras', ar: 'تغطية الكاميرات', color: '#0891b2' },
+    { id: 'parking', ar: 'المواقف والترددي', color: '#059669' },
+    { id: 'cameras', ar: 'تغطية الكاميرات', color: '#059669' },
   ];
 
   protected readonly legend = [
     { color: '#e11d48', ar: 'حادث / ازدحام / تنبيه كاميرا' },
-    { color: '#0ea5e9', ar: 'مخاطر مياه وبلدية' },
+    { color: '#10b981', ar: 'مخاطر مياه وبلدية' },
     { color: '#f59e0b', ar: 'إغلاق / حفريات / وقوف مخالف' },
-    { color: '#0b5cff', ar: 'مواقف ومراكز نقل' },
+    { color: '#059669', ar: 'مواقف ومراكز نقل' },
   ];
 
   private map?: L.Map;
@@ -110,8 +110,8 @@ export class RoadMap {
       this.group(p.layer).addLayer(m);
     }
     for (const ll of CAMERAS) {
-      this.group('cameras').addLayer(L.circle(ll, { radius: 380, color: '#0891b2', weight: 1, fillColor: '#0891b2', fillOpacity: 0.18 }));
-      this.group('cameras').addLayer(L.circleMarker(ll, { radius: 4, color: '#fff', weight: 1.5, fillColor: '#0891b2', fillOpacity: 1 }));
+      this.group('cameras').addLayer(L.circle(ll, { radius: 380, color: '#059669', weight: 1, fillColor: '#059669', fillOpacity: 0.18 }));
+      this.group('cameras').addLayer(L.circleMarker(ll, { radius: 4, color: '#fff', weight: 1.5, fillColor: '#059669', fillOpacity: 1 }));
     }
   }
 

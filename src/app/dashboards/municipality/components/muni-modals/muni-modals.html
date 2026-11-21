@@ -4,7 +4,7 @@
     <div class="w-full max-w-[600px] overflow-hidden rounded-xl border border-[#e6ebf2] bg-white shadow-xl" (click)="$event.stopPropagation()">
       <div class="flex items-center justify-between border-b border-[#e6ebf2] px-4 py-3">
         <div class="flex items-center gap-2">
-          <span class="num rounded bg-[#eaf1ff] px-2 py-0.5 text-[12px] font-bold text-[#0b5cff] [direction:ltr]">{{ t.uid }}</span>
+          <span class="num rounded bg-[#ecfdf5] px-2 py-0.5 text-[12px] font-bold text-[#059669] [direction:ltr]">{{ t.uid }}</span>
           <h3 class="m-0 text-[16px] font-bold text-ink">{{ t.title }}</h3>
         </div>
         <button type="button" class="cursor-pointer rounded border-0 bg-transparent px-2 py-1 text-ink-2 hover:bg-hover" aria-label="إغلاق" (click)="store.traceUid.set(null)">✕</button>
@@ -12,14 +12,14 @@
       <div class="flex flex-col gap-3 p-4">
         <div class="grid grid-cols-2 gap-2.5 max-[560px]:grid-cols-[minmax(0,1fr)]">
           <div class="rounded-lg border border-[#e6ebf2] bg-[#f6f8fb] p-3"><span class="block text-[12px] text-[#475569]">١. البلاغ / مصدر الرصد</span><b class="text-[14px] text-ink">{{ t.source }}</b></div>
-          <div class="rounded-lg border border-[#e6ebf2] bg-[#f6f8fb] p-3"><span class="block text-[12px] text-[#475569]">٢. معرّف الأصل البلدي (GIS)</span><b class="num text-[14px] text-[#0891b2]">{{ t.asset }} ({{ t.districtLabel }})</b></div>
+          <div class="rounded-lg border border-[#e6ebf2] bg-[#f6f8fb] p-3"><span class="block text-[12px] text-[#475569]">٢. معرّف الأصل البلدي (GIS)</span><b class="num text-[14px] text-[#059669]">{{ t.asset }} ({{ t.districtLabel }})</b></div>
           <div class="rounded-lg border border-[#e6ebf2] bg-[#f6f8fb] p-3"><span class="block text-[12px] text-[#475569]">٣. أمر العمل (CMMS) والمقاول</span><b class="text-[14px] text-[#d97706]">{{ t.wo }}</b></div>
           <div class="rounded-lg border border-[#e6ebf2] bg-[#f6f8fb] p-3"><span class="block text-[12px] text-[#475569]">٤. الربط المشترك لمنع التكرار</span><b class="text-[14px] text-[#059669]">{{ t.cross }}</b></div>
         </div>
         <div class="relative flex h-36 items-center justify-center overflow-hidden rounded-xl bg-[#0f172a] p-4">
-          <div class="absolute inset-0 opacity-20" style="background-image: radial-gradient(#38bdf8 1px, transparent 1px); background-size: 16px 16px;"></div>
+          <div class="absolute inset-0 opacity-20" style="background-image: radial-gradient(#34d399 1px, transparent 1px); background-size: 16px 16px;"></div>
           <div class="z-10 text-center">
-            <span class="material-symbols-outlined !text-[32px] text-[#38bdf8]">videocam</span>
+            <span class="material-symbols-outlined !text-[32px] text-[#34d399]">videocam</span>
             <p class="m-0 mt-1 text-[14px] font-bold text-white">معاينة التحقق الميداني / VISuite</p>
             <p class="m-0 mt-1 text-[13px] text-slate-400">{{ t.notes }}</p>
           </div>
@@ -29,7 +29,7 @@
         <span class="text-[14px] font-medium text-[#475569]">تحديث حالة التنفيذ الفعلي:</span>
         <div class="flex gap-2">
           <button type="button" class="cursor-pointer rounded-lg border border-line bg-white px-4 py-2 text-[14px] font-semibold text-[#475569] hover:bg-[#f6f8fb]" (click)="store.traceUid.set(null)">إغلاق</button>
-          <button type="button" class="cursor-pointer rounded-lg border-0 bg-[#0b5cff] px-4 py-2 text-[14px] font-bold text-white hover:bg-[#0a4fe0]" (click)="store.verifyTrace()">اعتماد التحقق الميداني</button>
+          <button type="button" class="cursor-pointer rounded-lg border-0 bg-[#059669] px-4 py-2 text-[14px] font-bold text-white hover:bg-[#047857]" (click)="store.verifyTrace()">اعتماد التحقق الميداني</button>
         </div>
       </div>
     </div>
@@ -41,7 +41,7 @@
   <div class="fixed inset-0 z-[2000] flex items-center justify-center bg-black/60 p-4" role="dialog" aria-modal="true" (click)="store.govOpen.set(false)">
     <div class="flex max-h-[85vh] w-full max-w-[960px] flex-col overflow-hidden rounded-xl border border-[#e6ebf2] bg-white shadow-xl" (click)="$event.stopPropagation()">
       <div class="flex items-center justify-between border-b border-[#e6ebf2] px-5 py-3.5">
-        <h3 class="m-0 flex items-center gap-2 text-[18px] font-bold text-ink"><span class="material-symbols-outlined text-[#0b5cff]">database</span>مصفوفة مصادر البيانات وحوكمة التكامل (البلدية - المدينة المنورة)</h3>
+        <h3 class="m-0 flex items-center gap-2 text-[18px] font-bold text-ink"><span class="material-symbols-outlined text-[#059669]">database</span>مصفوفة مصادر البيانات وحوكمة التكامل (البلدية - المدينة المنورة)</h3>
         <button type="button" class="cursor-pointer rounded border-0 bg-transparent px-2 py-1 text-ink-2 hover:bg-hover" aria-label="إغلاق" (click)="store.govOpen.set(false)">✕</button>
       </div>
       <div class="overflow-auto p-4">
@@ -55,7 +55,7 @@
             @for (g of governance; track g.group) {
               <tr class="border-t border-[#e6ebf2]">
                 <td class="px-3 py-3 font-bold text-ink">{{ g.group }}</td>
-                <td class="px-3 py-3 font-semibold text-[#0b5cff]">{{ g.system }}</td>
+                <td class="px-3 py-3 font-semibold text-[#059669]">{{ g.system }}</td>
                 <td class="px-3 py-3 text-[#334155]">{{ g.owner }}</td>
                 <td class="px-3 py-3 text-[#334155]">{{ g.refresh }}</td>
                 <td class="px-3 py-3"><span class="rounded px-2 py-0.5 text-[13px] font-bold" [class]="g.ok ? 'bg-[#ecfdf5] text-[#059669]' : 'bg-[#fffbeb] text-[#d97706]'">{{ g.status }}</span></td>

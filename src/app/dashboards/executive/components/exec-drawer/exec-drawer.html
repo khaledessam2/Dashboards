@@ -1,0 +1,72 @@
+@if (store.drawerKey()) {
+  <div class="fixed inset-0 z-[2000] bg-black/50" (click)="store.closeDrawer()"></div>
+  <aside class="fixed inset-y-0 start-0 z-[2001] flex w-full max-w-[520px] flex-col border-e border-line bg-white shadow-xl" role="dialog" aria-modal="true">
+    <div class="flex items-center justify-between border-b border-line px-5 py-3.5">
+      <h3 class="m-0 flex items-center gap-2 text-[17px] font-bold text-ink">
+        <i class="size-2.5 rounded-full bg-[#059669]"></i>{{ store.drawerIncident()?.title ?? store.drawerSector()?.title ?? 'الملف المكاني الموحد' }}
+      </h3>
+      <button type="button" class="flex size-8 cursor-pointer items-center justify-center rounded-lg border-0 bg-[#f6f8fb] text-[#475569]" aria-label="إغلاق" (click)="store.closeDrawer()">
+        <span class="material-symbols-outlined !text-[20px]">close</span>
+      </button>
+    </div>
+
+    <div class="flex flex-1 flex-col gap-3 overflow-y-auto p-5 text-[14px]">
+      @if (store.drawerIncident(); as d) {
+        <div class="rounded-xl border border-line bg-[#f6f8fb] p-3.5">
+          <b class="mb-1 block text-[#059669]">ماذا حدث وأين؟</b>
+          <p class="m-0 leading-6 text-ink">{{ d.dossier.whatWhere }}</p>
+        </div>
+
+        <div class="rounded-xl border border-[#e11d48]/25 bg-[#fff1f2] p-3.5">
+          <b class="mb-1.5 block text-[#e11d48]">الآثار عبر القطاعات (سجل موحد بدون تكرار العدّ)</b>
+          <ul class="m-0 flex list-none flex-col gap-1 p-0 leading-6 text-ink">
+            @for (i of d.dossier.impacts; track i) { <li>• {{ i }}</li> }
+          </ul>
+        </div>
+
+        <div class="grid grid-cols-2 gap-2.5 max-[480px]:grid-cols-[minmax(0,1fr)]">
+          <div class="rounded-xl border border-line bg-[#f6f8fb] p-3">
+            <b class="mb-1 block text-[#059669]">الجوار والتأثير المكاني</b>
+            <p class="m-0 leading-6 text-[#334155]">{{ d.dossier.proximity }}</p>
+          </div>
+          <div class="rounded-xl border border-line bg-[#f6f8fb] p-3">
+            <b class="mb-1 block text-[#d97706]">نقص الرؤية والبيانات</b>
+            <p class="m-0 leading-6 text-[#334155]">{{ d.dossier.blindSpots }}</p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-3 gap-2 rounded-xl border border-line bg-[#f6f8fb] p-3.5 max-[480px]:grid-cols-[minmax(0,1fr)]">
+          <div><span class="block text-[12px] text-[#475569]">الجهة المسؤولة</span><b class="text-ink">{{ d.agency }}</b></div>
+          <div><span class="block text-[12px] text-[#475569]">اتجاه الوضع</span><b class="text-[#059669]">{{ d.dossier.trend }}</b></div>
+          <div><span class="block text-[12px] text-[#475569]">الموعد المتوقع من الجهة</span><b class="text-[#059669]">{{ d.dossier.eta }}</b></div>
+        </div>
+
+        <div class="rounded-xl border border-[#059669]/30 bg-[#ecfdf5] p-3.5">
+          <b class="mb-1 block text-[#059669]">الخطوة التالية / التوجيه المطلوب</b>
+          <p class="m-0 font-semibold leading-6 text-ink">{{ d.dossier.nextStep }}</p>
+        </div>
+      } @else if (store.drawerSector(); as s) {
+        @if (s.headline) {
+          <div class="rounded-xl border p-3.5 font-bold leading-6"
+            [class]="s.tone === 'ok' ? 'border-[#10b981]/30 bg-[#ecfdf5] text-[#047857]' : s.tone === 'warn' ? 'border-[#f59e0b]/35 bg-[#fffbeb] text-[#b45309]' : 'border-[#e11d48]/30 bg-[#fff1f2] text-[#be123c]'">{{ s.headline }}</div>
+        }
+        @for (p of s.paras; track p) { <p class="m-0 leading-7 text-[#334155]">• {{ p }}</p> }
+        @if (s.rows) {
+          <div class="flex flex-col gap-2">
+            @for (r of s.rows; track r.l) {
+              <div class="flex flex-wrap items-center justify-between gap-2 rounded-xl border border-line bg-[#f6f8fb] p-3">
+                <span class="font-medium text-ink">{{ r.l }}</span>
+                <b [class]="r.ok ? 'text-[#059669]' : 'text-[#d97706]'">{{ r.v }}</b>
+              </div>
+            }
+          </div>
+        }
+      }
+    </div>
+
+    <div class="flex items-center justify-between border-t border-line bg-[#f6f8fb] px-5 py-3 text-[13px] font-medium text-[#475569]">
+      <span>{{ store.drawerIncident() ? 'آخر تحديث: ' + store.drawerIncident()!.dossier.lastUpdate : 'تحديث لحظي من مصادر المشروع المعتمدة' }}</span>
+      <button type="button" class="cursor-pointer rounded-lg border-0 bg-[#1c2434] px-4 py-1.5 text-[14px] font-semibold text-white hover:bg-[#0f172a]" (click)="store.closeDrawer()">إغلاق</button>
+    </div>
+  </aside>
+}

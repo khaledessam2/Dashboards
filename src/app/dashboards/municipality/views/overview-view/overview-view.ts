@@ -16,7 +16,7 @@ export class OverviewView {
   protected readonly store = inject(MunicipalityCommandStore);
 
   protected prio(p: MuniPriority): string {
-    return p === 'critical' ? '#e11d48' : p === 'high' ? '#d97706' : '#0b5cff';
+    return p === 'critical' ? '#e11d48' : p === 'high' ? '#d97706' : '#059669';
   }
 
   protected readonly energyChart: Highcharts.Options = {
@@ -41,7 +41,7 @@ export class OverviewView {
     plotOptions: { column: { borderRadius: 4, borderWidth: 0, groupPadding: 0.12 } },
     series: [
       { type: 'column', name: 'إنجاز النظافة %', data: [97, 92, 90, 88, 86], color: '#10b981' },
-      { type: 'column', name: 'التزام المقاولين %', data: [95, 84, 86, 89, 82], color: '#0b5cff' },
+      { type: 'column', name: 'التزام المقاولين %', data: [95, 84, 86, 89, 82], color: '#f59e0b' },
     ],
   };
 }

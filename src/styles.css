@@ -4,18 +4,18 @@
   /* KPI-Documentation §7 — reference hues */
   --green-accent: #00a651;
   --green-light: #4dc97b;
-  --cyan: #00bcd4;
+  --cyan: #10b981;
   --amber: #f5a623;
   --red: #e74c3c;
-  --indigo: #5b6abf;
-  --purple: #8b5cf6;
+  --indigo: #d97706;
+  --purple: #f59e0b;
 
   /* Severity — Material Dashboard palette */
   --sev-green: #00a651;
   --sev-amber: #f5a623;
   --sev-red: #e74c3c;
   --green: var(--sev-green);
-  --cyan-muted: #00bcd4;
+  --cyan-muted: #10b981;
 
   /* Surfaces — light */
   --bg: #f1f5f9;
@@ -28,7 +28,7 @@
   --border: #e2e8f0;
   --border-strong: rgba(52, 71, 103, 0.16);
   --grid: #e2e8f0;
-  --focus: #1a73e8;
+  --focus: #059669;
 
   --text: #1c2434;
   --text-2: #64748b;
@@ -85,7 +85,7 @@
     text-rendering: optimizeLegibility;
   }
 
-  ::selection { background: rgba(26, 115, 232, 0.2); }
+  ::selection { background: rgba(5, 150, 105, 0.2); }
   :focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; border-radius: 4px; }
   * { scrollbar-width: thin; scrollbar-color: var(--border-strong) transparent; }
 }

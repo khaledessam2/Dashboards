@@ -28,10 +28,10 @@ export class OverviewView {
     { icon: 'local_parking', title: 'وقوف طويل مخالف', place: 'طريق الملك فهد - قرب محطة الحافلات', rule: 'VISuite Rule #14', ago: 'منذ 11د', urgent: false, cam: 'كاميرا طريق الملك فهد - الدائري الأول' },
   ];
   protected readonly incidents = [
-    { id: '#NWC-211', title: 'تسرب مياه وتجمع (شركة المياه)', place: 'طريق السلام - المسار الأيمن (تأثير متوسط)', status: 'جارٍ الإصلاح', color: '#0ea5e9' },
+    { id: '#NWC-211', title: 'تسرب مياه وتجمع (شركة المياه)', place: 'طريق السلام - المسار الأيمن (تأثير متوسط)', status: 'جارٍ الإصلاح', color: '#10b981' },
     { id: '#MUN-518', title: 'عطل إنارة + عائق رصيف (940)', place: 'تقاطع طريق سلطانة مع الدائري الثاني', status: 'مُسند للأمانة', color: '#f59e0b' },
     { id: '#TRF-915', title: 'مركبة متعطلة في المسار', place: 'طريق المطار - جسر الملك عبدالله', status: 'بانتظار الونش', color: '#e11d48' },
-    { id: '#NWC-214', title: 'انسداد مصرف مياه أمطار', place: 'طريق الملك عبدالله - الدائري الثاني', status: 'فرقة بالموقع', color: '#0ea5e9' },
+    { id: '#NWC-214', title: 'انسداد مصرف مياه أمطار', place: 'طريق الملك عبدالله - الدائري الثاني', status: 'فرقة بالموقع', color: '#10b981' },
     { id: '#MUN-523', title: 'حفرة في الطريق', place: 'طريق سلطانة - مسار الخدمة', status: 'مُسند للأمانة', color: '#f59e0b' },
     { id: '#TRF-912', title: 'تصادم خفيف (دون إصابات)', place: 'طريق السلام - مدخل الساحة الغربية', status: 'تم الإخلاء', color: '#10b981' },
     { id: '#MUN-531', title: 'إشارة مرور معطلة', place: 'تقاطع الملك فهد مع الدائري الأول', status: 'بانتظار الصيانة', color: '#f59e0b' },
@@ -48,13 +48,13 @@ export class OverviewView {
     plotOptions: { areaspline: { lineWidth: 2.4, marker: { enabled: false } } },
     series: [
       { type: 'areaspline', name: 'مركبات داخلة', data: this.store.flowSeries(), color: '#10b981', fillOpacity: 0.1 },
-      { type: 'areaspline', name: 'مركبات خارجة', data: [8900, 9600, 10400, 11100, 11440], color: '#0b5cff', fillOpacity: 0.04 },
+      { type: 'areaspline', name: 'مركبات خارجة', data: [8900, 9600, 10400, 11100, 11440], color: '#f59e0b', fillOpacity: 0.04 },
     ],
   }));
 
   protected readonly classes = [
-    { name: 'سيارات خاصة', y: 68, color: '#0b5cff', text: 'text-ink' },
-    { name: 'حافلات وترددي', y: 24, color: '#10b981', text: 'text-[#059669]' },
+    { name: 'سيارات خاصة', y: 68, color: '#059669', text: 'text-ink' },
+    { name: 'حافلات وترددي', y: 24, color: '#4ade80', text: 'text-[#059669]' },
     { name: 'شاحنات وخدمات', y: 8, color: '#f59e0b', text: 'text-[#d97706]' },
   ];
 
@@ -63,7 +63,7 @@ export class OverviewView {
     legend: { enabled: false },
     tooltip: { pointFormat: '<b>{point.y}%</b>', shared: false },
     plotOptions: { pie: { innerSize: '68%', borderWidth: 2, borderColor: '#ffffff', dataLabels: { enabled: false } } },
-    series: [{ type: 'pie', name: 'التصنيف', data: [{ name: 'سيارات خاصة', y: 68, color: '#0b5cff' }, { name: 'حافلات وترددي', y: 24, color: '#10b981' }, { name: 'شاحنات', y: 8, color: '#f59e0b' }] }],
+    series: [{ type: 'pie', name: 'التصنيف', data: [{ name: 'سيارات خاصة', y: 68, color: '#059669' }, { name: 'حافلات وترددي', y: 24, color: '#4ade80' }, { name: 'شاحنات', y: 8, color: '#f59e0b' }] }],
   };
 
 

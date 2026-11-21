@@ -15,7 +15,7 @@ export class PoliceFlowChart {
 
   protected readonly series = [
     { id: 'inn', ar: 'دخول', color: '#10b981' },
-    { id: 'out', ar: 'خروج', color: '#0b5cff' },
+    { id: 'out', ar: 'خروج', color: '#f59e0b' },
   ] as const;
   protected readonly hidden = signal<string[]>([]);
   protected toggle(id: string): void {
@@ -33,7 +33,7 @@ export class PoliceFlowChart {
       plotOptions: { areaspline: { lineWidth: 2.4, marker: { enabled: false } } },
       series: [
         { type: 'areaspline', name: 'دخول', color: '#10b981', fillOpacity: 0.1, visible: !this.hidden().includes('inn'), data: s.map((p) => p.inn) },
-        { type: 'areaspline', name: 'خروج', color: '#0b5cff', fillOpacity: 0.04, visible: !this.hidden().includes('out'), data: s.map((p) => p.out) },
+        { type: 'areaspline', name: 'خروج', color: '#f59e0b', fillOpacity: 0.04, visible: !this.hidden().includes('out'), data: s.map((p) => p.out) },
       ],
     };
   });

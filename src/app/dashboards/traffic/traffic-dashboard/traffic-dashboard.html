@@ -2,7 +2,7 @@
 
   <header class="flex flex-wrap items-center justify-between gap-3 rounded-xl bg-surface px-5 py-3 shadow-card">
     <div class="flex items-center gap-3">
-      <span class="flex size-12 items-center justify-center rounded-xl bg-[#0b5cff] text-white">
+      <span class="flex size-12 items-center justify-center rounded-xl bg-[#059669] text-white">
         <span class="material-symbols-outlined !text-[28px]">traffic</span>
       </span>
       <div>
@@ -33,12 +33,12 @@
 
   <section class="grid grid-cols-[repeat(4,minmax(0,1fr))] gap-4 max-[1500px]:grid-cols-[repeat(2,minmax(0,1fr))] max-[640px]:grid-cols-[minmax(0,1fr)]" aria-label="الحالة التشغيلية الآنية">
     <div class="pcard !flex-row items-center !gap-3.5 !px-5 !py-4">
-      <span class="flex size-12 shrink-0 items-center justify-center rounded-xl bg-[#eaf1ff] text-[#0b5cff]"><span class="material-symbols-outlined !text-[26px]">mosque</span></span>
+      <span class="flex size-12 shrink-0 items-center justify-center rounded-xl bg-[#ecfdf5] text-[#059669]"><span class="material-symbols-outlined !text-[26px]">mosque</span></span>
       <div class="flex min-w-0 flex-col gap-1">
         <span class="text-[16px] leading-6 font-semibold text-ink">الصلاة القادمة: صلاة {{ prayer().ar }}</span>
         <div class="flex flex-wrap items-center gap-2.5">
-          <b class="num text-[30px] leading-9 text-[#0b5cff] [direction:ltr]">{{ prayer().countdown }}</b>
-          <span class="rounded px-2 py-0.5 text-[13px] font-bold" [class]="prayer().minutes <= 45 ? 'bg-[#fffbeb] text-[#d97706]' : 'bg-[#eaf1ff] text-[#0b5cff]'">{{ prayer().tag }}</span>
+          <b class="num text-[30px] leading-9 text-[#059669] [direction:ltr]">{{ prayer().countdown }}</b>
+          <span class="rounded px-2 py-0.5 text-[13px] font-bold" [class]="prayer().minutes <= 45 ? 'bg-[#fffbeb] text-[#d97706]' : 'bg-[#ecfdf5] text-[#059669]'">{{ prayer().tag }}</span>
         </div>
       </div>
     </div>
@@ -52,17 +52,17 @@
     </div>
 
     <div class="pcard !flex-row items-center !gap-3.5 !px-5 !py-4">
-      <span class="flex size-12 shrink-0 items-center justify-center rounded-xl bg-[#eaf1ff] text-[#0b5cff]"><span class="material-symbols-outlined !text-[26px]">flight_land</span></span>
+      <span class="flex size-12 shrink-0 items-center justify-center rounded-xl bg-[#ecfdf5] text-[#059669]"><span class="material-symbols-outlined !text-[26px]">flight_land</span></span>
       <div class="flex min-w-0 flex-col gap-1">
-        <span class="num text-[16px] leading-6 font-semibold text-ink">موجة الوصول (الساعة القادمة): <b class="inline-block whitespace-nowrap font-bold text-[#0b5cff]">6,450 مسافر</b></span>
+        <span class="num text-[16px] leading-6 font-semibold text-ink">موجة الوصول (الساعة القادمة): <b class="inline-block whitespace-nowrap font-bold text-[#059669]">6,450 مسافر</b></span>
         <span class="num text-[14px] leading-5 font-medium text-[#475569]">مطار الأمير محمد: <b class="inline-block whitespace-nowrap text-ink">14 رحلة</b> | قطار الحرمين: <b class="inline-block whitespace-nowrap text-[#059669]">4 قطارات</b></span>
       </div>
     </div>
 
     <div class="pcard !flex-row items-center !gap-3.5 !px-5 !py-4">
-      <span class="flex size-12 shrink-0 items-center justify-center rounded-xl bg-[#f5f3ff] text-[#7c3aed]"><span class="material-symbols-outlined !text-[26px]">remove_road</span></span>
+      <span class="flex size-12 shrink-0 items-center justify-center rounded-xl bg-[#fffbeb] text-[#d97706]"><span class="material-symbols-outlined !text-[26px]">remove_road</span></span>
       <div class="flex min-w-0 flex-col gap-1">
-        <b class="text-[16px] leading-6 text-[#7c3aed]">إغلاقات وتحويلات نشطة (3)</b>
+        <b class="text-[16px] leading-6 text-[#d97706]">إغلاقات وتحويلات نشطة (3)</b>
         <span class="num text-[14px] leading-5 font-medium text-[#475569]">مسار زيارة رسمية: طريق الملك عبدالعزيز · <span class="inline-block [direction:ltr]">17:30</span></span>
       </div>
     </div>
@@ -73,13 +73,13 @@
       @for (t of tabs; track t.id) {
         <button type="button" (click)="tab.set(t.id)"
           class="flex cursor-pointer items-center gap-2 rounded-lg border-0 px-4 py-2.5 text-[15px] font-semibold whitespace-nowrap transition-colors"
-          [class]="tab() === t.id ? 'bg-[#0b5cff] text-white' : 'bg-transparent text-[#475569] hover:bg-[#f6f8fb]'">
+          [class]="tab() === t.id ? 'bg-[#059669] text-white' : 'bg-transparent text-[#475569] hover:bg-[#f6f8fb]'">
           <span class="material-symbols-outlined !text-[22px]" [style.color]="tab() === t.id ? '#fff' : t.color">{{ t.icon }}</span>{{ t.ar }}
         </button>
       }
     </div>
     <div class="flex flex-wrap items-center gap-2">
-      <button type="button" (click)="store.govOpen.set(true)" class="flex cursor-pointer items-center gap-2 rounded-lg border border-line bg-surface px-4 py-2 text-[14px] font-bold text-[#0b5cff] hover:bg-[#f6f8fb]">
+      <button type="button" (click)="store.govOpen.set(true)" class="flex cursor-pointer items-center gap-2 rounded-lg border border-line bg-surface px-4 py-2 text-[14px] font-bold text-[#059669] hover:bg-[#f6f8fb]">
         <span class="material-symbols-outlined !text-[20px]">database</span>مصادر البيانات والحوكمة
       </button>
     </div>
@@ -88,14 +88,14 @@
   <section class="grid grid-cols-[repeat(5,minmax(0,1fr))] gap-4 max-[1500px]:grid-cols-[repeat(3,minmax(0,1fr))] max-[900px]:grid-cols-[repeat(2,minmax(0,1fr))] max-[560px]:grid-cols-[minmax(0,1fr)]">
     <article [flashOnChange]="store.data().vehicles" class="pcard relative !gap-3 overflow-hidden !p-4">
       <div class="flex min-h-10 items-center justify-center gap-2.5 text-center">
-        <span class="flex size-10 shrink-0 items-center justify-center rounded-xl bg-[#eaf1ff] text-[#0b5cff]"><span class="material-symbols-outlined !text-[22px]">directions_car</span></span>
+        <span class="flex size-10 shrink-0 items-center justify-center rounded-xl bg-[#ecfdf5] text-[#059669]"><span class="material-symbols-outlined !text-[22px]">directions_car</span></span>
         <span class="text-[15px] leading-5 font-semibold text-[#475569]">المركبات المرصودة (حي)</span>
       </div>
       <div class="flex h-10 items-center justify-center"><b class="num text-[34px] leading-10 text-ink">{{ fmt(store.data().vehicles) }}</b></div>
       <div class="mt-auto flex min-h-11 flex-col items-stretch justify-end text-center gap-1">
         <div class="flex items-center justify-center gap-3">
           <span class="num rounded-md px-2 py-0.5 text-[13px] font-bold whitespace-nowrap" class="bg-[#fffbeb] text-[#d97706]">↑ {{ store.data().delta }}</span>
-          <svg viewBox="0 0 60 30" class="h-6 w-16 [direction:ltr]" aria-hidden="true"><path [attr.d]="spark" fill="none" stroke="#0b5cff" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" /></svg>
+          <svg viewBox="0 0 60 30" class="h-6 w-16 [direction:ltr]" aria-hidden="true"><path [attr.d]="spark" fill="none" stroke="#059669" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" /></svg>
         </div>
         <span class="text-[14px] font-medium text-[#475569]">المصدر: VISuite &amp; عدادات المرور</span>
       </div>
@@ -113,7 +113,7 @@
       <div class="mt-auto flex min-h-11 flex-col items-stretch justify-end text-center">
         <div class="num grid grid-cols-2 gap-1.5 text-[13px] font-bold whitespace-nowrap">
           <span class="rounded-md bg-[#ecfdf5] px-2 py-1 text-center text-[#059669]">داخل: {{ fmt(store.data().inbound) }}</span>
-          <span class="rounded-md bg-[#eaf1ff] px-2 py-1 text-center text-[#0b5cff]">خارج: {{ fmt(store.data().outbound) }}</span>
+          <span class="rounded-md bg-[#ecfdf5] px-2 py-1 text-center text-[#059669]">خارج: {{ fmt(store.data().outbound) }}</span>
         </div>
       </div>
     </article>
@@ -149,7 +149,7 @@
 
     <article class="pcard relative !gap-3 overflow-hidden !p-4">
       <div class="flex min-h-10 items-center justify-center gap-2.5 text-center">
-        <span class="flex size-10 shrink-0 items-center justify-center rounded-xl bg-[#eaf1ff] text-[#0b5cff]"><span class="material-symbols-outlined !text-[22px]">visibility</span></span>
+        <span class="flex size-10 shrink-0 items-center justify-center rounded-xl bg-[#ecfdf5] text-[#059669]"><span class="material-symbols-outlined !text-[22px]">visibility</span></span>
         <span class="text-[15px] leading-5 font-semibold text-[#475569]">جاهزية الكاميرات وتحليل VISuite</span>
       </div>
       <div class="flex h-10 items-center justify-center gap-2">
@@ -157,7 +157,7 @@
         <span class="num text-[14px] font-medium text-[#475569] [direction:ltr] [unicode-bidi:isolate]">(612 / 632)</span>
       </div>
       <div class="num mt-auto flex min-h-11 flex-col items-stretch justify-end text-center gap-0.5 text-[14px]">
-        <span class="font-semibold text-[#0b5cff]">تحليل VISuite مفعّل: <b>420 كاميرا</b></span>
+        <span class="font-semibold text-[#059669]">تحليل VISuite مفعّل: <b>420 كاميرا</b></span>
         <span class="font-medium text-[#e11d48]">20 كاميرا منقطعة</span>
       </div>
     </article>
@@ -184,9 +184,9 @@
         <button type="button" class="cursor-pointer rounded border-0 bg-transparent px-2 py-1 text-ink-2 hover:bg-hover" aria-label="إغلاق" (click)="store.cameraModal.set(null)">✕</button>
       </div>
       <div class="relative flex h-56 items-center justify-center bg-[#0f172a] p-4">
-        <div class="absolute inset-0 opacity-20" style="background-image: radial-gradient(#38bdf8 1px, transparent 1px); background-size: 16px 16px;"></div>
-        <div class="z-10 rounded-xl border-2 border-dashed border-[#38bdf8]/80 bg-[#0f172a]/80 p-5 text-center">
-          <span class="material-symbols-outlined !text-[36px] text-[#38bdf8]">videocam</span>
+        <div class="absolute inset-0 opacity-20" style="background-image: radial-gradient(#34d399 1px, transparent 1px); background-size: 16px 16px;"></div>
+        <div class="z-10 rounded-xl border-2 border-dashed border-[#34d399]/80 bg-[#0f172a]/80 p-5 text-center">
+          <span class="material-symbols-outlined !text-[36px] text-[#34d399]">videocam</span>
           <p class="m-0 mt-1 text-[14px] font-bold text-white">محرك التحليل الذكي نشط (Ipsotek VISuite)</p>
           <p class="m-0 mt-1 text-[13px] text-slate-400">عدّ وتصنيف المركبات ورصد المخالفات والازدحام في الزمن الحقيقي</p>
         </div>
@@ -196,7 +196,7 @@
         <span class="text-[14px] font-medium text-[#475569]">إجراء المشغل المعتمد:</span>
         <div class="flex gap-2">
           <button type="button" class="cursor-pointer rounded-lg border border-line bg-white px-4 py-2 text-[14px] font-semibold text-[#475569] hover:bg-[#f6f8fb]" (click)="store.cameraModal.set(null)">إغلاق</button>
-          <button type="button" class="cursor-pointer rounded-lg border-0 bg-[#0b5cff] px-4 py-2 text-[14px] font-bold text-white hover:bg-[#0a4fe0]" (click)="store.confirmVerification()">اعتماد الحالة وتوجيه دورية مرور</button>
+          <button type="button" class="cursor-pointer rounded-lg border-0 bg-[#059669] px-4 py-2 text-[14px] font-bold text-white hover:bg-[#047857]" (click)="store.confirmVerification()">اعتماد الحالة وتوجيه دورية مرور</button>
         </div>
       </div>
     </div>
@@ -207,7 +207,7 @@
   <div class="fixed inset-0 z-[2000] flex items-center justify-center bg-black/60 p-4" role="dialog" aria-modal="true" (click)="store.govOpen.set(false)">
     <div class="flex max-h-[85vh] w-full max-w-[960px] flex-col overflow-hidden rounded-xl border border-[#e6ebf2] bg-white shadow-xl" (click)="$event.stopPropagation()">
       <div class="flex items-center justify-between border-b border-[#e6ebf2] px-5 py-3.5">
-        <h3 class="m-0 flex items-center gap-2 text-[18px] font-bold text-ink"><span class="material-symbols-outlined text-[#0b5cff]">database</span>مصفوفة مصادر البيانات والحوكمة والتكامل (المدينة المنورة)</h3>
+        <h3 class="m-0 flex items-center gap-2 text-[18px] font-bold text-ink"><span class="material-symbols-outlined text-[#059669]">database</span>مصفوفة مصادر البيانات والحوكمة والتكامل (المدينة المنورة)</h3>
         <button type="button" class="cursor-pointer rounded border-0 bg-transparent px-2 py-1 text-ink-2 hover:bg-hover" aria-label="إغلاق" (click)="store.govOpen.set(false)">✕</button>
       </div>
       <div class="overflow-auto p-4">
@@ -221,7 +221,7 @@
             @for (g of governance; track g.group) {
               <tr class="border-t border-[#e6ebf2]">
                 <td class="px-3 py-3 font-bold text-ink">{{ g.group }}</td>
-                <td class="px-3 py-3 font-semibold text-[#0b5cff]">{{ g.system }}</td>
+                <td class="px-3 py-3 font-semibold text-[#059669]">{{ g.system }}</td>
                 <td class="px-3 py-3 text-[#334155]">{{ g.owner }}</td>
                 <td class="px-3 py-3 text-[#334155]">{{ g.refresh }}</td>
                 <td class="px-3 py-3"><span class="rounded px-2 py-0.5 text-[13px] font-bold" [class]="g.ok ? 'bg-[#ecfdf5] text-[#059669]' : 'bg-[#fffbeb] text-[#d97706]'">{{ g.status }}</span></td>

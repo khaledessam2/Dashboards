@@ -1,6 +1,6 @@
 <header class="flex flex-wrap items-start justify-between gap-3">
   <div>
-    <h2 class="m-0 flex items-center gap-2 text-[18px] leading-6 font-bold text-ink"><span class="material-symbols-outlined !text-[20px] text-[#0b5cff]">map</span>الخريطة المكانية الموحدة للأصول والخدمات البلدية (GIS)</h2>
+    <h2 class="m-0 flex items-center gap-2 text-[18px] leading-6 font-bold text-ink"><span class="material-symbols-outlined !text-[20px] text-[#059669]">map</span>الخريطة المكانية الموحدة للأصول والخدمات البلدية (GIS)</h2>
     <p class="m-0 mt-1 text-[14px] font-medium text-[#475569]">انقر على أي حي أو رمز حالة لعرض المعرّف الموحد، الأصل، وأمر العمل المرتبط</p>
   </div>
   <div class="flex flex-wrap items-center gap-2">
@@ -20,16 +20,16 @@
     <div class="absolute top-3 right-3 z-[1000] w-[290px] rounded-xl border border-[#e6ebf2] bg-white/95 p-3">
       <div class="flex items-start justify-between gap-2">
         <div class="min-w-0">
-          <span class="num text-[12px] font-bold text-[#0b5cff] [direction:ltr]">{{ s.uid }}</span>
+          <span class="num text-[12px] font-bold text-[#059669] [direction:ltr]">{{ s.uid }}</span>
           <h3 class="m-0 text-[15px] leading-5 font-bold text-ink">{{ s.title }}</h3>
         </div>
-        <span class="rounded px-2 py-0.5 text-[12px] font-bold whitespace-nowrap" [class]="s.priority === 'critical' ? 'bg-[#fff1f2] text-[#e11d48]' : s.priority === 'high' ? 'bg-[#fffbeb] text-[#d97706]' : 'bg-[#eaf1ff] text-[#0b5cff]'">{{ s.priorityLabel }}</span>
+        <span class="rounded px-2 py-0.5 text-[12px] font-bold whitespace-nowrap" [class]="s.priority === 'critical' ? 'bg-[#fff1f2] text-[#e11d48]' : s.priority === 'high' ? 'bg-[#fffbeb] text-[#d97706]' : 'bg-[#ecfdf5] text-[#059669]'">{{ s.priorityLabel }}</span>
       </div>
       <div class="mt-2 grid grid-cols-2 gap-2 rounded-lg bg-[#f6f8fb] p-2">
         <div><span class="block text-[12px] text-[#475569]">الأصل / أمر العمل</span><b class="num text-[13px] text-ink [direction:ltr]">{{ s.asset }} / {{ s.wo.split(' ')[0] }}</b></div>
         <div><span class="block text-[12px] text-[#475569]">الربط المشترك</span><b class="text-[13px] text-[#d97706]">{{ s.cross }}</b></div>
       </div>
-      <button type="button" class="mt-2 flex w-full cursor-pointer items-center justify-center gap-1.5 rounded-lg border border-[#e6ebf2] bg-white py-1.5 text-[13px] font-semibold text-[#0b5cff] hover:bg-[#f6f8fb]" (click)="store.traceUid.set(s.uid)">
+      <button type="button" class="mt-2 flex w-full cursor-pointer items-center justify-center gap-1.5 rounded-lg border border-[#e6ebf2] bg-white py-1.5 text-[13px] font-semibold text-[#059669] hover:bg-[#f6f8fb]" (click)="store.traceUid.set(s.uid)">
         <span class="material-symbols-outlined !text-[18px]">account_tree</span>تتبع البلاغ والأصل وأمر العمل
       </button>
     </div>

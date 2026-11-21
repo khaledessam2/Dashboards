@@ -46,7 +46,7 @@ export class DcTopKpis {
       ...gauges,
       { id: 'kpi-availability', label: 'توافر الخدمات', icon: 'check_circle', value: '99.93%', color: '#059669', bg: '#ecfdf5', sub: 'SLA الشهر الحالي', chip: { text: 'متوافق', tone: 'ok' } },
       { id: 'kpi-critical', label: 'التنبيهات الحرجة', icon: 'warning', value: k.down.toLocaleString('en-US'), color: '#e11d48', bg: '#fff1f2', sub: 'يتطلب التدخل السريع', chip: { text: '33% ↑', tone: 'bad' }, alert: true },
-      { id: 'kpi-devices', label: 'الأجهزة المتصلة', icon: 'desktop_windows', value: k.systems.toLocaleString('en-US'), color: '#1c2434', bg: '#eaf1ff', sub: 'عقد خوادم وشبكات نشطة', chip: { text: '3% ↑', tone: 'ok' } },
+      { id: 'kpi-devices', label: 'الأجهزة المتصلة', icon: 'desktop_windows', value: k.systems.toLocaleString('en-US'), color: '#1c2434', bg: '#ecfdf5', sub: 'عقد خوادم وشبكات نشطة', chip: { text: '3% ↑', tone: 'ok' } },
     ];
   });
 }

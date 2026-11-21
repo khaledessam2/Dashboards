@@ -59,7 +59,7 @@ const ALERTS: Array<{ at: Pt; color: string }> = [
 ];
 const ROUTES: Array<{ points: Pt[]; color: string }> = [
   { points: [[24.4672, 39.6122], [24.465, 39.6122], [24.465, 39.61]], color: '#f59e0b' },
-  { points: [[24.4673, 39.615], [24.4655, 39.615], [24.4655, 39.6125]], color: '#0b5cff' },
+  { points: [[24.4673, 39.615], [24.4655, 39.615], [24.4655, 39.6125]], color: '#059669' },
 ];
 
 const ZONE_CAMERA: Record<string, string> = { rawdah: '10.0.30.24', main: '10.0.30.14', north: '10.0.30.20', south: '10.0.30.16', west: '10.0.30.5', east: '10.0.30.18' };
@@ -69,7 +69,7 @@ const centerOf = (id: string): Pt => {
   return s.kind === 'circle' ? s.center : [(s.bounds[0][0] + s.bounds[1][0]) / 2, (s.bounds[0][1] + s.bounds[1][1]) / 2];
 };
 
-const HEAT_GRADIENT = { 0.2: '#10b981', 0.45: '#a3e635', 0.62: '#facc15', 0.8: '#f97316', 1: '#e11d48' };
+const HEAT_GRADIENT = { 0.2: '#10b981', 0.55: '#facc15', 1: '#e11d48' };
 
 const pin = (label: string, color: string, size = 26) =>
   L.divIcon({ className: 'heat-pin-wrap', iconSize: [size, size], html: `<div class="heat-pin" style="background:${color};width:${size}px;height:${size}px">${label}</div>` });
@@ -93,7 +93,7 @@ export class PoliceLiveMap {
     { id: 'density', ar: 'كثافة الحشود', color: '#e11d48' },
     { id: 'gates', ar: 'الأبواب', color: '#10b981' },
     { id: 'alerts', ar: 'البلاغات', color: '#f59e0b' },
-    { id: 'routes', ar: 'مسارات الإخلاء', color: '#0b5cff' },
+    { id: 'routes', ar: 'مسارات الإخلاء', color: '#059669' },
   ];
   protected toggleLayer(id: Layer): void {
     this.layers.update((l) => ({ ...l, [id]: !l[id] }));
@@ -198,7 +198,7 @@ export class PoliceLiveMap {
       const shape = this.zoneShapes.get(z.id);
       if (shape) {
         shape.setTooltipContent(`${z.short} · ${z.occ}%`);
-        shape.setStyle(z.id === selected ? { color: '#0b5cff', weight: 3, dashArray: '', opacity: 1 } : { color: '#94a3b8', weight: 1.5, dashArray: '6 5', opacity: off ? 0.25 : 1 });
+        shape.setStyle(z.id === selected ? { color: '#059669', weight: 3, dashArray: '', opacity: 1 } : { color: '#94a3b8', weight: 1.5, dashArray: '6 5', opacity: off ? 0.25 : 1 });
         shape.getTooltip()?.getElement()?.classList.toggle('heat-label-dim', off);
       }
     }

@@ -15,7 +15,7 @@ export class LightingView {
   protected readonly faults = [
     { ar: 'فشل التغذية / الحمل', v: 54, c: 'text-[#e11d48]' },
     { ar: 'انحراف الجهد الكهربائي', v: 31, c: 'text-[#d97706]' },
-    { ar: 'معامل القدرة (Power Factor)', v: 19, c: 'text-[#0891b2]' },
+    { ar: 'معامل القدرة (Power Factor)', v: 19, c: 'text-[#059669]' },
     { ar: 'حجب حساس الضوء', v: 16, c: 'text-[#059669]' },
     { ar: 'أعطال جزئية / متقطعة', v: 22, c: 'text-ink' },
   ];

@@ -22,7 +22,7 @@ const pinIcon = (i: Incident, selected: boolean): L.DivIcon => {
   styles: `
     :host ::ng-deep .mm-pulse { animation: mm-pulse 1.4s ease-out infinite; }
     :host ::ng-deep .mm-district { font: 700 12px 'IBM Plex Sans Arabic','Cairo',sans-serif; direction: rtl; color: #334155; background: rgba(255,255,255,.88); border: 1px solid #e6ebf2; border-radius: 6px; padding: 2px 8px; white-space: nowrap; }
-    :host ::ng-deep .mm-district.on { background: #0b5cff; color: #fff; border-color: #0b5cff; }
+    :host ::ng-deep .mm-district.on { background: #059669; color: #fff; border-color: #059669; }
     @keyframes mm-pulse { 0% { box-shadow: 0 0 0 0 rgba(225,29,72,.6); } 100% { box-shadow: 0 0 0 14px rgba(225,29,72,0); } }
   `,
 })

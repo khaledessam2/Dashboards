@@ -18,8 +18,8 @@ export class ReadinessView {
     tooltip: { shared: true, valueSuffix: ' مسافر' },
     plotOptions: { column: { stacking: 'normal', borderRadius: 3, borderWidth: 0 } },
     series: [
-      { type: 'column', name: 'مطار الأمير محمد (MED)', data: [2400, 4150, 3100, 2200, 1850], color: '#0b5cff' },
-      { type: 'column', name: 'قطار الحرمين السريع', data: [1500, 2300, 1900, 1600, 1400], color: '#7c3aed' },
+      { type: 'column', name: 'مطار الأمير محمد (MED)', data: [2400, 4150, 3100, 2200, 1850], color: '#059669' },
+      { type: 'column', name: 'قطار الحرمين السريع', data: [1500, 2300, 1900, 1600, 1400], color: '#d97706' },
     ],
   };
 }

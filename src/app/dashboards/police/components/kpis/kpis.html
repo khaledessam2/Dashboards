@@ -1,14 +1,14 @@
 <section class="grid h-full grid-cols-[repeat(3,minmax(0,1fr))] gap-4 max-[900px]:grid-cols-[repeat(2,minmax(0,1fr))] max-[480px]:grid-cols-[minmax(0,1fr)]">
   <article [flashOnChange]="store.total()" class="pcard relative !gap-3 overflow-hidden !p-4">
     <div class="flex min-h-10 items-center gap-2.5">
-      <span class="flex size-10 shrink-0 items-center justify-center rounded-xl bg-[#eaf1ff] text-[#0b5cff]"><span class="material-symbols-outlined !text-[22px]">groups</span></span>
+      <span class="flex size-10 shrink-0 items-center justify-center rounded-xl bg-[#ecfdf5] text-[#059669]"><span class="material-symbols-outlined !text-[22px]">groups</span></span>
       <span class="text-[15px] leading-5 font-semibold text-[#475569]">إجمالي الإشغال الحالي</span>
     </div>
     <div class="flex h-10 items-center"><b class="num text-[34px] leading-10 text-ink">{{ fmt(store.total()) }}</b></div>
     <div class="mt-auto flex min-h-11 flex-col justify-end gap-1">
       <div class="flex items-center justify-between gap-2">
         <span class="num rounded-md bg-[#ecfdf5] px-2 py-0.5 text-[13px] font-bold whitespace-nowrap text-[#059669]">↑ {{ store.hourDelta }}% خلال ساعة</span>
-        <svg viewBox="0 0 120 30" class="h-6 w-20 [direction:ltr]" aria-hidden="true"><path [attr.d]="spark()" fill="none" stroke="#0b5cff" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" /></svg>
+        <svg viewBox="0 0 120 30" class="h-6 w-20 [direction:ltr]" aria-hidden="true"><path [attr.d]="spark()" fill="none" stroke="#059669" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" /></svg>
       </div>
       <span class="text-[14px] text-[#475569] font-medium">المصدر: حساسات &amp; VISuite</span>
     </div>
@@ -40,7 +40,7 @@
       <span class="rounded-md bg-[#ecfdf5] px-2 py-0.5 text-[13px] font-bold text-[#059669]">{{ store.flowNow().net > 0 ? 'داخل' : 'خارج' }}</span>
     </div>
     <div class="mt-auto flex min-h-11 flex-col justify-end">
-      <div class="num grid grid-cols-2 gap-1.5 text-[13px] font-bold whitespace-nowrap"><span class="rounded-md bg-[#ecfdf5] px-2 py-1 text-center text-[#059669]">دخول: {{ fmt(store.flowNow().inn) }}</span><span class="rounded-md bg-[#eaf1ff] px-2 py-1 text-center text-[#0b5cff]">خروج: {{ fmt(store.flowNow().out) }}</span></div>
+      <div class="num grid grid-cols-2 gap-1.5 text-[13px] font-bold whitespace-nowrap"><span class="rounded-md bg-[#ecfdf5] px-2 py-1 text-center text-[#059669]">دخول: {{ fmt(store.flowNow().inn) }}</span><span class="rounded-md bg-[#ecfdf5] px-2 py-1 text-center text-[#059669]">خروج: {{ fmt(store.flowNow().out) }}</span></div>
     </div>
   </article>
 
@@ -73,7 +73,7 @@
 
   <article [flashOnChange]="store.response().onTarget" class="pcard relative !gap-3 overflow-hidden !p-4">
     <div class="flex min-h-10 items-center gap-2.5">
-      <span class="flex size-10 shrink-0 items-center justify-center rounded-xl bg-[#eaf1ff] text-[#0b5cff]"><span class="material-symbols-outlined !text-[22px]">timer</span></span>
+      <span class="flex size-10 shrink-0 items-center justify-center rounded-xl bg-[#ecfdf5] text-[#059669]"><span class="material-symbols-outlined !text-[22px]">timer</span></span>
       <span class="text-[15px] leading-5 font-semibold text-[#475569]">نسبة الوصول داخل المستهدف</span>
     </div>
     <div class="flex h-10 items-center"><b class="num text-[34px] leading-10 text-[#059669]">{{ store.response().onTarget }}%</b></div>

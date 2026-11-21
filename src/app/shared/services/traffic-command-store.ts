@@ -92,7 +92,7 @@ export class TrafficCommandStore {
     const notes = ['طابور ' + this.queue() + ' مركبة عند المدخل', 'وصول الحافلة: 3 دقائق', 'وصول الحافلة: 5 دقائق'];
     return defs.map((d, i) => ({
       name: d.name, pct: p[i], left: Math.round(d.cap * (1 - p[i] / 100)).toLocaleString('en-US') + ' موقف', note: notes[i],
-      noteTone: i === 0 ? 'text-[#e11d48] font-bold' : 'text-[#0b5cff]', tone: (p[i] >= 90 ? 'bad' : p[i] >= 75 ? 'warn' : 'ok') as Tone,
+      noteTone: i === 0 ? 'text-[#e11d48] font-bold' : 'text-[#059669]', tone: (p[i] >= 90 ? 'bad' : p[i] >= 75 ? 'warn' : 'ok') as Tone,
     }));
   });
 

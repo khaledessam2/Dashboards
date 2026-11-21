@@ -3,8 +3,8 @@ import { AlertSeverity, PrtgStatus, SensorKind } from '../models/datacenter.mode
 export const COLOR_RED = '#e74c3c';
 export const COLOR_AMBER = '#f5a623';
 export const COLOR_GREEN = '#00a651';
-export const COLOR_CYAN = '#00bcd4';
-export const COLOR_PURPLE = '#8b5cf6';
+export const COLOR_CYAN = '#10b981';
+export const COLOR_PURPLE = '#f59e0b';
 export const COLOR_GRAY = '#8a99af';
 
 /** §4.10 — Up green, Down red, Warning amber, Unusual purple, Paused gray. */

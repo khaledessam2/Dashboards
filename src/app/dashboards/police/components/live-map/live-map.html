@@ -1,6 +1,6 @@
 <header class="flex flex-wrap items-start justify-between gap-3 px-5 pt-5 pb-3">
   <div>
-    <h2 class="m-0 flex items-center gap-2 text-[18px] leading-6 font-bold text-ink"><span class="material-symbols-outlined !text-[20px] text-[#0b5cff]">map</span>الخريطة الحرارية الحية للازدحام (GIS) في المسجد النبوي والساحات</h2>
+    <h2 class="m-0 flex items-center gap-2 text-[18px] leading-6 font-bold text-ink"><span class="material-symbols-outlined !text-[20px] text-[#059669]">map</span>الخريطة الحرارية الحية للازدحام (GIS) في المسجد النبوي والساحات</h2>
     <p class="m-0 mt-0.5 text-[14px] text-[#475569] font-medium">اللون الأحمر = أعلى ازدحاماً. انقر فوق أي منطقة لعرض مؤشرات الكثافة والبث المباشر.</p>
   </div>
   <span class="inline-flex items-center gap-1.5 rounded-full bg-[#ecfdf5] px-2.5 py-0.5 text-[12px] font-bold text-[#059669]"><i class="size-1.5 rounded-full bg-[#10b981]"></i>بث مباشر من VISuite والحساسات</span>
@@ -22,7 +22,7 @@
       @if (selected(); as s) {
         <div class="pointer-events-auto flex flex-1 flex-col rounded-xl border border-[#e6ebf2] bg-white/95 p-3">
           <div class="flex items-center justify-between gap-2">
-            <span class="text-[13px] font-semibold text-[#0b5cff]">المنطقة المحددة</span>
+            <span class="text-[13px] font-semibold text-[#059669]">المنطقة المحددة</span>
             <span class="num rounded px-2 py-0.5 text-[12px] font-bold" [class]="pill[s.level]">{{ levelWord[s.level] }} {{ s.occ }}%</span>
           </div>
           <b class="mt-1 block text-[15px] leading-5 text-ink">{{ s.name }}</b>
@@ -31,7 +31,7 @@
             <div><span class="block text-[13px] font-medium text-[#475569]">الكثافة</span><b class="num text-[16px]" [class]="text[s.level]">{{ s.density.toFixed(1) }} ش/م²</b></div>
           </div>
           <div class="mt-2 flex gap-2">
-            <button type="button" (click)="openCamera()" class="flex flex-1 cursor-pointer items-center justify-center gap-1.5 rounded-lg border border-[#e6ebf2] bg-white py-1.5 text-[13px] font-semibold text-[#0b5cff] hover:bg-[#f6f8fb]">
+            <button type="button" (click)="openCamera()" class="flex flex-1 cursor-pointer items-center justify-center gap-1.5 rounded-lg border border-[#e6ebf2] bg-white py-1.5 text-[13px] font-semibold text-[#059669] hover:bg-[#f6f8fb]">
               <span class="material-symbols-outlined !text-[18px]">videocam</span>بث الكاميرات المباشر (VISuite)
             </button>
             <button type="button" (click)="resetView()" class="flex cursor-pointer items-center justify-center rounded-lg border border-[#e6ebf2] bg-white px-2.5 text-[#475569] hover:bg-[#f6f8fb]" aria-label="عرض الكل" title="عرض الكل">
@@ -43,7 +43,7 @@
 
       <div class="pointer-events-auto flex flex-1 flex-col gap-1 rounded-xl border border-[#e6ebf2] bg-white/95 p-3 text-[14px] font-medium text-[#475569]">
         <b class="block text-[15px] text-ink">دليل الكثافة <span class="text-[12px] font-medium text-[#475569]">(اضغط للفلترة)</span></b>
-        <div class="mb-1 h-2.5 rounded-full" style="background: linear-gradient(to left, #e11d48, #f97316, #facc15, #84cc16, #10b981)"></div>
+        <div class="mb-1 h-2.5 rounded-full" style="background: linear-gradient(to left, #e11d48, #facc15, #10b981)"></div>
         @for (l of legend; track l.id) {
           <button type="button" class="flex cursor-pointer items-center justify-between gap-2 rounded-md border-0 bg-transparent px-1.5 py-0.5 text-start text-[14px] font-medium text-[#475569] hover:bg-[#f6f8fb]"
             [class.opacity-40]="hiddenLevels().includes(l.id)" [attr.aria-pressed]="!hiddenLevels().includes(l.id)" (click)="toggleLevel(l.id)">

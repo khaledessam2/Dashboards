@@ -11,12 +11,12 @@ import { RoadsView } from '../views/roads-view/roads-view';
 import { fmt } from '../traffic-ui';
 
 const TABS = [
-  { id: 'overview', ar: 'نظرة عامة تنفيذية', icon: 'layers', color: '#0b5cff' },
+  { id: 'overview', ar: 'نظرة عامة تنفيذية', icon: 'layers', color: '#059669' },
   { id: 'traffic', ar: '١. الحركة والازدحام', icon: 'directions_car', color: '#10b981' },
   { id: 'incidents', ar: '٢. الحوادث والمخاطر', icon: 'warning', color: '#e11d48' },
   { id: 'roads', ar: '٣. الطرق والمواقف والنقل', icon: 'local_parking', color: '#f59e0b' },
-  { id: 'cameras', ar: '٤. الكاميرات والرصد', icon: 'videocam', color: '#06b6d4' },
-  { id: 'readiness', ar: '٥. الاستعداد والتخطيط', icon: 'event_available', color: '#6366f1' },
+  { id: 'cameras', ar: '٤. الكاميرات والرصد', icon: 'videocam', color: '#10b981' },
+  { id: 'readiness', ar: '٥. الاستعداد والتخطيط', icon: 'event_available', color: '#d97706' },
 ] as const;
 
 type TabId = (typeof TABS)[number]['id'];

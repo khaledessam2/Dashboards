@@ -26,8 +26,8 @@ export class PoliceArrivalWaves {
       },
       plotOptions: { column: { stacking: 'normal', borderWidth: 0, borderRadius: 3, pointPadding: 0.1, groupPadding: 0.08 } },
       series: [
-        { type: 'column', name: 'محطة قطار الحرمين (منتظم)', color: '#7c3aed', data: rows.map((r) => r.train) },
-        { type: 'column', name: 'مطار (MED) المتوقع', color: '#0891b2', data: rows.map((r) => r.air) },
+        { type: 'column', name: 'محطة قطار الحرمين (منتظم)', color: '#d97706', data: rows.map((r) => r.train) },
+        { type: 'column', name: 'مطار (MED) المتوقع', color: '#059669', data: rows.map((r) => r.air) },
       ],
     };
   });
