@@ -40,27 +40,26 @@
     </div>
 
     <div class="pcard !flex-row items-center !gap-3.5 !px-5 !py-4">
-      <span class="flex size-12 shrink-0 items-center justify-center rounded-xl bg-[#fffbeb] text-[#f59e0b]"><span class="material-symbols-outlined !text-[26px]">wb_sunny</span></span>
-      <div class="flex min-w-0 flex-col gap-1">
-        <span class="num text-[16px] leading-6 font-semibold text-ink"><b class="text-[22px] font-bold">28°C</b> | رياح 14 km/h | رؤية 10 km</span>
-        <span class="flex items-center gap-1 text-[14px] leading-5 font-medium text-[#059669]"><span class="material-symbols-outlined !text-[16px]">check_circle</span>الأرصاد (NCM): لا توجد تنبيهات جوية</span>
-      </div>
-    </div>
-
-    <div class="pcard !flex-row items-center !gap-3.5 !px-5 !py-4">
       <span class="flex size-12 shrink-0 items-center justify-center rounded-xl bg-[#ecfdf5] text-[#059669]"><span class="material-symbols-outlined !text-[26px]">flight_land</span></span>
       <div class="flex min-w-0 flex-col gap-1">
-        <span class="num text-[16px] leading-6 font-semibold text-ink">موجة الوصول (الساعة القادمة): <b class="inline-block whitespace-nowrap font-bold text-[#059669]">6,450 مسافر</b></span>
-        <span class="num text-[14px] leading-5 font-medium text-[#475569]">مطار الأمير محمد: <b class="inline-block whitespace-nowrap text-ink">14 رحلة</b> | قطار الحرمين: <b class="inline-block whitespace-nowrap text-[#059669]">4 قطارات</b></span>
-      </div>
+        <span class="text-[16px] leading-6 font-semibold text-ink">موجة الوصول (الساعة القادمة)</span>
+        <div class="flex flex-wrap items-baseline gap-2">
+          <b class="num text-[30px] leading-9 text-[#059669]">6,450</b>
+          <span class="text-[16px] font-semibold text-[#059669]">مسافر</span>
+        </div>      </div>
     </div>
 
     <div class="pcard !flex-row items-center !gap-3.5 !px-5 !py-4">
       <span class="flex size-12 shrink-0 items-center justify-center rounded-xl bg-[#fffbeb] text-[#d97706]"><span class="material-symbols-outlined !text-[26px]">remove_road</span></span>
       <div class="flex min-w-0 flex-col gap-1">
-        <b class="text-[16px] leading-6 text-[#d97706]">إغلاقات وتحويلات نشطة (3)</b>
-        <span class="num text-[14px] leading-5 font-medium text-[#475569]">مسار زيارة رسمية: طريق الملك عبدالعزيز · <span class="inline-block [direction:ltr]">17:30</span></span>
-      </div>
+        <span class="text-[16px] leading-6 font-semibold text-ink">إغلاقات وتحويلات نشطة</span>
+        <b class="num text-[30px] leading-9 text-[#d97706]">3</b>      </div>
+    </div>
+
+    <div class="pcard !flex-row items-center !gap-3.5 !px-5 !py-4">
+      <span class="flex size-12 shrink-0 items-center justify-center rounded-xl bg-[#fffbeb] text-[#f59e0b]"><span class="material-symbols-outlined !text-[26px]">wb_sunny</span></span>
+      <div class="flex min-w-0 flex-col gap-1">
+        <span class="num text-[16px] leading-6 font-semibold text-ink"><b class="text-[22px] font-bold">28°C</b> | رياح 14 km/h</span>      </div>
     </div>
   </section>
 
@@ -73,11 +72,6 @@
           <span class="material-symbols-outlined !text-[22px]" [style.color]="tab() === t.id ? '#fff' : t.color">{{ t.icon }}</span>{{ t.ar }}
         </button>
       }
-    </div>
-    <div class="flex flex-wrap items-center gap-2">
-      <button type="button" (click)="store.govOpen.set(true)" class="flex cursor-pointer items-center gap-2 rounded-lg border border-line bg-surface px-4 py-2 text-[14px] font-bold text-[#059669] hover:bg-[#f6f8fb]">
-        <span class="material-symbols-outlined !text-[20px]">database</span>مصادر البيانات والحوكمة
-      </button>
     </div>
   </nav>
 
@@ -101,14 +95,10 @@
         <span class="flex size-10 shrink-0 items-center justify-center rounded-xl bg-[#ecfdf5] text-[#10b981]"><span class="material-symbols-outlined !text-[22px]">swap_horiz</span></span>
         <span class="text-[15px] leading-5 font-semibold text-[#475569]">صافي تدفق المنطقة المركزية</span>
       </div>
-      <div class="flex h-10 items-center justify-center gap-3">
-        <b class="num text-[34px] leading-10 text-[#059669] [direction:ltr] [unicode-bidi:isolate]">+{{ fmt(store.data().net) }}</b>
-        <span class="rounded-md bg-[#ecfdf5] px-2 py-0.5 text-[13px] font-bold text-[#059669]">مركبة داخل</span>
-      </div>
-      <div class="mt-auto flex min-h-11 flex-col items-stretch justify-end text-center">
-        <div class="num grid grid-cols-2 gap-1.5 text-[13px] font-bold whitespace-nowrap">
-          <span class="rounded-md bg-[#ecfdf5] px-2 py-1 text-center text-[#059669]">داخل: {{ fmt(store.data().inbound) }}</span>
-          <span class="rounded-md bg-[#ecfdf5] px-2 py-1 text-center text-[#059669]">خارج: {{ fmt(store.data().outbound) }}</span>
+      <div class="flex flex-1 items-center justify-center text-center">
+        <div class="num grid w-full grid-cols-2 gap-2 text-[24px] leading-9 font-bold whitespace-nowrap">
+          <span class="flex flex-col items-center rounded-md bg-[#ecfdf5] px-2 py-1 text-[#059669]">{{ fmt(store.data().inbound) }}<small class="text-[13px] leading-5 font-semibold">داخلة</small></span>
+          <span class="flex flex-col items-center rounded-md bg-[#fff1f2] px-2 py-1 text-[#e11d48]">{{ fmt(store.data().outbound) }}<small class="text-[13px] leading-5 font-semibold">خارجة</small></span>
         </div>
       </div>
     </article>
@@ -124,26 +114,23 @@
       </div>
     </article>
 
-    <article [flashOnChange]="store.data().open + '-' + store.data().sla" class="pcard relative !gap-3 overflow-hidden !p-4">
+    <article [flashOnChange]="store.data().open" class="pcard relative !gap-3 overflow-hidden !p-4">
       <div class="flex min-h-10 items-center justify-center gap-2.5 text-center">
         <span class="flex size-10 shrink-0 items-center justify-center rounded-xl bg-[#fff1f2] text-[#e11d48]"><span class="material-symbols-outlined !text-[22px]">car_crash</span></span>
-        <span class="text-[15px] leading-5 font-semibold text-[#475569]">الحوادث المفتوحة والمتأخرة</span>
+        <span class="text-[15px] leading-5 font-semibold text-[#475569]">الحوادث المفتوحة</span>
       </div>
       <div class="flex flex-1 items-center justify-center gap-2.5">
         <b class="num text-[34px] leading-10 text-ink">{{ store.data().open }}</b>
-        <span class="num rounded-md bg-[#fff1f2] px-2 py-0.5 text-[13px] font-bold whitespace-nowrap text-[#e11d48]">{{ store.data().sla }} متأخرة SLA</span>
       </div>
     </article>
 
     <article class="pcard relative !gap-3 overflow-hidden !p-4">
       <div class="flex min-h-10 items-center justify-center gap-2.5 text-center">
         <span class="flex size-10 shrink-0 items-center justify-center rounded-xl bg-[#ecfdf5] text-[#059669]"><span class="material-symbols-outlined !text-[22px]">visibility</span></span>
-        <span class="text-[15px] leading-5 font-semibold text-[#475569]">جاهزية الكاميرات وتحليل VISuite</span>
+        <span class="text-[15px] leading-5 font-semibold text-[#475569]">جاهزية الكاميرات</span>
       </div>
       <div class="flex flex-1 items-center justify-center gap-2">
-        <b class="num text-[34px] leading-10 text-[#059669] [direction:ltr] [unicode-bidi:isolate]">96.8%</b>
-        <span class="num text-[14px] font-medium text-[#475569] [direction:ltr] [unicode-bidi:isolate]">(612 / 632)</span>
-      </div>
+        <b class="num text-[34px] leading-10 text-[#059669] [direction:ltr] [unicode-bidi:isolate]">96.8%</b>      </div>
     </article>
   </section>
 
@@ -182,37 +169,6 @@
           <button type="button" class="cursor-pointer rounded-lg border border-line bg-white px-4 py-2 text-[14px] font-semibold text-[#475569] hover:bg-[#f6f8fb]" (click)="store.cameraModal.set(null)">إغلاق</button>
           <button type="button" class="cursor-pointer rounded-lg border-0 bg-[#059669] px-4 py-2 text-[14px] font-bold text-white hover:bg-[#047857]" (click)="store.confirmVerification()">اعتماد الحالة وتوجيه دورية مرور</button>
         </div>
-      </div>
-    </div>
-  </div>
-}
-
-@if (store.govOpen()) {
-  <div class="fixed inset-0 z-[2000] flex items-center justify-center bg-black/60 p-4" role="dialog" aria-modal="true" (click)="store.govOpen.set(false)">
-    <div class="flex max-h-[85vh] w-full max-w-[960px] flex-col overflow-hidden rounded-xl border border-[#e6ebf2] bg-white shadow-xl" (click)="$event.stopPropagation()">
-      <div class="flex items-center justify-between border-b border-[#e6ebf2] px-5 py-3.5">
-        <h3 class="m-0 flex items-center gap-2 text-[18px] font-bold text-ink"><span class="material-symbols-outlined text-[#059669]">database</span>مصفوفة مصادر البيانات والحوكمة والتكامل (المدينة المنورة)</h3>
-        <button type="button" class="cursor-pointer rounded border-0 bg-transparent px-2 py-1 text-ink-2 hover:bg-hover" aria-label="إغلاق" (click)="store.govOpen.set(false)">✕</button>
-      </div>
-      <div class="overflow-auto p-4">
-        <table class="w-full border-collapse text-[15px]">
-          <thead>
-            <tr class="border-b-2 border-[#dde2e8] text-[14px] font-bold text-[#334155]">
-              <th class="px-3 py-2.5 text-start font-bold">المجموعة</th><th class="px-3 py-2.5 text-start font-bold">النظام / المصدر</th><th class="px-3 py-2.5 text-start font-bold">الجهة المالكة</th><th class="px-3 py-2.5 text-start font-bold">دورية التحديث</th><th class="px-3 py-2.5 text-start font-bold">حالة الربط</th>
-            </tr>
-          </thead>
-          <tbody>
-            @for (g of governance; track g.group) {
-              <tr class="border-t border-[#e6ebf2]">
-                <td class="px-3 py-3 font-bold text-ink">{{ g.group }}</td>
-                <td class="px-3 py-3 font-semibold text-[#059669]">{{ g.system }}</td>
-                <td class="px-3 py-3 text-[#334155]">{{ g.owner }}</td>
-                <td class="px-3 py-3 text-[#334155]">{{ g.refresh }}</td>
-                <td class="px-3 py-3"><span class="rounded px-2 py-0.5 text-[13px] font-bold" [class]="g.ok ? 'bg-[#ecfdf5] text-[#059669]' : 'bg-[#fffbeb] text-[#d97706]'">{{ g.status }}</span></td>
-              </tr>
-            }
-          </tbody>
-        </table>
       </div>
     </div>
   </div>

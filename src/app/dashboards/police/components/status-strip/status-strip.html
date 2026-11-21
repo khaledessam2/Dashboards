@@ -11,16 +11,13 @@
   <div class="pcard !flex-row items-center !gap-3.5 !px-5 !py-4">
     <span class="flex size-12 shrink-0 items-center justify-center rounded-xl bg-[#fffbeb] text-[#f59e0b]"><span class="material-symbols-outlined !text-[26px]">wb_sunny</span></span>
     <div class="flex min-w-0 flex-col gap-1">
-      <span class="num text-[16px] leading-6 font-semibold text-ink"><b class="text-[22px] font-bold">{{ store.weatherNow().temp }}°C</b> | رياح {{ store.weatherNow().wind }} km/h | رطوبة {{ store.weatherNow().humidity }}%</span>
-      <span class="text-[14px] leading-5 font-medium text-[#475569]">أرصاد المدينة (NCM) - رؤية {{ store.weatherNow().vis }} كم - مستقر</span>
-    </div>
+      <span class="num text-[16px] leading-6 font-semibold text-ink"><b class="text-[22px] font-bold">{{ store.weatherNow().temp }}°C</b> | رياح {{ store.weatherNow().wind }} km/h | رطوبة {{ store.weatherNow().humidity }}%</span>    </div>
   </div>
 
   <div class="pcard !flex-row items-center !gap-3.5 !px-5 !py-4">
     <span class="flex size-12 shrink-0 items-center justify-center rounded-xl bg-[#ecfdf5] text-[#10b981]"><span class="material-symbols-outlined !text-[26px]">umbrella</span></span>
     <div class="flex min-w-0 flex-col gap-1">
       <span class="num text-[16px] leading-6 font-semibold text-ink">مظلات الساحات: <b class="font-bold text-[#059669]">{{ store.umbrellas.open }} مفتوحة</b> / <b class="font-bold text-[#d97706]">{{ store.umbrellas.maintenance }} صيانة</b></span>
-      <span class="num text-[14px] leading-5 font-medium text-[#475569]">القباب المتحركة ({{ store.umbrellas.domesTotal }}): مغلقة ({{ store.umbrellas.domesClosed }}) / قيد الحركة ({{ store.umbrellas.domesMoving }})</span>
     </div>
   </div>
 

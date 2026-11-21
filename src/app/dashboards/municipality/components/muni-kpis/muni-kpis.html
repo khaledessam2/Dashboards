@@ -4,11 +4,7 @@
       <span class="flex size-10 shrink-0 items-center justify-center rounded-xl bg-[#fffbeb] text-[#f59e0b]"><span class="material-symbols-outlined !text-[22px]">lightbulb</span></span>
       <span class="text-[15px] leading-5 font-semibold text-[#475569]">جاهزية الإنارة الذكية</span>
     </div>
-    <div class="flex h-10 items-center justify-center"><b class="num text-[34px] leading-10 text-[#059669] [direction:ltr]">{{ store.kpi().lightPct }}%</b></div>
-    <div class="num mt-auto flex min-h-11 flex-col items-stretch justify-end gap-0.5 text-center text-[14px] font-medium text-[#475569]">
-      <span class="font-bold text-[#e11d48]">{{ store.kpi().lightFaults }} معطلة</span>
-      <span>{{ store.kpi().lightNoData }} دون تحديث</span>
-    </div>
+    <div class="flex flex-1 items-center justify-center"><b class="num text-[34px] leading-10 text-[#059669] [direction:ltr]">{{ store.kpi().lightPct }}%</b></div>
   </article>
 
   <article class="pcard relative !gap-3 overflow-hidden !p-4" [flashOnChange]="store.kpi().crit940 + '-' + store.kpi().late940">
@@ -16,13 +12,9 @@
       <span class="flex size-10 shrink-0 items-center justify-center rounded-xl bg-[#fff1f2] text-[#e11d48]"><span class="material-symbols-outlined !text-[22px]">support_agent</span></span>
       <span class="text-[15px] leading-5 font-semibold text-[#475569]">البلاغات الحرجة والمتأخرة (940)</span>
     </div>
-    <div class="flex h-10 items-center justify-center gap-2.5">
+    <div class="flex flex-1 items-center justify-center gap-2.5">
       <b class="num text-[34px] leading-10 text-[#e11d48]">{{ store.kpi().crit940 }}</b>
       <span class="num rounded-md bg-[#fffbeb] px-2 py-0.5 text-[13px] font-bold whitespace-nowrap text-[#d97706]">{{ store.kpi().late940 }} متأخرة</span>
-    </div>
-    <div class="num mt-auto flex min-h-11 flex-col items-stretch justify-end gap-0.5 text-center text-[14px] font-medium text-[#475569]">
-      <span class="font-bold text-[#059669]">88% إنجاز ضمن المستهدف</span>
-      <span>متوسط الإسناد: 22 دقيقة</span>
     </div>
   </article>
 
@@ -31,11 +23,7 @@
       <span class="flex size-10 shrink-0 items-center justify-center rounded-xl bg-[#ecfdf5] text-[#059669]"><span class="material-symbols-outlined !text-[22px]">build</span></span>
       <span class="text-[15px] leading-5 font-semibold text-[#475569]">أوامر العمل والصيانة (CMMS)</span>
     </div>
-    <div class="flex h-10 items-center justify-center gap-2"><b class="num text-[34px] leading-10 text-ink">{{ store.kpi().woOpen }}</b><span class="text-[14px] font-medium text-[#475569]">أمر مفتوح</span></div>
-    <div class="num mt-auto flex min-h-11 flex-col items-stretch justify-end gap-0.5 text-center text-[14px] font-medium text-[#475569]">
-      <span class="font-bold text-[#e11d48]">{{ store.kpi().woLate }} متأخرة</span>
-      <span class="text-[#d97706]">14 متوقفة</span>
-    </div>
+    <div class="flex flex-1 items-center justify-center gap-2"><b class="num text-[34px] leading-10 text-ink">{{ store.kpi().woOpen }}</b><span class="text-[14px] font-medium text-[#475569]">أمر مفتوح</span></div>
   </article>
 
   <article class="pcard relative !gap-3 overflow-hidden !p-4" [flashOnChange]="store.kpi().sanPct">
@@ -43,11 +31,7 @@
       <span class="flex size-10 shrink-0 items-center justify-center rounded-xl bg-[#ecfdf5] text-[#10b981]"><span class="material-symbols-outlined !text-[22px]">cleaning_services</span></span>
       <span class="text-[15px] leading-5 font-semibold text-[#475569]">إنجاز خطة النظافة</span>
     </div>
-    <div class="flex h-10 items-center justify-center"><b class="num text-[34px] leading-10 text-[#059669] [direction:ltr]">{{ store.kpi().sanPct }}%</b></div>
-    <div class="num mt-auto flex min-h-11 flex-col items-stretch justify-end gap-0.5 text-center text-[14px] font-medium text-[#475569]">
-      <span class="font-bold text-[#d97706]">{{ store.kpi().fullBins }} حاوية ممتلئة/متأخرة</span>
-      <span>64 فرقة</span>
-    </div>
+    <div class="flex flex-1 items-center justify-center"><b class="num text-[34px] leading-10 text-[#059669] [direction:ltr]">{{ store.kpi().sanPct }}%</b></div>
   </article>
 
   <article class="pcard relative !gap-3 overflow-hidden !p-4" [flashOnChange]="store.kpi().waterActive">
@@ -55,11 +39,7 @@
       <span class="flex size-10 shrink-0 items-center justify-center rounded-xl bg-[#ecfdf5] text-[#10b981]"><span class="material-symbols-outlined !text-[22px]">water_drop</span></span>
       <span class="text-[15px] leading-5 font-semibold text-[#475569]">المياه وتصريف الأمطار</span>
     </div>
-    <div class="flex h-10 items-center justify-center gap-2"><b class="num text-[34px] leading-10 text-[#10b981]">{{ store.kpi().waterActive }}</b><span class="text-[14px] font-medium text-[#475569]">تجمعات/كسور نشطة</span></div>
-    <div class="num mt-auto flex min-h-11 flex-col items-stretch justify-end gap-0.5 text-center text-[14px] font-medium text-[#475569]">
-      <span class="font-bold text-[#059669]">98% جاهزية المضخات</span>
-      <span>SCADA</span>
-    </div>
+    <div class="flex flex-1 items-center justify-center gap-2"><b class="num text-[34px] leading-10 text-[#10b981]">{{ store.kpi().waterActive }}</b><span class="text-[14px] font-medium text-[#475569]">تجمعات/كسور نشطة</span></div>
   </article>
 
   <article class="pcard relative !gap-3 overflow-hidden !p-4" [flashOnChange]="store.kpi().roadHazards">
@@ -67,10 +47,6 @@
       <span class="flex size-10 shrink-0 items-center justify-center rounded-xl bg-[#fffbeb] text-[#f59e0b]"><span class="material-symbols-outlined !text-[22px]">construction</span></span>
       <span class="text-[15px] leading-5 font-semibold text-[#475569]">مخاطر الطرق والأرصفة</span>
     </div>
-    <div class="flex h-10 items-center justify-center gap-2"><b class="num text-[34px] leading-10 text-[#f59e0b]">{{ store.kpi().roadHazards }}</b><span class="text-[14px] font-medium text-[#475569]">حالة نشطة</span></div>
-    <div class="num mt-auto flex min-h-11 flex-col items-stretch justify-end gap-0.5 text-center text-[14px] font-medium text-[#475569]">
-      <span class="font-bold text-[#059669]">11 حفريات بلدي/نسق</span>
-      <span>ربط مرور</span>
-    </div>
+    <div class="flex flex-1 items-center justify-center gap-2"><b class="num text-[34px] leading-10 text-[#f59e0b]">{{ store.kpi().roadHazards }}</b><span class="text-[14px] font-medium text-[#475569]">حالة نشطة</span></div>
   </article>
 </section>

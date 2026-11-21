@@ -21,16 +21,6 @@ const TABS = [
 
 type TabId = (typeof TABS)[number]['id'];
 
-const GOVERNANCE = [
-  { group: 'تحليل الفيديو', system: 'Ipsotek VISuite', owner: 'غرفة العمليات / المشروع', refresh: 'فوري (Real-time)', status: 'مفعّل ومتصل', ok: true },
-  { group: 'إدارة الكاميرات', system: 'Milestone XProtect VMS', owner: 'الأمن / المشروع', refresh: 'فوري (Real-time)', status: 'مفعّل ومتصل', ok: true },
-  { group: 'المرور التجاري', system: 'TomTom / HERE Traffic', owner: 'مزود خارجي (اشتراك API)', refresh: 'كل 1 دقيقة', status: 'متصل', ok: true },
-  { group: 'الحوادث والطوارئ', system: 'نظام المرور / 911', owner: 'المركز الوطني للعمليات الأمنية', refresh: 'فوري عند البلاغ', status: 'متصل', ok: true },
-  { group: 'المخاطر والحفريات', system: 'بلاغات 940 / نسق / بلدي', owner: 'أمانة منطقة المدينة المنورة', refresh: 'كل 5 دقائق', status: 'تكامل مرحلي', ok: false },
-  { group: 'شبكات المياه', system: 'بلاغات الكسور والتسربات', owner: 'شركة المياه الوطنية (NWC)', refresh: 'عند حدوث بلاغ', status: 'متصل', ok: true },
-  { group: 'الطيران والقطار', system: 'مطار الأمير محمد / قطار الحرمين', owner: 'طيبة للمطارات / سار (SAR)', refresh: 'كل 10 دقائق', status: 'متصل', ok: true },
-];
-
 @Component({
   selector: 'app-traffic-dashboard',
   imports: [FlashOnChange, OverviewView, FlowView, IncidentsView, RoadsView, CamerasView, ReadinessView],
@@ -44,7 +34,6 @@ export class TrafficDashboard {
 
   protected readonly tabs = TABS;
   protected readonly tab = signal<TabId>('overview');
-  protected readonly governance = GOVERNANCE;
   protected readonly fmt = fmt;
 
   protected readonly clock = computed(() => new Date(this.live.now()).toLocaleTimeString('en-GB', { hour12: false, timeZone: 'Asia/Riyadh' }));
@@ -65,6 +54,5 @@ export class TrafficDashboard {
 
   protected closeModals(): void {
     this.store.cameraModal.set(null);
-    this.store.govOpen.set(false); 
   }
 }
