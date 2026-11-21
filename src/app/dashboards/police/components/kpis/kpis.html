@@ -1,0 +1,85 @@
+<section class="grid h-full grid-cols-[repeat(3,minmax(0,1fr))] gap-4 max-[900px]:grid-cols-[repeat(2,minmax(0,1fr))] max-[480px]:grid-cols-[minmax(0,1fr)]">
+  <article [flashOnChange]="store.total()" class="pcard relative !gap-3 overflow-hidden !p-4">
+    <div class="flex min-h-10 items-center gap-2.5">
+      <span class="flex size-10 shrink-0 items-center justify-center rounded-xl bg-[#eaf1ff] text-[#0b5cff]"><span class="material-symbols-outlined !text-[22px]">groups</span></span>
+      <span class="text-[15px] leading-5 font-semibold text-[#475569]">إجمالي الإشغال الحالي</span>
+    </div>
+    <div class="flex h-10 items-center"><b class="num text-[34px] leading-10 text-ink">{{ fmt(store.total()) }}</b></div>
+    <div class="mt-auto flex min-h-11 flex-col justify-end gap-1">
+      <div class="flex items-center justify-between gap-2">
+        <span class="num rounded-md bg-[#ecfdf5] px-2 py-0.5 text-[13px] font-bold whitespace-nowrap text-[#059669]">↑ {{ store.hourDelta }}% خلال ساعة</span>
+        <svg viewBox="0 0 120 30" class="h-6 w-20 [direction:ltr]" aria-hidden="true"><path [attr.d]="spark()" fill="none" stroke="#0b5cff" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" /></svg>
+      </div>
+      <span class="text-[14px] text-[#475569] font-medium">المصدر: حساسات &amp; VISuite</span>
+    </div>
+  </article>
+
+  <article [flashOnChange]="store.occupancyPct()" class="pcard relative !gap-3 overflow-hidden !p-4">
+    <div class="flex min-h-10 items-center gap-2.5">
+      <span class="flex size-10 shrink-0 items-center justify-center rounded-xl bg-[#fffbeb] text-[#f59e0b]"><span class="material-symbols-outlined !text-[22px]">speed</span></span>
+      <span class="text-[15px] leading-5 font-semibold text-[#475569]">نسبة الإشغال من السعة</span>
+    </div>
+    <div class="flex h-10 items-baseline gap-2"><b class="num text-[34px] leading-10" [style.color]="occColor()">{{ store.occupancyPct() }}%</b><span class="num text-[14px] text-[#475569] font-medium">/ {{ fmt(store.capacity) }}</span></div>
+    <div class="mt-auto flex min-h-11 flex-col justify-end gap-1.5">
+      <div class="relative h-2 rounded-full bg-[#eef1f6]">
+        <div class="h-full rounded-full transition-[width] duration-700" [style.width.%]="store.occupancyPct()" [style.background]="occColor()"></div>
+        <i class="absolute -top-1 h-4 w-0.5 bg-[#f59e0b]" style="inset-inline-start: 85%"></i>
+        <i class="absolute -top-1 h-4 w-0.5 bg-[#e11d48]" style="inset-inline-start: 95%"></i>
+      </div>
+      <div class="num flex justify-between text-[14px] text-[#475569] font-medium"><span>تحذير: 85%</span><span>حرج: 95%</span></div>
+    </div>
+  </article>
+
+  <article [flashOnChange]="store.flowNow().net" class="pcard relative !gap-3 overflow-hidden !p-4">
+    <div class="flex min-h-10 items-center gap-2.5">
+      <span class="flex size-10 shrink-0 items-center justify-center rounded-xl bg-[#ecfdf5] text-[#10b981]"><span class="material-symbols-outlined !text-[22px]">swap_horiz</span></span>
+      <span class="text-[15px] leading-5 font-semibold text-[#475569]">صافي التدفق (15 دقيقة)</span>
+    </div>
+    <div class="flex h-10 items-center justify-between gap-2">
+      <b class="num text-[34px] leading-10 text-[#059669]">{{ store.flowNow().net > 0 ? '+' : '' }}{{ fmt(store.flowNow().net) }}</b>
+      <span class="rounded-md bg-[#ecfdf5] px-2 py-0.5 text-[13px] font-bold text-[#059669]">{{ store.flowNow().net > 0 ? 'داخل' : 'خارج' }}</span>
+    </div>
+    <div class="mt-auto flex min-h-11 flex-col justify-end">
+      <div class="num grid grid-cols-2 gap-1.5 text-[13px] font-bold whitespace-nowrap"><span class="rounded-md bg-[#ecfdf5] px-2 py-1 text-center text-[#059669]">دخول: {{ fmt(store.flowNow().inn) }}</span><span class="rounded-md bg-[#eaf1ff] px-2 py-1 text-center text-[#0b5cff]">خروج: {{ fmt(store.flowNow().out) }}</span></div>
+    </div>
+  </article>
+
+  <article [flashOnChange]="store.crowdAlerts().crit + '-' + store.crowdAlerts().warn" class="pcard relative !gap-3 overflow-hidden !p-4">
+    <div class="flex min-h-10 items-center gap-2.5">
+      <span class="flex size-10 shrink-0 items-center justify-center rounded-xl bg-[#fff1f2] text-[#e11d48]"><span class="material-symbols-outlined !text-[22px]">local_fire_department</span></span>
+      <span class="text-[15px] leading-5 font-semibold text-[#475569]">المناطق ذات الازدحام</span>
+    </div>
+    <div class="flex h-10 items-center gap-2">
+      <span class="num rounded-lg bg-[#fff1f2] px-2.5 text-[24px] leading-9 font-bold text-[#e11d48]">{{ store.crowdAlerts().crit }} <small class="text-[13px]">حرج</small></span>
+      <span class="num rounded-lg bg-[#fffbeb] px-2.5 text-[24px] leading-9 font-bold text-[#d97706]">{{ store.crowdAlerts().warn }} <small class="text-[13px]">تحذيري</small></span>
+    </div>
+    <div class="mt-auto flex min-h-11 flex-col justify-end">
+      <span class="num text-[14px] leading-5 text-[#475569] font-medium">الأعلى: {{ store.crowdAlerts().top.short }} <span class="inline-block whitespace-nowrap">({{ store.crowdAlerts().top.density.toFixed(1) }} ش/م²)</span></span>
+    </div>
+  </article>
+
+  <article class="pcard relative !gap-3 overflow-hidden !p-4">
+    <div class="flex min-h-10 items-center gap-2.5">
+      <span class="flex size-10 shrink-0 items-center justify-center rounded-xl bg-[#fff1f2] text-[#e11d48]"><span class="material-symbols-outlined !text-[22px]">notifications_active</span></span>
+      <span class="text-[15px] leading-5 font-semibold text-[#475569]">الحالات الحرجة النشطة</span>
+    </div>
+    <div class="flex h-10 items-baseline gap-2"><b class="num text-[34px] leading-10 text-[#e11d48]">{{ store.response().critical }}</b><span class="text-[15px] text-[#475569] font-medium">حالات</span></div>
+    <div class="mt-auto flex min-h-11 flex-wrap content-end gap-1.5">
+      @for (b of store.response().badges; track b.ar) {
+        <span class="num rounded bg-[#fff1f2] px-2 py-0.5 text-[12px] font-bold text-[#e11d48]">{{ b.n }} {{ b.ar }}</span>
+      }
+    </div>
+  </article>
+
+  <article [flashOnChange]="store.response().onTarget" class="pcard relative !gap-3 overflow-hidden !p-4">
+    <div class="flex min-h-10 items-center gap-2.5">
+      <span class="flex size-10 shrink-0 items-center justify-center rounded-xl bg-[#eaf1ff] text-[#0b5cff]"><span class="material-symbols-outlined !text-[22px]">timer</span></span>
+      <span class="text-[15px] leading-5 font-semibold text-[#475569]">نسبة الوصول داخل المستهدف</span>
+    </div>
+    <div class="flex h-10 items-center"><b class="num text-[34px] leading-10 text-[#059669]">{{ store.response().onTarget }}%</b></div>
+    <div class="num mt-auto flex min-h-11 flex-col justify-end gap-0.5 text-[14px] text-[#475569] font-medium">
+      <span>المستهدف ≥95% · متوسط الوصول <b class="text-ink">{{ store.response().arrive }} د</b></span>
+      <span class="text-[#d97706]">{{ store.response().delayed }} حالة متأخرة</span>
+    </div>
+  </article>
+</section>

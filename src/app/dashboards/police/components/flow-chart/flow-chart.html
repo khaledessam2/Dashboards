@@ -1,0 +1,15 @@
+<header class="mb-2 flex items-center justify-between gap-3">
+  <h2 class="m-0 flex items-center gap-2 text-[18px] leading-6 font-bold text-ink"><span class="material-symbols-outlined !text-[20px] text-[#0b5cff]">show_chart</span>حركة الدخول والخروج (كل 15 دقيقة)</h2>
+</header>
+<div class="mb-2 flex items-center justify-between gap-2 text-[14px] text-[#475569] font-medium">
+  <span>مقارنة التدفق الداخل مقابل الخارج</span>
+  <span class="flex items-center gap-2">
+    @for (s of series; track s.id) {
+      <button type="button" class="flex cursor-pointer items-center gap-2 rounded-lg border border-[#e6ebf2] bg-white px-3 py-1 text-[14px] font-semibold text-[#475569] transition-opacity hover:bg-[#f6f8fb]"
+        [class.opacity-40]="hidden().includes(s.id)" [attr.aria-pressed]="!hidden().includes(s.id)" (click)="toggle(s.id)">
+        <i class="size-2.5 rounded-full" [style.background]="s.color"></i><span [class.line-through]="hidden().includes(s.id)">{{ s.ar }}</span>
+      </button>
+    }
+  </span>
+</div>
+<div class="relative min-h-[220px] flex-1"><app-hc-chart class="absolute inset-0" [options]="flowOptions()" [height]="0" /></div>

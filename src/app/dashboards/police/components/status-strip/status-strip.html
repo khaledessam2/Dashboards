@@ -1,0 +1,36 @@
+<section class="grid grid-cols-[repeat(4,minmax(0,1fr))] gap-4 max-[1500px]:grid-cols-[repeat(2,minmax(0,1fr))] max-[640px]:grid-cols-[minmax(0,1fr)]" aria-label="الحالة التشغيلية الآنية">
+  <div class="pcard !flex-row items-center !gap-3.5 !px-5 !py-4">
+    <span class="flex size-12 shrink-0 items-center justify-center rounded-xl bg-[#eaf1ff] text-[#0b5cff]"><span class="material-symbols-outlined !text-[26px]">schedule</span></span>
+    <div class="flex min-w-0 flex-col gap-1">
+      <span class="text-[16px] leading-6 font-semibold text-ink">الصلاة القادمة: صلاة {{ store.nextPrayer().ar }} (المدينة)</span>
+      <div class="flex flex-wrap items-center gap-2.5">
+        <b class="num text-[30px] leading-9 text-[#0b5cff] [direction:ltr]">{{ store.nextPrayer().countdown }}</b>
+        <span class="rounded px-2 py-0.5 text-[13px] font-bold" [class]="store.nextPrayer().minutes <= 45 ? 'bg-[#fff1f2] text-[#e11d48]' : 'bg-[#eaf1ff] text-[#0b5cff]'">{{ tag() }}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="pcard !flex-row items-center !gap-3.5 !px-5 !py-4">
+    <span class="flex size-12 shrink-0 items-center justify-center rounded-xl bg-[#fffbeb] text-[#f59e0b]"><span class="material-symbols-outlined !text-[26px]">wb_sunny</span></span>
+    <div class="flex min-w-0 flex-col gap-1">
+      <span class="num text-[16px] leading-6 font-semibold text-ink"><b class="text-[22px] font-bold">{{ store.weatherNow().temp }}°C</b> | رياح {{ store.weatherNow().wind }} km/h | رطوبة {{ store.weatherNow().humidity }}%</span>
+      <span class="text-[14px] leading-5 font-medium text-[#475569]">أرصاد المدينة (NCM) - رؤية {{ store.weatherNow().vis }} كم - مستقر</span>
+    </div>
+  </div>
+
+  <div class="pcard !flex-row items-center !gap-3.5 !px-5 !py-4">
+    <span class="flex size-12 shrink-0 items-center justify-center rounded-xl bg-[#ecfdf5] text-[#10b981]"><span class="material-symbols-outlined !text-[26px]">umbrella</span></span>
+    <div class="flex min-w-0 flex-col gap-1">
+      <span class="num text-[16px] leading-6 font-semibold text-ink">مظلات الساحات: <b class="font-bold text-[#059669]">{{ store.umbrellas.open }} مفتوحة</b> / <b class="font-bold text-[#d97706]">{{ store.umbrellas.maintenance }} صيانة</b></span>
+      <span class="num text-[14px] leading-5 font-medium text-[#475569]">القباب المتحركة ({{ store.umbrellas.domesTotal }}): مغلقة ({{ store.umbrellas.domesClosed }}) / قيد الحركة ({{ store.umbrellas.domesMoving }})</span>
+    </div>
+  </div>
+
+  <div class="pcard !flex-row items-center !gap-3.5 !px-5 !py-4">
+    <span class="flex size-12 shrink-0 items-center justify-center rounded-xl bg-[#f5f3ff] text-[#7c3aed]"><span class="material-symbols-outlined !text-[26px]">star</span></span>
+    <div class="flex min-w-0 flex-col gap-1">
+      <b class="text-[17px] leading-6 text-ink">{{ store.visit.title }}</b>
+      <span class="num text-[14px] leading-5 font-medium text-[#475569]">{{ store.visit.gate }} · <span class="inline-block [direction:ltr]">{{ store.visit.from }} - {{ store.visit.to }}</span></span>
+    </div>
+  </div>
+</section>

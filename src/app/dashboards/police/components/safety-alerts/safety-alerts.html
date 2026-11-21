@@ -1,0 +1,30 @@
+<header class="flex items-start justify-between gap-3 px-5 pt-5 pb-3">
+  <div>
+    <h2 class="m-0 flex items-center gap-2 text-[18px] leading-6 font-bold text-ink"><span class="material-symbols-outlined !text-[20px] text-[#0b5cff]">notifications_active</span>تنبيهات السلامة والاحداث النشطة</h2>
+  </div>
+</header>
+<div class="relative min-h-[320px] flex-1">
+<ul class="absolute inset-0 m-0 flex list-none flex-col overflow-y-auto p-0">
+  @for (a of store.alerts(); track a.id) {
+    <li class="flex items-start gap-3 border-t border-[#eef1f6] px-5 py-3">
+      <span class="flex size-10 shrink-0 items-center justify-center rounded-xl" [class]="a.level === 'bad' ? 'bg-[#fff1f2] text-[#e11d48]' : a.level === 'warn' ? 'bg-[#fffbeb] text-[#d97706]' : 'bg-[#ecfdf5] text-[#059669]'"><span class="material-symbols-outlined !text-[22px]">{{ a.icon }}</span></span>
+      <div class="flex min-w-0 flex-1 flex-col gap-0.5">
+        <div class="flex items-center justify-between gap-2"><b class="text-[15px] leading-5 text-ink">{{ a.title }}</b><span class="num mono shrink-0 text-[13px] font-medium text-[#475569]">{{ a.ago }}</span></div>
+        <div class="flex items-end justify-between gap-3">
+          <div class="flex min-w-0 flex-col gap-0.5">
+            <span class="text-[14px] font-medium text-[#475569]">الموقع: {{ a.place }}</span>
+          </div>
+          <button type="button" (click)="open(a.cam)"
+            class="flex shrink-0 cursor-pointer items-center gap-1.5 rounded-lg border border-[#d5dbe3] bg-white px-3 py-1.5 text-[13px] font-semibold text-ink hover:bg-[#f6f8fb]">
+            <span class="material-symbols-outlined !text-[18px]">videocam</span>عرض
+          </button>
+        </div>
+      </div>
+    </li>
+  }
+</ul>
+</div>
+
+@if (selected(); as cam) {
+  <app-camera-popup [camera]="cam" (closed)="selected.set(null)" />
+}

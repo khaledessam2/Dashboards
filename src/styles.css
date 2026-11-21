@@ -185,3 +185,17 @@
 @utility pcard {
   @apply box-border flex min-h-0 min-w-0 flex-col rounded-xl border border-[#e6ebf2] bg-white p-5 shadow-[0_1px_2px_rgba(16,24,40,0.04)];
 }
+
+/* Police heat map (Leaflet): muted base map, zone labels, gate / alert pins */
+.heat-tiles { filter: grayscale(0.8) contrast(0.92) brightness(1.08); }
+.heat-label {
+  padding: 2px 8px; color: #1c2434; font: 700 12px 'IBM Plex Sans Arabic', 'Cairo', sans-serif; direction: rtl;
+  background: rgba(255, 255, 255, 0.92); border: 1px solid #e6ebf2; border-radius: 6px; box-shadow: none;
+}
+.heat-label::before { display: none; }
+.heat-label-dim { opacity: 0.3; }
+.heat-pin-wrap { background: none; border: 0; }
+.heat-pin {
+  display: flex; align-items: center; justify-content: center; color: #fff; border: 2px solid #fff; border-radius: 9999px;
+  font: 700 11px 'IBM Plex Sans Arabic', 'Cairo', sans-serif; box-shadow: 0 1px 3px rgba(16, 24, 40, 0.35);
+}

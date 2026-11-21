@@ -1,168 +1,27 @@
-<!-- Top bar -->
-
-
 <div class="flex flex-col gap-4 px-6 pt-4 pb-6 max-[900px]:px-3">
-  <header class="flex flex-wrap items-center justify-between gap-3 rounded-xl bg-surface px-5 py-3 shadow-card">
-    <div class="flex items-center gap-3">
-      <span class="flex size-12 items-center justify-center rounded-xl bg-[#0b5cff] text-white">
-        <span class="material-symbols-outlined !text-[28px]">shield</span>
-      </span>
-      <div>
-        <h1 class="m-0 text-[22px] leading-7 font-bold text-ink">نظام الرصد الذكي – الأمن العام</h1>
-        <p class="m-0 text-[14px] text-ink-2">لوحة مؤشرات العمليات الأمنية والتحليل المرئي - المدينة المنورة</p>
-      </div>
+  <app-police-header />
+  <app-police-status-strip />
+
+  <section class="grid grid-cols-2 items-stretch gap-4 max-[1500px]:grid-cols-1">
+    <app-police-kpis />
+    <app-police-flow-chart />
+  </section>
+
+  <section class="grid grid-cols-[minmax(0,1.9fr)_minmax(0,1fr)] items-stretch gap-4 max-[1100px]:grid-cols-[minmax(0,1fr)]">
+    <app-police-live-map />
+    <app-police-safety-alerts />
+  </section>
+
+  <section class="grid grid-cols-[minmax(0,1.9fr)_minmax(0,1fr)] items-stretch gap-4 max-[1100px]:grid-cols-[minmax(0,1fr)]">
+    <app-police-gates-table />
+    <app-police-emergency-response />
+  </section>
+
+  <section class="grid grid-cols-[minmax(0,1.9fr)_minmax(0,1fr)] items-stretch gap-4 max-[1100px]:grid-cols-[minmax(0,1fr)]">
+    <div class="grid grid-cols-2 items-stretch gap-4 max-[800px]:grid-cols-[minmax(0,1fr)]">
+      <app-police-zone-occupancy />
+      <app-police-arrival-waves />
     </div>
-
-    <div class="flex flex-wrap items-center gap-3">
-      <span class="flex items-center gap-2 rounded-full bg-green-600/10 px-3 py-1.5 text-[14px] font-semibold text-green-700">
-        <span class="material-symbols-outlined !text-[18px]">sync</span>آخر تحديث: {{ updatedText() }}
-        <span class="size-2.5 rounded-full bg-green-500"></span>
-      </span>
-      <span class="flex items-center gap-2 rounded-full border border-line px-3 py-1.5 text-[14px] text-ink">
-        <span class="material-symbols-outlined !text-[18px] text-ink-2">calendar_month</span>{{ dateText() }}
-      </span>
-      <button type="button" class="flex size-10 cursor-pointer items-center justify-center rounded-lg border border-line bg-surface text-ink-2" aria-label="ملء الشاشة" (click)="fullscreen()">
-        <span class="material-symbols-outlined !text-[22px]">fullscreen</span>
-      </button>
-    </div>
-  </header>
-  <!-- Filter bar -->
-  <section class="flex flex-wrap items-center gap-3 border-b border-[#e6ebf2] pb-4" aria-label="تصفية البيانات">
-    <span class="flex items-center gap-1.5 text-[14px] font-medium text-ink-2">
-      <span class="material-symbols-outlined !text-[18px] text-[#0b5cff]">filter_alt</span>تصفية النطاق:
-    </span>
-    <label class="flex items-center gap-2 rounded-lg border border-[#e6ebf2] bg-white px-3 py-1.5 text-[13px] text-ink-2">المنطقة:
-      <select class="cursor-pointer border-0 bg-transparent py-0.5 text-[13px] font-semibold text-ink outline-none" [value]="store.filters().zone" (change)="store.setFilter('zone', $any($event.target).value)">
-        @for (o of zones; track o.id) { <option [value]="o.id">{{ o.ar }}</option> }
-      </select>
-    </label>
-    <label class="flex items-center gap-2 rounded-lg border border-[#e6ebf2] bg-white px-3 py-1.5 text-[13px] text-ink-2">الكاميرا:
-      <select class="cursor-pointer border-0 bg-transparent py-0.5 text-[13px] font-semibold text-ink outline-none" [value]="store.filters().camera" (change)="store.setFilter('camera', $any($event.target).value)">
-        <option value="all">الكل ({{ store.cameraOptions.length }} كاميرا)</option>
-        @for (o of store.cameraOptions; track o.ip) { <option [value]="o.ip">{{ o.ar }}</option> }
-      </select>
-    </label>
-    <label class="flex items-center gap-2 rounded-lg border border-[#e6ebf2] bg-white px-3 py-1.5 text-[13px] text-ink-2">نوع الحدث:
-      <select class="cursor-pointer border-0 bg-transparent py-0.5 text-[13px] font-semibold text-ink outline-none" [value]="store.filters().type" (change)="store.setFilter('type', $any($event.target).value)">
-        @for (o of types; track o.id) { <option [value]="o.id">{{ o.ar }}</option> }
-      </select>
-    </label>
-    <label class="flex items-center gap-2 rounded-lg border border-[#e6ebf2] bg-white px-3 py-1.5 text-[13px] text-ink-2">مستوى الخطورة:
-      <select class="cursor-pointer border-0 bg-transparent py-0.5 text-[13px] font-semibold text-ink outline-none" [value]="store.filters().severity" (change)="store.setFilter('severity', $any($event.target).value)">
-        @for (o of severities; track o.id) { <option [value]="o.id">{{ o.ar }}</option> }
-      </select>
-    </label>
-    <div class="ms-auto flex flex-wrap items-center gap-3">
-      @if (store.period() === 'custom') {
-        <label class="flex items-center gap-2 text-[13px] text-ink-2">من
-          <input type="date" class="rounded-lg border border-[#e6ebf2] bg-white px-2 py-1.5 text-[13px] font-semibold text-ink" [value]="store.customRange().from" [max]="today" (change)="store.setCustom('from', $any($event.target).value)" />
-        </label>
-        <label class="flex items-center gap-2 text-[13px] text-ink-2">إلى
-          <input type="date" class="rounded-lg border border-[#e6ebf2] bg-white px-2 py-1.5 text-[13px] font-semibold text-ink" [value]="store.customRange().to" [max]="today" (change)="store.setCustom('to', $any($event.target).value)" />
-        </label>
-      }
-      <div class="flex rounded-lg border border-[#e6ebf2] bg-[#f1f5f9] p-1" role="tablist" aria-label="الفترة الزمنية">
-        @for (p of periods; track p.id) {
-          <button type="button" role="tab" [attr.aria-selected]="store.period() === p.id" class="cursor-pointer rounded-md border-0 px-3.5 py-1.5 text-[13px] font-semibold transition-colors"
-            [class]="store.period() === p.id ? 'bg-white text-ink shadow-sm' : 'bg-transparent text-ink-2 hover:text-ink'" (click)="store.setPeriod(p.id)">{{ p.ar }}</button>
-        }
-      </div>
-    </div>
-  </section>
-
-  <p class="m-0 -mb-1 flex items-center gap-2 text-[17px] font-semibold text-ink-2">
-    <span class="material-symbols-outlined !text-[22px] text-[#0b5cff]">info</span>
-    الأرقام تخص الفترة المحددة، ونسب التغيير (↑ ↓) مقارنةً بالفترة السابقة المماثلة لها.
-  </p>
-
-  <!-- KPIs: hero total + 6 tiles -->
-  <section class="grid grid-cols-[minmax(0,1fr)_minmax(0,2.3fr)] items-stretch gap-4 max-[1300px]:grid-cols-[minmax(0,1fr)]">
-    @if (hero(); as t) {
-      <article [flashOnChange]="t.value" class="pcard min-h-[220px] justify-between !gap-4 !p-5">
-        <div class="flex items-center justify-between gap-2">
-          <span class="text-[17px] font-semibold text-ink-2">{{ t.label }}</span>
-          <span class="flex size-11 items-center justify-center rounded-xl bg-[#eaf1ff] text-[#0b5cff]"><span class="material-symbols-outlined !text-[26px]">{{ t.icon }}</span></span>
-        </div>
-        <div class="flex items-end gap-3">
-          <b class="num text-[64px] leading-[64px] text-ink">{{ t.value }}</b>
-          <span class="num mb-1 rounded-md px-2.5 py-1 text-[14px] font-bold whitespace-nowrap" [class]="chipClass(t.pct, t.upTone)">{{ arrow(t.pct) }}</span>
-        </div>
-        <svg viewBox="0 0 200 50" preserveAspectRatio="none" class="h-14 w-full [direction:ltr]" aria-hidden="true">
-          <path [attr.d]="spark().area" fill="rgba(11,92,255,0.08)" />
-          <path [attr.d]="spark().line" fill="none" stroke="#0b5cff" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke" />
-        </svg>
-      </article>
-    }
-
-    <div class="grid grid-cols-[repeat(3,minmax(0,1fr))] gap-4 max-[900px]:grid-cols-[repeat(2,minmax(0,1fr))] max-[480px]:grid-cols-[minmax(0,1fr)]">
-      @for (t of others(); track t.id) {
-        <article [flashOnChange]="t.value" class="pcard relative !gap-2 overflow-hidden !p-4">
-          <div class="flex items-center gap-2.5">
-            <span class="flex size-10 shrink-0 items-center justify-center rounded-xl" [style.background]="t.bg" [style.color]="t.accent">
-              <span class="material-symbols-outlined !text-[22px]">{{ t.icon }}</span>
-            </span>
-            <span class="text-[15px] leading-5 font-semibold text-ink-2">{{ t.label }}</span>
-          </div>
-          <div class="mt-auto flex items-end justify-between gap-2">
-            <b class="num text-[38px] leading-10" [style.color]="t.color">{{ t.value }}</b>
-            <span class="num mb-1 rounded-md px-2 py-0.5 text-[13px] font-bold whitespace-nowrap" [class]="chipClass(t.pct, t.upTone)">{{ arrow(t.pct) }}</span>
-          </div>
-          @if (t.sub) {
-            <span class="num text-[13px] text-ink-3">{{ t.sub }}</span>
-          }
-        </article>
-      }
-    </div>
-  </section>
-
-  <!-- Secondary indicators -->
-  <section class="grid grid-cols-[repeat(auto-fit,minmax(185px,1fr))] gap-3" aria-label="مؤشرات ثانوية">
-    @for (s of strip(); track s.label) {
-      <div [flashOnChange]="s.value" class="pcard !gap-2 !p-4">
-        <div class="flex items-center justify-between gap-2">
-          <span class="flex size-10 shrink-0 items-center justify-center rounded-xl" [style.background]="s.bg" [style.color]="s.color">
-            <span class="material-symbols-outlined !text-[22px]">{{ s.icon }}</span>
-          </span>
-          <span class="num rounded-md px-2 py-0.5 text-[13px] font-bold whitespace-nowrap" [class]="chipClass(s.pct, s.up)">{{ arrow(s.pct) }}</span>
-        </div>
-        <span class="text-[15px] leading-5 font-semibold text-ink-2">{{ s.label }}</span>
-        <b class="num text-[28px] leading-8 text-ink">{{ s.value }}</b>
-      </div>
-    }
-  </section>
-
-  <!-- Live events · map · objects -->
-  <section class="grid grid-cols-[minmax(0,1fr)_minmax(0,2fr)_minmax(0,1fr)] items-stretch gap-4 max-[1500px]:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] max-[900px]:grid-cols-[minmax(0,1fr)]">
-    <app-police-live-events />
-    <app-police-cam-map class="max-[1500px]:order-first max-[1500px]:col-span-2 max-[900px]:col-span-1" />
-    <app-police-breakdown
-      layout="stacked"
-      icon="groups"
-      title="توزيع الأجسام المرصودة"
-      badge="ذكاء اصطناعي"
-      centerLabel="إجمالي الأجسام"
-      [items]="objectItems()"
-      footnote="معدل دقة التصنيف والتتبع: %98.4"
-    />
-  </section>
-
-  <!-- Distribution row -->
-  <section class="grid grid-cols-[repeat(4,minmax(0,1fr))] items-stretch gap-4 max-[1500px]:grid-cols-[repeat(2,minmax(0,1fr))] max-[900px]:grid-cols-[minmax(0,1fr)]">
-    <app-police-breakdown class="h-[320px]" title="توزيع الأحداث حسب النوع" [badge]="store.totalAll() + ' حدث'" centerLabel="حدث" [items]="store.byType()" />
-    <app-police-hourly-chart class="h-[320px]" />
-    <app-police-cam-ranking class="h-[320px]" />
-    <app-police-cam-trend class="h-[320px]" />
-  </section>
-
-  <!-- Comparison · zones · infrastructure -->
-  <section class="grid grid-cols-[minmax(0,1fr)_minmax(0,2fr)_minmax(0,1.3fr)] items-stretch gap-4 max-[1500px]:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] max-[900px]:grid-cols-[minmax(0,1fr)]">
-    <app-police-compare-gauge />
-    <app-police-top-zones />
-    <app-police-infra-metrics class="max-[1500px]:col-span-2 max-[900px]:col-span-1" />
+    <app-police-lost-help />
   </section>
 </div>
-
-<footer class="flex flex-wrap items-center justify-between gap-2 border-t border-[#e6ebf2] bg-white px-6 py-3 text-[13px] text-ink-2 max-[640px]:px-3">
-  <span>الإدارة العامة للأمن والسلامة وإدارة الحشود بالمدينة المنورة · <b class="text-ink [direction:ltr]">Madinah Smart Flow</b></span>
-  <span class="mono text-[11px] text-ink-3 [direction:ltr]">SEC-MONITOR-BUILD: 2025.02-RELEASE-LGT</span>
-</footer>
