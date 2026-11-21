@@ -1,0 +1,18 @@
+<section class="pcard !gap-4">
+  <header class="flex flex-wrap items-start justify-between gap-3 border-b border-[#e6ebf2] pb-3">
+    <div>
+      <h2 class="m-0 text-[22px] leading-8 font-bold text-ink">٤. جاهزية الكاميرات ونطاق تفعيل تحليل الفيديو (VISuite)</h2>
+      <p class="m-0 mt-1 text-[17px] font-medium text-[#334155]">الفصل الدقيق بين اتصال الكاميرا في Milestone VMS وتفعيل محرك التحليل الذكي VISuite</p>
+    </div>
+    <span class="rounded-lg bg-[#ecfdf5] px-3 py-1 text-[15px] font-bold text-[#059669]">612 متصلة | 420 تحليل ذكي مفعّل</span>
+  </header>
+  <div class="grid grid-cols-3 gap-4 max-[1100px]:grid-cols-[minmax(0,1fr)]">
+    @for (z of zones; track z.name) {
+      <div class="rounded-xl border border-[#e6ebf2] p-4">
+        <span class="text-[17px] font-semibold text-[#475569]">{{ z.name }}</span>
+        <div class="num my-1 text-start text-[40px] leading-[48px] font-bold [direction:ltr]" [class]="z.color">{{ z.pct }}</div>
+        <div class="text-[16px] font-medium text-[#334155]">{{ z.note }}</div>
+      </div>
+    }
+  </div>
+</section>
