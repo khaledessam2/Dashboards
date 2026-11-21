@@ -1,8 +1,7 @@
-import { LastUpdated } from '../../../shared/components/last-updated/last-updated';
-import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
-import { KpiCard, KpiDef } from '../../../shared/components/kpi-card/kpi-card';
+import { ChangeDetectionStrategy, Component, DestroyRef, computed, inject, signal } from '@angular/core';
 import { DatacenterStore } from '../../../shared/services/datacenter-store';
-import { DcGauges } from '../components/dc-gauges/dc-gauges';
+import { DcTopKpis } from '../components/dc-top-kpis/dc-top-kpis';
+import { DcClusterHealth } from '../components/dc-cluster-health/dc-cluster-health';
 import { DcPowerCooling } from '../components/dc-power-cooling/dc-power-cooling';
 import { DcDrBackup } from '../components/dc-dr-backup/dc-dr-backup';
 import { DcSiteBadges } from '../components/dc-site-badges/dc-site-badges';
@@ -14,27 +13,41 @@ import { DcDevicesList } from '../components/dc-devices-list/dc-devices-list';
 import { DcGroupHealth } from '../components/dc-group-health/dc-group-health';
 import { DcOpsInsights } from '../components/dc-ops-insights/dc-ops-insights';
 import { DcServiceHealth } from '../components/dc-service-health/dc-service-health';
+import { DcExtraCards } from '../components/dc-extra-cards/dc-extra-cards';
 
 
 @Component({
   selector: 'app-datacenter-dashboard',
-  imports: [LastUpdated, KpiCard, DcGauges, DcPowerCooling, DcDrBackup, DcSiteBadges, DcNetTraffic, DcDeviceHealth, DcSensorDonut, DcAlertsFeed, DcDevicesList, DcGroupHealth, DcOpsInsights, DcServiceHealth],
+  imports: [DcTopKpis, DcClusterHealth, DcPowerCooling, DcDrBackup, DcSiteBadges, DcNetTraffic, DcDeviceHealth, DcSensorDonut, DcAlertsFeed, DcDevicesList, DcGroupHealth, DcOpsInsights, DcServiceHealth, DcExtraCards],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  host: { class: 'dc-theme box-border flex flex-col gap-4 px-6 pt-4 pb-8 max-[900px]:p-4 max-[480px]:gap-3 max-[480px]:p-3' },
+  host: { class: 'dc-theme block min-h-full' },
   templateUrl: './datacenter-dashboard.html',
 })
 export class DatacenterDashboard {
   private readonly store = inject(DatacenterStore);
   protected readonly lastUpdate = this.store.lastUpdate;
+  private readonly now = signal(Date.now());
 
+  constructor() {
+    const id = setInterval(() => this.now.set(Date.now()), 30_000);
+    inject(DestroyRef).onDestroy(() => clearInterval(id));
+  }
 
-  protected readonly kpiCards = computed<KpiDef[]>(() => {
-    const k = this.store.kpis();
-    return [
-      { id: 'kpi-systems', ar: 'أجهزة متصلة', icon: 'dns', value: k.systems.toLocaleString('en-US') },
-      { id: 'kpi-sensors', ar: 'أجهزة الاستشعار', icon: 'sensors', value: k.sensors.toLocaleString('en-US') },
-      { id: 'kpi-down', ar: 'متوقف عن العمل', icon: 'error', value: k.down.toLocaleString('en-US'), status: 'crit' },
-      { id: 'kpi-warn', ar: 'تحذيرات', icon: 'warning', value: k.warn.toLocaleString('en-US'), status: 'warn' },
-    ];
+  protected readonly dateText = computed(() => {
+    const d = new Date(this.now());
+    const date = new Intl.DateTimeFormat('ar-u-nu-latn', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }).format(d);
+    const time = d.toLocaleTimeString('ar-u-nu-latn', { hour: '2-digit', minute: '2-digit', hour12: true });
+    return `${date} | ${time}`;
   });
+
+  protected readonly updatedText = computed(() => {
+    const mins = Math.floor((this.now() - this.lastUpdate()) / 60000);
+    return mins < 1 ? 'قبل لحظات' : `قبل ${mins} دقيقة`;
+  });
+
+  protected fullscreen(): void {
+    void document.documentElement.requestFullscreen?.();
+  }
+
+
 }

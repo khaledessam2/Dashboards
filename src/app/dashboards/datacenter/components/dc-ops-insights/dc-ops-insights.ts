@@ -1,9 +1,11 @@
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
+import { FlashOnChange } from '../../../../shared/directives/flash-on-change';
 import { DatacenterStore } from '../../../../shared/services/datacenter-store';
 import { formatDuration } from '../../../../shared/constants/datacenter.constants';
 
 @Component({
   selector: 'app-dc-ops-insights',
+  imports: [FlashOnChange],
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'grid grid-cols-[repeat(3,minmax(0,1fr))] gap-4 max-[1400px]:grid-cols-[repeat(2,minmax(0,1fr))] max-[900px]:grid-cols-[minmax(0,1fr)] max-[480px]:gap-3' },
   templateUrl: './dc-ops-insights.html',

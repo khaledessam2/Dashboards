@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, DestroyRef, ElementRef, afterNextRender, computed, effect, inject, signal, viewChildren } from '@angular/core';
+import { FlashOnChange } from '../../../../shared/directives/flash-on-change';
 import Highcharts from 'highcharts';
 import { STATUS_META } from '../../../../shared/constants/datacenter.constants';
 import { PrtgStatus } from '../../../../shared/models/datacenter.model';
@@ -11,6 +12,7 @@ const CHART_PADDING = 24;
 @Component({
   selector: 'app-dc-group-health',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  hostDirectives: [FlashOnChange],
   host: { id: 'group-health', class: 'card' },
   templateUrl: './dc-group-health.html',
 })
@@ -40,6 +42,7 @@ export class DcGroupHealth {
   protected readonly height = computed(() => Math.max(160, this.halves()[0].length * ROW_HEIGHT + CHART_PADDING));
 
   constructor() {
+    inject(FlashOnChange).watch(this.groups);
     const destroyRef = inject(DestroyRef);
     afterNextRender(() => {
       this.charts = this.containers().map((c, i) =>

@@ -1,4 +1,4 @@
-<section class="card" id="dc-outages">
+<section class="card" id="dc-outages" [flashOnChange]="outages()">
   <header class="mb-3 flex items-center justify-between gap-2">
     <h2 class="m-0 my-3 text-[20px] leading-2 font-semibold text-slate-600">الأعطال المفتوحة</h2>
     <span class="num rounded-full bg-red-50 px-2 py-0.5 text-[12px] font-medium text-red-600">{{ outages().length }}</span>
@@ -19,7 +19,7 @@
   </ul>
 </section>
 
-<section class="card" id="dc-stale">
+<section class="card" id="dc-stale" [flashOnChange]="stale()">
   <header class="mb-3 flex items-center justify-between gap-2">
     <h2 class="m-0 my-3 text-[20px] leading-2 font-semibold text-slate-600">حساسات متأخرة القراءة</h2>
     <span class="num rounded-full bg-amber-50 px-2 py-0.5 text-[12px] font-medium text-amber-600">{{ stale().length }}</span>
@@ -41,7 +41,7 @@
   <p class="m-0 mt-2 text-[14px] text-slate-400">الحساسات الموقوفة مستثناة.</p>
 </section>
 
-<section class="card max-[1400px]:col-span-full" id="dc-failing">
+<section class="card max-[1400px]:col-span-full" id="dc-failing" [flashOnChange]="failing()">
   <header class="mb-3 flex flex-wrap items-center justify-between gap-2">
     <h2 class="m-0 my-3 text-[20px] leading-2 font-semibold text-slate-600">الأجهزة الأكثر تعطّلًا</h2>
     <div class="inline-flex gap-0.5 rounded-lg bg-slate-100 p-0.5" role="tablist">

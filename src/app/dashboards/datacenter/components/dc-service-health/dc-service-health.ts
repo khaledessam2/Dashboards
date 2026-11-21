@@ -1,10 +1,12 @@
 import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
+import { FlashOnChange } from '../../../../shared/directives/flash-on-change';
 import { DatacenterStore } from '../../../../shared/services/datacenter-store';
 import { SERVICE_STATUS_META } from '../../../../shared/constants/datacenter.constants';
 
 @Component({
   selector: 'app-dc-service-health',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  hostDirectives: [FlashOnChange],
   host: { class: 'card' },
   templateUrl: './dc-service-health.html',
 })
@@ -23,5 +25,9 @@ export class DcServiceHealth {
   protected age(verifiedAt: number): string {
     const s = Math.max(0, Math.round((this.store.now() - verifiedAt) / 1000));
     return s < 60 ? `قبل ${s} ث` : `قبل ${Math.floor(s / 60)} د`;
+  }
+
+  constructor() {
+    inject(FlashOnChange).watch(this.checks);
   }
 }

@@ -1,37 +1,73 @@
-<header class="flex items-center justify-between gap-4 pt-3 pb-2">
-  <h1 class="m-0 min-w-0 text-2xl leading-8 font-bold text-ink max-[900px]:text-[17px] max-[900px]:leading-6">مركز البيانات — مركز القيادة والتحكم</h1>
-  <div class="flex shrink-0 items-center">
-    <app-last-updated [at]="lastUpdate()" />
-  </div>
-</header>
+<div class="flex flex-col gap-4 px-6 pt-4 pb-8 max-[900px]:p-4 max-[480px]:p-3 max-[480px]:gap-3">
+  <header class="flex flex-wrap items-center justify-between gap-3 rounded-xl bg-surface px-5 py-3 shadow-card">
+    <div class="flex items-center gap-3">
+      <span class="flex size-12 items-center justify-center rounded-xl bg-brand text-white">
+        <span class="material-symbols-outlined !text-[28px]">dns</span>
+      </span>
+      <div>
+        <h1 class="m-0 text-[22px] leading-7 font-bold text-ink">مركز البيانات - مركز القيادة والتحكم</h1>
+        <p class="m-0 text-[14px] text-ink-2">لوحة المراقبة التشغيلية للبنية التحتية والخدمات</p>
+      </div>
+    </div>
 
-<app-dc-gauges />
+    <div class="flex flex-wrap items-center gap-3">
+      <span class="flex items-center gap-2 rounded-full bg-green-600/10 px-3 py-1.5 text-[14px] font-semibold text-green-700">
+        <span class="material-symbols-outlined !text-[18px]">sync</span>آخر تحديث: {{ updatedText() }}
+        <span class="size-2.5 rounded-full bg-green-500"></span>
+      </span>
+      <span class="flex items-center gap-2 rounded-full border border-line px-3 py-1.5 text-[14px] text-ink">
+        <span class="material-symbols-outlined !text-[18px] text-ink-2">calendar_month</span>{{ dateText() }}
+      </span>
+      <button type="button" class="flex size-10 cursor-pointer items-center justify-center rounded-lg border border-line bg-surface text-ink-2" aria-label="ملء الشاشة" (click)="fullscreen()">
+        <span class="material-symbols-outlined !text-[22px]">fullscreen</span>
+      </button>
+    </div>
+  </header>
 
-<section class="grid grid-cols-[repeat(4,minmax(0,1fr))] gap-4 max-[1100px]:grid-cols-[repeat(2,minmax(0,1fr))] max-[480px]:grid-cols-[minmax(0,1fr)] max-[480px]:gap-3">
-  @for (card of kpiCards(); track card.id) {
-    <app-kpi-card [def]="card" />
-  }
-</section>
+  <!-- Summary tiles -->
+  <app-dc-top-kpis />
 
-<section class="grid grid-cols-[repeat(3,minmax(0,1fr))] gap-4 max-[1400px]:grid-cols-[repeat(2,minmax(0,1fr))] max-[900px]:grid-cols-[minmax(0,1fr)] max-[480px]:gap-3">
-  <app-dc-power-cooling />
-  <app-dc-dr-backup />
-  <app-dc-site-badges class="max-[1400px]:col-span-full" />
-</section>
+  <!-- Sites + DR · power · network + clusters -->
+  <section class="grid grid-cols-[minmax(0,1.3fr)_minmax(0,0.85fr)_minmax(0,1fr)] items-stretch gap-4 max-[1400px]:grid-cols-[repeat(2,minmax(0,1fr))] max-[900px]:grid-cols-[minmax(0,1fr)] max-[480px]:gap-3">
+    <div class="flex min-w-0 flex-col gap-4 max-[480px]:gap-3">
+      <app-dc-site-badges />
+      <app-dc-dr-backup class="flex-1" />
+    </div>
+    <app-dc-power-cooling />
+    <div class="flex min-w-0 flex-col gap-4 max-[1400px]:col-span-full max-[480px]:gap-3">
+      <app-dc-net-traffic />
+      <app-dc-cluster-health />
+    </div>
+  </section>
 
-<section class="grid grid-cols-[repeat(3,minmax(0,1fr))] gap-4 max-[1400px]:grid-cols-[repeat(2,minmax(0,1fr))] max-[900px]:grid-cols-[minmax(0,1fr)] max-[480px]:gap-3">
-  <app-dc-net-traffic />
-  <app-dc-device-health />
-  <app-dc-sensor-donut class="max-[1400px]:col-span-full" />
-</section>
+  <!-- Sensors · devices · live alerts -->
+  <section class="grid h-130 grid-cols-[minmax(0,0.8fr)_minmax(0,1.4fr)_minmax(0,1.1fr)] gap-4 max-[1400px]:h-auto max-[1400px]:grid-cols-[repeat(2,minmax(0,1fr))] max-[900px]:grid-cols-[minmax(0,1fr)] max-[1400px]:*:h-110 max-[480px]:gap-3 max-[480px]:*:h-96">
+    <app-dc-sensor-donut />
+    <app-dc-devices-list />
+    <app-dc-alerts-feed class="max-[1400px]:col-span-full" />
+  </section>
 
-<section class="grid h-105 grid-cols-[repeat(2,minmax(0,1fr))] gap-4 max-[900px]:h-auto max-[900px]:grid-cols-[minmax(0,1fr)] max-[900px]:*:h-96 max-[480px]:gap-3 max-[480px]:*:h-80">
-  <app-dc-alerts-feed />
-  <app-dc-devices-list />
-</section>
+  <!-- Advanced telemetry -->
+  <h2 class="m-0 mt-2 flex items-center gap-2 text-[17px] font-bold text-ink">
+    <span class="material-symbols-outlined !text-[22px] text-brand">star</span>مؤشرات إضافية متقدمة (Advanced Telemetry &amp; APM)
+  </h2>
+  <app-dc-extra-cards />
 
-<app-dc-group-health />
+  <!-- Operational details -->
+  <h2 class="m-0 mt-2 flex items-center gap-2 text-[17px] font-bold text-ink">
+    <span class="material-symbols-outlined !text-[22px] text-brand">monitor_heart</span>تفاصيل التشغيل
+  </h2>
+  <section class="grid grid-cols-[minmax(0,1fr)_minmax(0,2fr)] items-stretch gap-4 max-[1400px]:grid-cols-[minmax(0,1fr)] max-[480px]:gap-3">
+    <app-dc-device-health />
+    <div class="flex min-w-0 flex-col gap-4 max-[480px]:gap-3">
+      <app-dc-group-health />
+      <app-dc-ops-insights class="flex-1 !grid-cols-[repeat(3,minmax(0,1fr))] max-[1100px]:!grid-cols-[repeat(2,minmax(0,1fr))] max-[700px]:!grid-cols-[minmax(0,1fr)]" />
+    </div>
+  </section>
+  <app-dc-service-health />
+</div>
 
-<app-dc-ops-insights />
-
-<app-dc-service-health />
+<footer class="flex flex-wrap items-center justify-between gap-2 border-t border-[#e6ebf2] bg-white px-6 py-3 text-[13px] text-ink-2 max-[640px]:px-3">
+  <span>مركز البيانات · <b class="text-ink [direction:ltr]">Command &amp; Control Center</b></span>
+  <span class="mono text-[11px] text-ink-3 [direction:ltr]">DC-MONITOR · PRTG / Zabbix</span>
+</footer>

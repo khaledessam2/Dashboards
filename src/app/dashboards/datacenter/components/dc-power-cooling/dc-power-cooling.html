@@ -1,24 +1,47 @@
-<header class="mb-3"><h2 class="m-0 my-3 text-[20px] leading-2 font-semibold text-slate-600">الطاقة والتبريد</h2></header>
-<div class="grid min-h-0 flex-1 grid-cols-[repeat(2,minmax(0,1fr))] gap-3">
-  @for (m of metrics; track m.ar) {
-    <div class="flex items-center gap-3 rounded-lg bg-hover px-3 py-3">
-      <span
-        class="material-symbols-outlined !text-[24px]"
-        [class.text-brand]="!m.status"
-        [class.text-yellow-500]="m.status === 'warn'"
-        [class.text-red-600]="m.status === 'crit'"
-        >{{ m.icon }}</span
+<header class="mb-3 flex items-center justify-between gap-2">
+  <h2 class="m-0 my-3 text-[20px] leading-6 font-semibold text-slate-600">الطاقة والتبريد</h2>
+  <span class="rounded-full bg-amber-50 px-2.5 py-0.5 text-[13px] font-semibold text-amber-600">مراقبة حية</span>
+</header>
+
+<div class="flex min-h-0 flex-1 flex-col gap-3">
+  <div class="flex min-h-0 flex-1 flex-col gap-3">
+    @for (m of rows(); track m.ar) {
+      <div
+        class="flex flex-1 items-center justify-between gap-3 rounded-xl border px-4 py-3"
+        [class.border-line]="!m.status"
+        [class.bg-hover]="!m.status"
+        [class.border-amber-200]="m.status === 'warn'"
+        [class.bg-amber-50]="m.status === 'warn'"
+        [class.border-red-200]="m.status === 'crit'"
+        [class.bg-red-50]="m.status === 'crit'"
       >
-      <div class="flex min-w-0 flex-col">
-        <span
-          class="num text-[15px] leading-6 font-semibold [direction:ltr] [text-align:right]"
-          [class.text-slate-600]="!m.status"
-          [class.text-yellow-500]="m.status === 'warn'"
+        <span class="flex min-w-0 items-center gap-3">
+          <span
+            class="material-symbols-outlined !text-[26px]"
+            [class.text-brand]="!m.status"
+            [class.text-amber-500]="m.status === 'warn'"
+            [class.text-red-600]="m.status === 'crit'"
+            >{{ m.icon }}</span
+          >
+          <span class="truncate text-[18px] text-ink-2">{{ m.ar }}</span>
+        </span>
+        <b
+          class="num shrink-0 text-[20px] [direction:ltr]"
+          [class.text-ink]="!m.status"
+          [class.text-amber-600]="m.status === 'warn'"
           [class.text-red-600]="m.status === 'crit'"
-          >{{ m.value }}</span
+          >{{ m.value }}</b
         >
-        <span class="truncate text-[18px] text-ink-2">{{ m.ar }}</span>
       </div>
-    </div>
-  }
+    }
+  </div>
+
+  <div class="grid grid-cols-[repeat(2,minmax(0,1fr))] gap-3">
+    @for (m of tiles(); track m.ar) {
+      <div class="flex flex-col items-center gap-1 rounded-xl bg-hover px-3 py-3 text-center">
+        <span class="text-[14px] text-ink-3">{{ m.ar }}</span>
+        <b class="num text-[24px] leading-8 text-ink [direction:ltr]">{{ m.value }}</b>
+      </div>
+    }
+  </div>
 </div>

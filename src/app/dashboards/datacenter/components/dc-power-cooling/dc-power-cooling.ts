@@ -23,4 +23,8 @@ export class DcPowerCooling {
     { ar: 'الرطوبة', value: '45%', icon: 'humidity_percentage' },
     { ar: 'استهلاك الطاقة', value: '72%', icon: 'bolt' },
   ];
+
+  private static readonly TILES = ['كفاءة PUE', 'استهلاك الطاقة'];
+  protected readonly rows = () => this.metrics.filter((m) => !DcPowerCooling.TILES.includes(m.ar));
+  protected readonly tiles = () => this.metrics.filter((m) => DcPowerCooling.TILES.includes(m.ar));
 }

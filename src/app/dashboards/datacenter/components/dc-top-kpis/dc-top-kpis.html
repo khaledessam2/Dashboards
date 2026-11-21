@@ -1,0 +1,25 @@
+@for (t of tiles(); track t.id) {
+  <article class="card justify-between gap-2 !p-4" [id]="t.id" [flashOnChange]="t.value" [class.!border-[#fecdd3]]="t.alert">
+    <div class="flex items-center gap-2">
+      <span class="flex size-9 shrink-0 items-center justify-center rounded-lg" [style.background]="t.bg" [style.color]="t.color">
+        <span class="material-symbols-outlined !text-[20px]">{{ t.icon }}</span>
+      </span>
+      <span class="text-[15px] leading-5 font-semibold text-ink-2">{{ t.label }}</span>
+    </div>
+    <div class="flex items-baseline justify-end gap-1 [direction:ltr]">
+      <b class="num text-[30px] leading-9" [style.color]="t.color">{{ t.value }}</b>
+      @if (t.unit) { <small class="text-[13px] font-semibold text-ink-3">{{ t.unit }}</small> }
+    </div>
+    @if (t.bar !== undefined) {
+      <div class="h-1.5 overflow-hidden rounded-full bg-track">
+        <div class="h-full rounded-full transition-all duration-700" [style.width.%]="t.bar" [style.background]="t.color"></div>
+      </div>
+    }
+    <div class="flex items-center justify-between gap-2 text-[13px]">
+      @if (t.chip) {
+        <span class="num rounded-md px-2 py-0.5 font-bold whitespace-nowrap" [class]="chipClass[t.chip.tone]">{{ t.chip.text }}</span>
+      }
+      @if (t.sub) { <span class="text-ink-3" [style.color]="t.alert ? t.color : ''">{{ t.sub }}</span> }
+    </div>
+  </article>
+}

@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, DestroyRef, ElementRef, afterNextRender, computed, effect, inject, viewChild } from '@angular/core';
+import { FlashOnChange } from '../../../../shared/directives/flash-on-change';
 import Highcharts from 'highcharts';
 import { STATUS_META, STATUS_ORDER } from '../../../../shared/constants/datacenter.constants';
 import { DatacenterStore } from '../../../../shared/services/datacenter-store';
@@ -7,6 +8,7 @@ import { DatacenterStore } from '../../../../shared/services/datacenter-store';
 @Component({
   selector: 'app-dc-sensor-donut',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  hostDirectives: [FlashOnChange],
   host: { id: 'sensor-donut', class: 'card' },
   templateUrl: './dc-sensor-donut.html',
 })
@@ -27,6 +29,7 @@ export class DcSensorDonut {
   );
 
   constructor() {
+    inject(FlashOnChange).watch(this.counts);
     const destroyRef = inject(DestroyRef);
     afterNextRender(() => {
       const chart = (this.chart = Highcharts.chart(this.container().nativeElement, {

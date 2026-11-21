@@ -1,0 +1,63 @@
+@let d = def();
+<header class="mb-3 flex flex-col">
+  <h2 class="m-0 my-3 flex items-center gap-2 text-[20px] leading-6 font-semibold text-slate-600">
+    <span class="material-symbols-outlined !text-[22px]">{{ d.icon }}</span>{{ d.ar }}
+  </h2>
+  <span class="text-[14px] text-slate-400 [direction:ltr] text-start">{{ d.source }} · mock</span>
+</header>
+
+@if (d.summary) {
+  <div class="mb-3 flex flex-wrap gap-x-6 gap-y-1">
+    @for (m of d.summary; track m.label) {
+      <span class="text-[16px] text-ink-2">{{ m.label }} <b class="num" [style.color]="color(m.sev)">{{ m.value }}</b></span>
+    }
+  </div>
+}
+
+@switch (d.kind) {
+  @case ('metrics') {
+    <ul class="m-0 flex min-h-0 flex-1 list-none flex-col justify-between p-0">
+      @for (m of d.metrics; track m.label) {
+        <li class="flex items-center justify-between gap-3 border-b border-line py-2 last:border-b-0">
+          <span class="text-[17px] text-ink-2">{{ m.label }}</span>
+          <span class="num text-[17px] font-bold" [style.color]="color(m.sev)">{{ m.value }}</span>
+        </li>
+      }
+    </ul>
+  }
+  @case ('bars') {
+    <ul class="m-0 flex min-h-0 flex-1 list-none flex-col justify-between gap-3 p-0">
+      @for (b of d.bars; track b.label) {
+        <li class="flex flex-col gap-1">
+          <div class="flex items-center justify-between text-[16px]">
+            <span class="text-ink-2">{{ b.label }}</span>
+            <b class="num" [style.color]="color(b.sev)">{{ b.text }}</b>
+          </div>
+          <div class="h-2 overflow-hidden rounded-full bg-track">
+            <div class="h-full rounded-full" [style.width.%]="b.pct" [style.background]="color(b.sev)"></div>
+          </div>
+        </li>
+      }
+    </ul>
+  }
+  @case ('table') {
+    <div class="min-h-0 flex-1"><table class="h-full w-full border-collapse text-[16px]">
+      <thead>
+        <tr class="text-start text-[14px] text-slate-400">
+          @for (h of d.headers; track h) {
+            <th class="pb-2 text-start font-medium">{{ h }}</th>
+          }
+        </tr>
+      </thead>
+      <tbody>
+        @for (r of d.rows; track r.cells[0]) {
+          <tr class="border-t border-line">
+            @for (c of r.cells; track $index) {
+              <td class="num py-2" [class.font-semibold]="$first || $last" [style.color]="$last ? color(r.sev) : ''">{{ c }}</td>
+            }
+          </tr>
+        }
+      </tbody>
+    </table></div>
+  }
+}

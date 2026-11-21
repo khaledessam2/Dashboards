@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
+import { FlashOnChange } from '../../../../shared/directives/flash-on-change';
 import { ALERT_META } from '../../../../shared/constants/datacenter.constants';
 import { DatacenterStore } from '../../../../shared/services/datacenter-store';
 import { formatTime12 as formatTime } from '../../../../shared/utils/time.utils';
@@ -8,6 +9,7 @@ import { formatTime12 as formatTime } from '../../../../shared/utils/time.utils'
 @Component({
   selector: 'app-dc-alerts-feed',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  hostDirectives: [FlashOnChange],
   host: { id: 'alert-feed', class: 'card' },
   templateUrl: './dc-alerts-feed.html',
 })
@@ -30,4 +32,8 @@ export class DcAlertsFeed {
     const fresh = this.store.freshAlertIds();
     return this.store.alerts().map((a) => ({ ...ALERT_META[a.severity], id: a.id, severity: a.severity, device: a.device, text: a.text, time: formatTime(a.time), fresh: fresh.has(a.id) }));
   });
+
+  constructor() {
+    inject(FlashOnChange).watch(this.store.alerts);
+  }
 }
